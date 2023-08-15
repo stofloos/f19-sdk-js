@@ -1,0 +1,128 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "sort-imports-es6-autofix",
+    "sort-keys-fix",
+    "import"
+  ],
+  "overrides": [
+    {
+      "files": ["src/**/*.ts"]
+    }
+  ],
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "pathGroups": [
+          {
+            "pattern": "~/*",
+            "group": "external"
+          },
+          {
+            "pattern": "constants/**/*",
+            "group": "index"
+          },
+          {
+            "pattern": "mockData/**/*",
+            "group": "sibling"
+          },
+          {
+            "pattern": "helpers/**/*",
+            "group": "index"
+          },
+          {
+            "pattern": "config/**/*",
+            "group": "index"
+          },
+          {
+            "pattern": "lib/**/*",
+            "group": "index"
+          },
+          {
+            "pattern": "components",
+            "group": "index"
+          },
+          {
+            "pattern": "components/**/*",
+            "group": "sibling"
+          },
+          {
+            "pattern": "cached-data/**/*",
+            "group": "object"
+          },
+          {
+            "pattern": "types/**/*",
+            "group": "type"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": [],
+        "groups": [
+          "external",
+          "builtin",
+          "internal",
+          "index",
+          "parent",
+          "sibling",
+          "object",
+          "type"
+        ],
+        "newlines-between": "always"
+      }
+    ],
+    "@typescript-eslint/array-type": ["error", { "default": "generic" }],
+    "no-console": "warn",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error",
+    "indent": "off",
+    "sort-imports-es6-autofix/sort-imports-es6": [
+      2,
+      {
+        "ignoreCase": false,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+      }
+    ],
+    "sort-keys-fix/sort-keys-fix": "error",
+    "@typescript-eslint/no-inferrable-types": "error",
+    "@typescript-eslint/member-delimiter-style": "error",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^I[A-Z]",
+          "match": false
+        }
+      }
+    ],
+    "no-multi-spaces": "off",
+    "no-extra-boolean-cast": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".ts"]
+      }
+    },
+    "react": {
+      "version": "16.8.6"
+    }
+  }
+}
+

@@ -1,6 +1,7 @@
-# F19 SDK JS [![Language](https://img.shields.io/badge/language-javascript-yellow.svg)](https://git.gracious.nl/f19/f19-sdk-js) [![Language](https://img.shields.io/badge/language-typescript-blue.svg)](https://git.gracious.nl/f19/f19-sdk-js)
+# F19 SDK JS
+[![Language](https://img.shields.io/badge/language-javascript-yellow.svg)](https://git.gracious.nl/f19/f19-sdk-js) [![Language](https://img.shields.io/badge/language-typescript-blue.svg)](https://git.gracious.nl/f19/f19-sdk-js)
 
-One Paragraph of project description goes here
+Javascript SDK for the F19 digital reporting platform. 
 
 ## Getting Started
 
@@ -15,11 +16,9 @@ What things you need to install the software and how to install them
 - Typescript
 ```
 
-### Installing
+### Installing (TODO)
 
 A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
 
 ```bash
 npm install 
@@ -37,15 +36,34 @@ or
 pnpm i
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+## Usage (TODO)
 
-## Running the tests
+```javascript
+import { F19 } from 'f19-sdk-js';
+
+const client = new F19({
+    apiKey: "[F19_API_KEY]",
+    baseUrl: "[F19_BASE_URL]"
+})
+```
+or
+
+```javascript
+const F19 = require('f19-sdk-js');
+
+const client = new F19({
+    apiKey: "[F19_API_KEY]",
+    baseUrl: "[F19_BASE_URL]"
+})
+```
+
+## Running the tests (TODO)
 
 Explain how to run the automated tests for this system
 
 ### Break down into end to end tests
 
-Explain what these tests test and why
+Explain what these tests test and why 
 
 ```text
 Give an example
@@ -61,18 +79,12 @@ Give an example
 
 ## Scripts
 
-| Command  | Description |
-| -------- | ----------- |
-| `yarn run start` | Why does this command exist and what does it do |
+| Command                                           | Description                            |
+|---------------------------------------------------|----------------------------------------|
+| `npm run build` or `yarn build`                   | Compile typescript into javascript     |
+| `npm run prettier:write` or `yarn prettier:write` | Format all files that match RegEx      |
+| `npm run prettier:check` or `yarn prettier:check` | Check if files are formatted correctly |
 
-## Deployment
-
-Deployment of the application is done using GitLab's CI/CD Pipelines using the following scenarios:
-
-* **Staging**: When a Merge Request is successfully merged to the develop branch, the latest develop build is deployed to [https://www.google.com](https://www.google.com).
-* **Production**: When a tag is created, the build is deployed to [https://www.google.com](https://www.google.com)
-
-To see what happens during the CI pipelines, see [.gitlab-ci.yml](https://git.gracious.nl/[group]/[repository]/pipelines)
 
 ## Built With
 

@@ -39,7 +39,7 @@ pnpm i
 ## Usage (TODO)
 
 ```javascript
-import sF19 from 'f19-sdk-js';
+import F19 from 'f19-sdk-js';
 
 const client = new F19({
     apiKey: "[F19_API_KEY]",

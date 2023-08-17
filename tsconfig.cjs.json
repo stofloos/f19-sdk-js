@@ -6,7 +6,7 @@
         "preserveConstEnums": true,
         "sourceMap": true,
         "allowJs": true,
-        "outDir": "dist/cjs",
+        "outDir": "./dist/cjs",
         "moduleResolution": "Node"
     },
     "files": ["src/index.ts"],

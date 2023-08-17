@@ -6,5 +6,7 @@
         "sourceMap": true,
         "allowJs": true,
         "moduleResolution": "Node",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true
     }
 }

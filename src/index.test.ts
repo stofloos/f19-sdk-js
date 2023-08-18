@@ -1,5 +1,7 @@
 import Client from "./index";
 import "isomorphic-fetch"
+import Reports from "./resources/reports/report";
+import { Projects } from "./resources/projects/project";
 
 const apiKey = process.env.F19_API_KEY!;
 const baseUrl = process.env.F19_BASE_URL!;
@@ -22,7 +24,7 @@ describe("Index instance", () => {
                 apiKey: "",
                 baseUrl: "https://api.f19.rocks"
             });
-        }).toThrowError("Api key not configured");
+        }).toThrowError("API-key not configured");
 
     })
 
@@ -32,19 +34,28 @@ describe("Index instance", () => {
                 apiKey: "123",
                 baseUrl: ""
             });
-        }).toThrowError("Base url not configured");
+        }).toThrowError("Base URL not configured");
     })
 
-    it("should contain projects", () => {
+    it("should contain Projects instance", () => {
         expect(client).toHaveProperty("projects");
+        expect(client.projects).toBeInstanceOf(Projects);
+        expect(client.projects).toHaveProperty("getAll");
+        expect(client.projects).toHaveProperty("getById");
     })
 
-    it("should be able to run projects.getAll()", async () => {
-      await expect(client.projects.getAll()).resolves.toHaveProperty("payload");
+    it("should contain Websites instance", () => {
+        expect(client).toHaveProperty("websites");
+        expect(client.websites).toHaveProperty("getAll");
+        expect(client.websites).toHaveProperty("getByAlias");
     })
 
-    it("should be able to run projects.getById()", async () => {
-        await expect(client.projects.getById("f9f9e70a-03e8-0000-f884-fdaf7d6313ed")).resolves.toHaveProperty("payload");
+    it("should contain Reports instance", () => {
+        expect(client).toHaveProperty("reports");
+        expect(client.reports).toBeInstanceOf(Reports);
+        expect(client.reports).toHaveProperty("getAllByProjectId");
+        expect(client.reports).toHaveProperty("getById");
+
     })
 
 

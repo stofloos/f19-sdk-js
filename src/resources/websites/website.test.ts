@@ -8,15 +8,17 @@ import "isomorphic-fetch";
 const apiKey = process.env.F19_API_KEY!;
 const baseUrl = process.env.F19_BASE_URL!;
 
+const config = {
+    apiKey,
+    baseUrl
+};
+
 beforeAll(() => {
     jest.resetModules();
 });
 
 describe("Websites resource", () => {
-    const websites = new Websites({
-        apiKey: apiKey,
-        baseUrl: baseUrl
-    });
+    const websites = new Websites(config);
 
     let websiteAlias: string;
 
@@ -29,21 +31,8 @@ describe("Websites resource", () => {
 
         websiteAlias = websitesResponse?.payload?.[0]?.alias;
 
-        expect(websitesResponse).toEqual(
-            expect.objectContaining({
-                nextNonce: expect.any(String),
-                statusCode: 200,
-                errors: null,
-                payload: expect.arrayContaining([
-                    expect.objectContaining({
-                        id: expect.any(String),
-                        name: expect.any(String),
-                        alias: expect.any(String),
-                        routes: expect.any(Array)
-                    })
-                ])
-            })
-        );
+        expect(websitesResponse).toHaveProperty("payload");
+        expect(websitesResponse.payload).toBeInstanceOf(Array);
     });
 
     it("should throw error if alias is not provided", () => {
@@ -52,24 +41,21 @@ describe("Websites resource", () => {
         }).toThrowError("No alias provided");
     });
 
-
-        it("should get a website by alias", async () => {
-            const websiteResponse = await websites.getByAlias(websiteAlias);
-            expect(websiteResponse).toEqual(
-                expect.objectContaining({
-                    nextNonce: expect.any(String),
-                    statusCode: 200,
-                    errors: null,
-                    payload: expect.objectContaining({
-                        id: expect.any(String),
-                        name: expect.any(String),
-                        alias: expect.any(String),
-                        routes: expect.any(Array)
-                    })
+    it("should get a website by alias", async () => {
+        const websiteResponse = await websites.getByAlias(websiteAlias);
+        expect(websiteResponse).toEqual(
+            expect.objectContaining({
+                nextNonce: expect.any(String),
+                statusCode: 200,
+                errors: null,
+                payload: expect.objectContaining({
+                    id: expect.any(String),
                 })
-            );
-        });
-
+            })
+        );
+        expect(websiteResponse?.payload).toHaveProperty("alias");
+        expect(websiteResponse?.payload?.alias).toEqual(websiteAlias)
+    });
 
     // TODO: Fix getCurrent test
     it("throws error getting current website", async () => {

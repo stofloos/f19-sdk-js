@@ -2,7 +2,6 @@ import { Base } from "../base";
 import { ProjectResponse, ProjectsResponse } from "./types";
 
 export class Projects extends Base {
-
     /**
      * Get all projects
      * @returns {Promise<ProjectsResponse>}
@@ -29,5 +28,4 @@ export class Projects extends Base {
             method: "GET"
         });
     }
-
 }

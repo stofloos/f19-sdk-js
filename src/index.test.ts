@@ -11,7 +11,7 @@ const client = new Client({
 
 });
 
-describe("Index", () => {
+describe("Index instance", () => {
     it("should be instance of Client", () => {
         expect(client).toBeInstanceOf(Client);
     });

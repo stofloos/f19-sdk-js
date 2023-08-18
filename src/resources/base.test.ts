@@ -2,7 +2,7 @@ import { Base } from "./base";
 
 class TestBase extends Base {}
 
-describe("Base", () => {
+describe("Base Instance", () => {
     it("should throw error if api key is not configured", () => {
         expect(() => {
             new TestBase({

@@ -1,10 +1,14 @@
 import type { Config } from "@jest/types";
-// Sync object
+
 const config: Config.InitialOptions = {
     verbose: true,
+    preset: "ts-jest",
     transform: {
-        "^.+\\.tsx?$": "ts-jest"
-    }
+        "^.+\\.ts?$": ["ts-jest", { tsconfig: "tsconfig.esm.json"}]
+    },
+    setupFiles: ["dotenv/config"],
+    testEnvironment: "node",
+    modulePathIgnorePatterns: ["<rootDir>/dist/"]
 };
 
 export default config;

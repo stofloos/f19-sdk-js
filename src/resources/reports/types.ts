@@ -1,4 +1,4 @@
-export declare type Event =  {
+export declare type Event = {
     message: string;
     type: string;
     category: string;

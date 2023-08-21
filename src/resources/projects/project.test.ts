@@ -1,4 +1,4 @@
-import { Projects } from "./project";
+import Projects from "./project";
 import "isomorphic-fetch";
 
 const apiKey = process.env.F19_API_KEY!;
@@ -13,8 +13,6 @@ beforeAll(() => {
     jest.resetModules();
 });
 
-
-
 describe("Projects resource", () => {
     const projects = new Projects(config);
 
@@ -25,13 +23,15 @@ describe("Projects resource", () => {
     });
 
     it("should throw error if id is not provided", async () => {
-       await expect(projects.getById("")).rejects.toThrowError("No id provided");
+        await expect(projects.getById("")).rejects.toThrowError(
+            "No id provided"
+        );
     });
 
     it("should return projects", async () => {
         const project = await projects.getAll();
 
-        if(project.payload?.[0]?.id) {
+        if (project.payload?.[0]?.id) {
             projectId = project.payload?.[0]?.id;
         }
 
@@ -46,4 +46,3 @@ describe("Projects resource", () => {
         expect(project.payload).toHaveProperty("id");
     });
 });
-

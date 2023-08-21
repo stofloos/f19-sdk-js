@@ -1,8 +1,10 @@
-import { Projects } from "./resources/projects/project";
+import Projects from "./resources/projects/project";
 import type { Config } from "./types";
 import Websites from "./resources/websites/website";
 import Reports from "./resources/reports/report";
 import Articles from "./resources/articles/article";
+import Charts from "./resources/charts/chart";
+import Assets from "./resources/assets/asset";
 import Channel from "./resources/channel/channel";
 
 /**
@@ -14,6 +16,8 @@ import Channel from "./resources/channel/channel";
  * @property {Websites} websites
  * @property {Reports} reports
  * @property {Articles} articles
+ * @property  {Assets} assets
+ * @property {Charts} charts
  * @property {Channel} items
  */
 export default class Client {
@@ -21,6 +25,8 @@ export default class Client {
     websites: Websites;
     reports: Reports;
     articles: Articles;
+    assets: Assets;
+    charts: Charts;
     channel: Channel;
 
     /**
@@ -43,6 +49,8 @@ export default class Client {
         this.websites = new Websites(config);
         this.reports = new Reports(config);
         this.articles = new Articles(config);
+        this.assets = new Assets(config);
+        this.charts = new Charts(config);
         this.channel = new Channel(config);
     }
 }

@@ -12,13 +12,13 @@ export declare type Event =  {
 export declare type ChannelResource = {};
 
 export declare type Block = {
-    multiChannelTags: Array<ChannelTag>[];
-    blocks: Array<Block> | [];
+    multiChannelTags: Array<ChannelTag>;
+    blocks: Array<Block>;
     text: string;
     id: string;
     type: string;
-    multiChannelResources: Array<ChannelResource> | [];
-    events: Array<Event> | [];
+    multiChannelResources: Array<ChannelResource>;
+    events: Array<Event>;
 };
 
 export declare type ChannelTag = {
@@ -44,8 +44,8 @@ export declare type Component = {
     };
     level: 0;
     multiChannelTags: Array<ChannelTag> | [];
-    blocks: Array<Block> | [];
-    events: Array<Event> | [];
+    blocks: Array<Block>;
+    events: Array<Event>;
 };
 
 export declare type Report = {
@@ -57,7 +57,7 @@ export declare type Report = {
     language: string;
     components: Array<Component>;
     facetNavigations: null;
-    multiChannelTags: Array<ChannelTag>[];
+    multiChannelTags: Array<ChannelTag>;
     events: Array<Event> | [];
     articleIds: Array<string>[];
 };

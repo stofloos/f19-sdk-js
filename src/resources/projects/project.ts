@@ -8,8 +8,12 @@ export class Projects extends Base {
      * @example
      * const projects = await client.projects.getAll()
      */
-    getAll(): Promise<ProjectsResponse> {
-        return this.request(`/cms/api/public/v1/project`, { method: "GET" });
+    async getAll(): Promise<ProjectsResponse> {
+        return this.request(`/cms/api/public/v1/project`, {
+            method: "GET"
+        }).then(response => {
+            return response.json();
+        });
     }
 
     /**
@@ -19,13 +23,15 @@ export class Projects extends Base {
      * @example
      * const project = awaits client.projects.getById("[PROJECT_ID]]")
      */
-    getById(id: string): Promise<ProjectResponse> {
+    async getById(id: string): Promise<ProjectResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
         return this.request(`/cms/api/public/v1/project/id/${id}`, {
             method: "GET"
+        }).then(response => {
+            return response.json();
         });
     }
 }

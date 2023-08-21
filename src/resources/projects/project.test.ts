@@ -33,7 +33,7 @@ describe("Projects resource", () => {
     it("should return projects", async () => {
         const project = await projects.getAll();
 
-        if (project.payload?.[0]?.id) {
+        if(project.payload?.[0]?.id) {
             projectId = project.payload?.[0]?.id;
         }
 
@@ -48,3 +48,4 @@ describe("Projects resource", () => {
         expect(project.payload).toHaveProperty("id");
     });
 });
+

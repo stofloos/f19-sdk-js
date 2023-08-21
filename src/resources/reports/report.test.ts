@@ -1,5 +1,5 @@
 import Reports from "./report";
-import { Projects } from "../projects/project";
+import Projects from "../projects/project";
 import "isomorphic-fetch";
 
 const apiKey = process.env.F19_API_KEY!;
@@ -45,7 +45,9 @@ describe("Reports resource", () => {
     });
 
     it("should throw error if id is not provided", async () => {
-       await expect(reports.getById("")).rejects.toThrowError("No id provided");
+        await expect(reports.getById("")).rejects.toThrowError(
+            "No id provided"
+        );
     });
 
     it("should throw error if invalid report id is provided", async () => {

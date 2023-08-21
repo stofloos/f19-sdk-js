@@ -1,6 +1,6 @@
 import type { WebsitesResponse, WebsiteResponse } from "./types";
 import { Config } from "../../types";
-import { Base } from "../base";
+import Base from "../base";
 
 /**
  * Websites resource

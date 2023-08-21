@@ -1,4 +1,4 @@
-import { Base } from "../base";
+import Base from "../base";
 import { ArticleResponse, ArticlesResponse } from "./types";
 
 /**
@@ -18,18 +18,16 @@ export default class Articles extends Base {
      * @throws Error
      *
      */
-   async getAllByProjectId(projectId: string): Promise<ArticlesResponse> {
+    async getAllByProjectId(projectId: string): Promise<ArticlesResponse> {
         if (!projectId || projectId === "") {
             throw new Error("Project id not provided");
         }
 
         return this.request(`/cms/api/public/v1/article/project/${projectId}`, {
             method: "GET"
-        }).then(
-            response => {
-                return response.json();
-            }
-        )
+        }).then(response => {
+            return response.json();
+        });
     }
 
     /**
@@ -39,17 +37,15 @@ export default class Articles extends Base {
      * @returns {Promise<ArticleResponse>}
      * @throws Error
      */
-   async getById(articleId: string): Promise<ArticleResponse> {
+    async getById(articleId: string): Promise<ArticleResponse> {
         if (!articleId || articleId === "") {
             throw new Error("Article id not provided");
         }
 
         return this.request(`/cms/api/public/v1/article/${articleId}`, {
             method: "GET"
-        }).then(
-            response => {
-                return response.json();
-            }
-        );
+        }).then(response => {
+            return response.json();
+        });
     }
 }

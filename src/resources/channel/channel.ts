@@ -1,4 +1,4 @@
-import { Base } from "../base";
+import Base from "../base";
 import { ChannelResponse } from "./types";
 
 export default class Channel extends Base {

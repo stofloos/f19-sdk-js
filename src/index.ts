@@ -1,4 +1,4 @@
-import { Projects } from "./resources/projects/project";
+import Projects from "./resources/projects/project";
 import type { Config } from "./types";
 import Websites from "./resources/websites/website";
 import Reports from "./resources/reports/report";
@@ -49,6 +49,8 @@ export default class Client {
         this.websites = new Websites(config);
         this.reports = new Reports(config);
         this.articles = new Articles(config);
+        this.assets = new Assets(config);
+        this.charts = new Charts(config);
         this.channel = new Channel(config);
     }
 }

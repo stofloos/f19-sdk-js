@@ -44,10 +44,8 @@ describe("Reports resource", () => {
         expect(report.payload).toBeInstanceOf(Array);
     });
 
-    it("should throw error if id is not provided", () => {
-        expect(() => {
-            reports.getById("");
-        }).toThrowError("No id provided");
+    it("should throw error if id is not provided", async () => {
+       await expect(reports.getById("")).rejects.toThrowError("No id provided");
     });
 
     it("should throw error if invalid report id is provided", async () => {

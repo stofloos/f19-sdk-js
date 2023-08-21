@@ -14,10 +14,8 @@ describe("Articles resource", () => {
         expect(articles).toBeInstanceOf(Articles);
     });
 
-    it("should throw error if project id is not provided", () => {
-        expect(() => {
-            articles.getAllByProjectId("");
-        }).toThrowError("Project id not provided");
+    it("should throw error if project id is not provided", async () => {
+        await expect( articles.getAllByProjectId("")).rejects.toThrowError("Project id not provided");
     });
 
     it("should throw error if invalid project id is provided", async () => {

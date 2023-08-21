@@ -35,10 +35,8 @@ describe("Websites resource", () => {
         expect(websitesResponse.payload).toBeInstanceOf(Array);
     });
 
-    it("should throw error if alias is not provided", () => {
-        expect(() => {
-            websites.getByAlias("");
-        }).toThrowError("No alias provided");
+    it("should throw error if alias is not provided", async () => {
+       await expect(websites.getByAlias("")).rejects.toThrowError("No alias provided");
     });
 
     it("should get a website by alias", async () => {

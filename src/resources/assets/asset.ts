@@ -36,7 +36,7 @@ export default class Assets extends Base {
      * Get download by name
      * @param projectId
      * @param name
-     * @returns {Promise<AssetResponse>}
+     * @returns {Promise<Blob>}
      */
     async getDownloadByName(projectId: string, name: string): Promise<Blob> {
         if (!projectId || projectId === "") {

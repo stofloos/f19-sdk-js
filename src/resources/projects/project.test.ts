@@ -24,10 +24,8 @@ describe("Projects resource", () => {
         expect(projects).toBeInstanceOf(Projects);
     });
 
-    it("should throw error if id is not provided", () => {
-        expect(() => {
-            projects.getById("");
-        }).toThrowError("No id provided");
+    it("should throw error if id is not provided", async () => {
+       await expect(projects.getById("")).rejects.toThrowError("No id provided");
     });
 
     it("should return projects", async () => {

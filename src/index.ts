@@ -3,6 +3,7 @@ import type { Config } from "./types";
 import Websites from "./resources/websites/website";
 import Reports from "./resources/reports/report";
 import Articles from "./resources/articles/article";
+import Channel from "./resources/channel/channel";
 
 /**
  * Client for interacting with the F19 API
@@ -13,12 +14,14 @@ import Articles from "./resources/articles/article";
  * @property {Websites} websites
  * @property {Reports} reports
  * @property {Articles} articles
+ * @property {Channel} items
  */
 export default class Client {
     projects: Projects;
     websites: Websites;
     reports: Reports;
     articles: Articles;
+    channel: Channel;
 
     /**
      * Create a new instance of the client
@@ -40,5 +43,6 @@ export default class Client {
         this.websites = new Websites(config);
         this.reports = new Reports(config);
         this.articles = new Articles(config);
+        this.channel = new Channel(config);
     }
 }

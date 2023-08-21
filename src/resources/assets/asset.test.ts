@@ -49,15 +49,11 @@ describe("Asset Resource", () => {
         expect(imageBlob).toBeDefined();
     });
 
-    it("should throw error if asset name is not provided", () => {
-        expect(() => {
-            assets.getImageByName("123", "");
-        }).toThrowError("No asset name provided");
+    it("should throw error if asset name is not provided", async () => {
+       await expect( assets.getImageByName("123", "")).rejects.toThrowError("No asset name provided");
     });
 
-    it("should throw error if no token is provided", () => {
-        expect(() => {
-            assets.getAssetBlobByToken("");
-        }).toThrowError("No token provided");
+    it("should throw error if no token is provided", async () => {
+      await  expect( assets.getAssetBlobByToken("")).rejects.toThrowError("No token provided");
     });
 });

@@ -1,4 +1,13 @@
-export declare type Event = {};
+export declare type Event =  {
+    message: string;
+    type: string;
+    category: string;
+    level: string;
+    tags: {
+        [key: string]: string | number | boolean;
+    };
+    channels: Array<string> | [];
+};
 
 export declare type ChannelResource = {};
 
@@ -48,7 +57,7 @@ export declare type Report = {
     language: string;
     components: Array<Component>;
     facetNavigations: null;
-    multiChannelTags: Array<ChannelTag>[];
+    multiChannelTags: Array<ChannelTag>;
     events: Array<Event> | [];
     articleIds: Array<string>[];
 };

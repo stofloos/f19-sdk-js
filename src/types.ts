@@ -4,7 +4,7 @@ export declare type Config = {
 };
 
 interface Response {
-    errors: null,
-    payload: any,
-    statusCode: number
+    errors: null;
+    payload: any;
+    statusCode: number;
 }

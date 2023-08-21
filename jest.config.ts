@@ -4,7 +4,7 @@ const config: Config.InitialOptions = {
     verbose: true,
     preset: "ts-jest",
     transform: {
-        "^.+\\.ts?$": ["ts-jest", { tsconfig: "tsconfig.esm.json"}]
+        "^.+\\.ts?$": ["ts-jest", { tsconfig: "tsconfig.esm.json" }]
     },
     setupFiles: ["dotenv/config"],
     testEnvironment: "node",

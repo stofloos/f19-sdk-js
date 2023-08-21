@@ -6,6 +6,7 @@ import Articles from "./resources/articles/article";
 import Charts from "./resources/charts/chart";
 import Assets from "./resources/assets/asset";
 import Channel from "./resources/channel/channel";
+import FacetNavigations from "./resources/facetNavigations/facetNavigation";
 
 /**
  * Client for interacting with the F19 API
@@ -19,6 +20,7 @@ import Channel from "./resources/channel/channel";
  * @property  {Assets} assets
  * @property {Charts} charts
  * @property {Channel} items
+ * @property {FacetNavigations} facetNavigations
  */
 export default class Client {
     projects: Projects;
@@ -28,6 +30,7 @@ export default class Client {
     assets: Assets;
     charts: Charts;
     channel: Channel;
+    facetNavigations: FacetNavigations;
 
     /**
      * Create a new instance of the client
@@ -52,5 +55,6 @@ export default class Client {
         this.assets = new Assets(config);
         this.charts = new Charts(config);
         this.channel = new Channel(config);
+        this.facetNavigations = new FacetNavigations(config);
     }
 }

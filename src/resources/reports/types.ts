@@ -1,3 +1,5 @@
+import { BaseResponse } from "../../types";
+
 export declare type Event = {
     message: string;
     type: string;
@@ -62,10 +64,10 @@ export declare type Report = {
     articleIds: Array<string>[];
 };
 
-export declare interface ReportResponse extends Response {
+export declare interface ReportResponse extends BaseResponse {
     payload: Report;
 }
 
-export declare interface ReportsResponse extends Response {
+export declare interface ReportsResponse extends BaseResponse {
     payload: Array<Report> | [];
 }

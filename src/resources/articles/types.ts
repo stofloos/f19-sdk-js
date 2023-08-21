@@ -1,4 +1,5 @@
 import { Block, ChannelTag } from "../reports/types";
+import { BaseResponse } from "../../types";
 
 export declare type Article = {
     id: string;
@@ -18,10 +19,10 @@ export declare type Article = {
     summaryLevel: number;
 };
 
-export declare interface ArticlesResponse extends Response {
+export declare interface ArticlesResponse extends BaseResponse {
     payload: Array<Article> | [];
 }
 
-export declare interface ArticleResponse extends Response {
+export declare interface ArticleResponse extends BaseResponse {
     payload: Article;
 }

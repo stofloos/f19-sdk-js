@@ -2,6 +2,7 @@ import { Projects } from "./resources/projects/project";
 import type { Config } from "./types";
 import Websites from "./resources/websites/website";
 import Reports from "./resources/reports/report";
+import Articles from "./resources/articles/article";
 import Channel from "./resources/channel/channel";
 
 /**
@@ -12,16 +13,14 @@ import Channel from "./resources/channel/channel";
  * @property {Projects} projects
  * @property {Websites} websites
  * @property {Reports} reports
+ * @property {Articles} articles
+ * @property {Channel} items
  */
 export default class Client {
-    /**
-     * Client resources
-     * @property {Projects} projects
-     * @property {Websites} websites
-     */
     projects: Projects;
     websites: Websites;
     reports: Reports;
+    articles: Articles;
     channel: Channel;
 
     /**
@@ -43,6 +42,7 @@ export default class Client {
         this.projects = new Projects(config);
         this.websites = new Websites(config);
         this.reports = new Reports(config);
+        this.articles = new Articles(config);
         this.channel = new Channel(config);
     }
 }

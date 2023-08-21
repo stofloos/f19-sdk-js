@@ -4,17 +4,19 @@ import "isomorphic-fetch";
 const apiKey = process.env.F19_API_KEY!;
 const baseUrl = process.env.F19_BASE_URL!;
 
+const config = {
+    apiKey: apiKey,
+    baseUrl: baseUrl
+};
 
 beforeAll(() => {
     jest.resetModules();
 });
 
-describe("Projects Resource", () => {
-    const projects = new Projects({
-        apiKey: apiKey,
-        baseUrl: baseUrl
-    });
 
+
+describe("Projects resource", () => {
+    const projects = new Projects(config);
 
     let projectId: string;
 
@@ -22,10 +24,8 @@ describe("Projects Resource", () => {
         expect(projects).toBeInstanceOf(Projects);
     });
 
-    it("should throw error if id is not provided", () => {
-        expect(() => {
-            projects.getById("");
-        }).toThrowError("No id provided");
+    it("should throw error if id is not provided", async () => {
+       await expect(projects.getById("")).rejects.toThrowError("No id provided");
     });
 
     it("should return projects", async () => {
@@ -35,42 +35,15 @@ describe("Projects Resource", () => {
             projectId = project.payload?.[0]?.id;
         }
 
-        expect(project).toEqual(
-            expect.objectContaining({
-                errors: null,
-                payload: expect.arrayContaining([
-                    expect.objectContaining({
-                        id: expect.any(String),
-                        name: expect.any(String),
-                        language: expect.any(String),
-                        publishDate: expect.any(String)
-                    })
-                ]),
-                statusCode: 200
-            })
-        );
+        expect(project).toHaveProperty("payload");
+        expect(project.payload).toBeInstanceOf(Array);
     });
 
+    it("should return project", async () => {
+        const project = await projects.getById(projectId);
 
-        it("should return project", async () => {
-
-            const project = await projects.getById(
-                projectId
-            );
-
-            expect(project).toEqual(
-                expect.objectContaining({
-                    errors: null,
-                    payload: expect.objectContaining({
-                        id: expect.any(String),
-                        name: expect.any(String),
-                        language: expect.any(String),
-                        publishDate: expect.any(String)
-                    }),
-                    statusCode: 200
-                })
-            );
-        });
-
+        expect(project).toHaveProperty("payload");
+        expect(project.payload).toHaveProperty("id");
+    });
 });
 

@@ -2,6 +2,7 @@ import { Projects } from "./resources/projects/project";
 import type { Config } from "./types";
 import Websites from "./resources/websites/website";
 import Reports from "./resources/reports/report";
+import Channel from "./resources/channel/channel";
 
 /**
  * Client for interacting with the F19 API
@@ -12,7 +13,7 @@ import Reports from "./resources/reports/report";
  * @property {Websites} websites
  * @property {Reports} reports
  */
-export default class Client  {
+export default class Client {
     /**
      * Client resources
      * @property {Projects} projects
@@ -21,6 +22,7 @@ export default class Client  {
     projects: Projects;
     websites: Websites;
     reports: Reports;
+    channel: Channel;
 
     /**
      * Create a new instance of the client
@@ -30,7 +32,6 @@ export default class Client  {
      *
      */
     constructor(config: Config) {
-
         if (!config.apiKey) {
             throw new Error("API-key not configured");
         }
@@ -42,5 +43,6 @@ export default class Client  {
         this.projects = new Projects(config);
         this.websites = new Websites(config);
         this.reports = new Reports(config);
+        this.channel = new Channel(config);
     }
 }

@@ -52,24 +52,22 @@ describe("Websites resource", () => {
         }).toThrowError("No alias provided");
     });
 
-
-        it("should get a website by alias", async () => {
-            const websiteResponse = await websites.getByAlias(websiteAlias);
-            expect(websiteResponse).toEqual(
-                expect.objectContaining({
-                    nextNonce: expect.any(String),
-                    statusCode: 200,
-                    errors: null,
-                    payload: expect.objectContaining({
-                        id: expect.any(String),
-                        name: expect.any(String),
-                        alias: expect.any(String),
-                        routes: expect.any(Array)
-                    })
+    it("should get a website by alias", async () => {
+        const websiteResponse = await websites.getByAlias(websiteAlias);
+        expect(websiteResponse).toEqual(
+            expect.objectContaining({
+                nextNonce: expect.any(String),
+                statusCode: 200,
+                errors: null,
+                payload: expect.objectContaining({
+                    id: expect.any(String),
+                    name: expect.any(String),
+                    alias: expect.any(String),
+                    routes: expect.any(Array)
                 })
-            );
-        });
-
+            })
+        );
+    });
 
     // TODO: Fix getCurrent test
     it("throws error getting current website", async () => {

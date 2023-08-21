@@ -39,29 +39,30 @@ export abstract class Base {
      * Make a request to the API using fetch and return the serialized response
      * @param endpoint
      * @param options
-     * @returns {Promise<T>}
+     * @returns {Promise<Response>}
      */
-    async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
+    async request<T>(
+        endpoint: string,
+        options?: RequestInit
+    ): Promise<Response> {
         const url = `${this.baseUrl}${endpoint}`;
 
         if (!endpoint || endpoint === "") {
             throw new Error("Endpoint not found");
         }
 
-        const headers = {
-            "Content-Type": "application/json",
-            "X-API-Key": this.apiKey,
-            Orgin: this.baseUrl
-        };
-
         const response = await fetch(url, {
             ...options,
-            headers,
+            headers: {
+                "Content-Type": "application/json",
+                "X-API-Key": this.apiKey,
+                ...options?.headers
+            },
             mode: "no-cors"
         });
 
         if (response.ok) {
-            return response.json();
+            return response;
         }
         throw new Error(response.statusText);
     }

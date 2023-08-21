@@ -12,7 +12,7 @@ import Reports from "./resources/reports/report";
  * @property {Websites} websites
  * @property {Reports} reports
  */
-export default class Client  {
+export default class Client {
     /**
      * Client resources
      * @property {Projects} projects
@@ -30,7 +30,6 @@ export default class Client  {
      *
      */
     constructor(config: Config) {
-
         if (!config.apiKey) {
             throw new Error("API-key not configured");
         }

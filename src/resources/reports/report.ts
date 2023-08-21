@@ -12,21 +12,22 @@ import { ReportResponse, ReportsResponse } from "./types";
  *
  */
 export default class Reports extends Base {
-
-        /**
-        * Get a report by id
-        * @param id
-        * @returns {Promise<ReportResponse>}
-        */
-        getById(id: string): Promise<ReportResponse> {
-            if (!id || id === "") {
-                throw new Error("No id provided");
-            }
-
-            return this.request(`/cms/api/public/v1/report/id/${id}`, {
-                method: "GET"
-            });
+    /**
+     * Get a report by id
+     * @param id
+     * @returns {Promise<ReportResponse>}
+     */
+    async getById(id: string): Promise<ReportResponse> {
+        if (!id || id === "") {
+            throw new Error("No id provided");
         }
+
+        return this.request(`/cms/api/public/v1/report/id/${id}`, {
+            method: "GET"
+        }).then(response => {
+            return response.json();
+        });
+    }
 
     /**
      * Get all reports by project id
@@ -34,14 +35,15 @@ export default class Reports extends Base {
      * @returns {Promise<ReportResponse>}
      *
      */
-    getAllByProjectId(id: string): Promise<ReportsResponse> {
-            if (!id || id === "") {
-                throw new Error("No id provided");
-            }
-
-            return this.request(`/cms/api/public/v1/report/project/${id}`, {
-                method: "GET"
-            });
+    async getAllByProjectId(id: string): Promise<ReportsResponse> {
+        if (!id || id === "") {
+            throw new Error("No id provided");
         }
 
+        return this.request(`/cms/api/public/v1/report/project/${id}`, {
+            method: "GET"
+        }).then(response => {
+            return response.json();
+        });
+    }
 }

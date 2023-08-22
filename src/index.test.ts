@@ -1,9 +1,8 @@
 import Client from "./index";
 import "isomorphic-fetch";
-import Reports from "./resources/reports/report";
-import Projects from "./resources/projects/project";
-import Index from "./resources/channel/channel";
-import Channel from "./resources/channel/channel";
+import Reports from "./resources/reports";
+import Projects from "./resources/projects";
+import Channel from "./resources/channel";
 import Downloads from "./resources/downloads/downloads";
 
 const config = {
@@ -87,7 +86,7 @@ describe("Index instance", () => {
 
     it("should contain Channel instance", () => {
         expect(client).toHaveProperty("channel");
-        expect(client.channel).toBeInstanceOf(Index);
+        expect(client.channel).toBeInstanceOf(Channel);
         expect(client.channel).toHaveProperty("getAll");
     });
 

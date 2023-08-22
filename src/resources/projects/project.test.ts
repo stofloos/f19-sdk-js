@@ -1,4 +1,4 @@
-import Projects from "./project";
+import Projects from "./";
 import "isomorphic-fetch";
 
 const apiKey = process.env.F19_API_KEY!;

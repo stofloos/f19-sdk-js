@@ -1,5 +1,5 @@
-import Reports from "./report";
-import Projects from "../projects/project";
+import Reports from "./";
+import Projects from "../projects";
 import "isomorphic-fetch";
 
 const apiKey = process.env.F19_API_KEY!;

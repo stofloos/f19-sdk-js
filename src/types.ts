@@ -3,8 +3,16 @@ export declare type Config = {
     baseUrl: string; // Base url of the F19 instance to connect to.
 };
 
+
+export declare type Error = {
+    "message": "string",
+    "details": {
+        [key: string]: string | number | boolean;
+    }
+}
+
 export declare interface BaseResponse {
-    errors: null;
+    errors: Error;
     payload: any;
     statusCode: number;
 }

@@ -1,12 +1,13 @@
-import Projects from "./resources/projects/project";
+import Projects from "./resources/projects";
 import type { Config } from "./types";
-import Websites from "./resources/websites/website";
-import Reports from "./resources/reports/report";
-import Articles from "./resources/articles/article";
-import Charts from "./resources/charts/chart";
-import Assets from "./resources/assets/asset";
-import Channel from "./resources/channel/channel";
-import FacetNavigations from "./resources/facetNavigations/facetNavigation";
+import Websites from "./resources/websites";
+import Reports from "./resources/reports";
+import Articles from "./resources/articles";
+import Charts from "./resources/charts";
+import Assets from "./resources/assets";
+import Channel from "./resources/channel";
+import FacetNavigations from "./resources/facetNavigations";
+import Images from "./resources/images";
 
 /**
  * Client for interacting with the F19 API
@@ -17,10 +18,11 @@ import FacetNavigations from "./resources/facetNavigations/facetNavigation";
  * @property {Websites} websites
  * @property {Reports} reports
  * @property {Articles} articles
- * @property  {Assets} assets
+ * @property {Assets} assets
  * @property {Charts} charts
  * @property {Channel} items
  * @property {FacetNavigations} facetNavigations
+ * @property {Images} images
  */
 export default class Client {
     projects: Projects;
@@ -31,6 +33,7 @@ export default class Client {
     charts: Charts;
     channel: Channel;
     facetNavigations: FacetNavigations;
+    images: Images;
 
     /**
      * Create a new instance of the client
@@ -56,5 +59,6 @@ export default class Client {
         this.charts = new Charts(config);
         this.channel = new Channel(config);
         this.facetNavigations = new FacetNavigations(config);
+        this.images = new Images(config);
     }
 }

@@ -1,49 +1,4 @@
-import { BaseResponse } from "../../types";
-
-export declare type Event = {
-    message: string;
-    type: string;
-    category: string;
-    level: number;
-    tags: {
-        type: string;
-        key: string;
-        "project-alias": string;
-        "project-id": string;
-    };
-    channels: null;
-};
-
-export declare type ChannelTag = {
-    channel: string;
-    tags: {
-        content: {
-            url_internal: {
-                value: string;
-                type: string;
-                "project-id": string;
-                label: string;
-                title: string;
-                target: string | null;
-                anchor: string | null;
-            };
-        };
-        settings: {
-            page_layout_wide: string;
-        };
-        editclass: string;
-    };
-};
-
-export declare type Block = {
-    type: string;
-    id: string;
-    blocks: Array<Block> | [];
-    multiChannelResources: [];
-    multiChannelTags: Array<ChannelTag>;
-    text: null;
-    events: Array<Event>;
-};
+import { BaseResponse, Block } from "../../types";
 
 export declare type Route = {
     id: string;
@@ -62,16 +17,16 @@ export declare type Website = {
     routes: Array<Route> | [];
 };
 
-export declare interface WebsitesResponse extends BaseResponse{
+export declare interface WebsitesResponse extends BaseResponse {
     nextNonce: string;
     statusCode: number;
     errors: null;
     payload: Array<Website>;
-};
+}
 
 export declare interface WebsiteResponse extends BaseResponse {
     nextNonce: string;
     statusCode: number;
     errors: null;
     payload: Website | null;
-};
+}

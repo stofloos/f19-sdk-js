@@ -47,6 +47,5 @@ describe("FacetNavigations Resource", () => {
         expect(faceNavigationResponse.payload).toBeInstanceOf(Object);
         expect(faceNavigationResponse.payload).toHaveProperty("id");
         expect(faceNavigationResponse.payload.id).toEqual(facetNavigationId);
-
     });
 });

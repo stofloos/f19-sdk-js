@@ -11,10 +11,10 @@ export declare interface ProjectResponse extends BaseResponse {
     errors: null;
     payload: Project;
     statusCode: number;
-};
+}
 
-export declare interface ProjectsResponse  extends BaseResponse {
+export declare interface ProjectsResponse extends BaseResponse {
     errors: null;
     payload: Array<Project> | [];
     statusCode: number;
-};
+}

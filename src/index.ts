@@ -10,6 +10,7 @@ import FacetNavigations from "./resources/facetNavigations";
 import Images from "./resources/images";
 import Nonce from "./resources/nonce";
 import Tables from "./resources/tables";
+import Downloads from "./resources/downloads/downloads";
 import Tokens from "./resources/tokens";
 
 /**
@@ -28,6 +29,7 @@ import Tokens from "./resources/tokens";
  * @property {Images} images
  * @property {Nonce} nonce
  * @property {Tables} tables
+ * @property {Downloads} items
  * @property {Tokens} tokens
  * @throws Error
  */
@@ -43,6 +45,7 @@ export default class Client {
     images: Images;
     nonce: Nonce;
     tables: Tables;
+    downloads: Downloads;
     tokens: Tokens;
 
     /**
@@ -72,6 +75,7 @@ export default class Client {
         this.images = new Images(config);
         this.nonce = new Nonce(config);
         this.tables = new Tables(config);
+        this.downloads = new Downloads(config);
         this.tokens = new Tokens(config);
     }
 }

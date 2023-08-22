@@ -11,6 +11,7 @@ import Images from "./resources/images";
 import Nonce from "./resources/nonce";
 import Tables from "./resources/tables";
 import Downloads from "./resources/downloads/downloads";
+import Tokens from "./resources/tokens";
 
 /**
  * Client for interacting with the F19 API
@@ -29,6 +30,8 @@ import Downloads from "./resources/downloads/downloads";
  * @property {Nonce} nonce
  * @property {Tables} tables
  * @property {Downloads} items
+ * @property {Tokens} tokens
+ * @throws Error
  */
 export default class Client {
     projects: Projects;
@@ -43,6 +46,7 @@ export default class Client {
     nonce: Nonce;
     tables: Tables;
     downloads: Downloads;
+    tokens: Tokens;
 
     /**
      * Create a new instance of the client
@@ -72,5 +76,6 @@ export default class Client {
         this.nonce = new Nonce(config);
         this.tables = new Tables(config);
         this.downloads = new Downloads(config);
+        this.tokens = new Tokens(config);
     }
 }

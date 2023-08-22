@@ -10,6 +10,7 @@ import FacetNavigations from "./resources/facetNavigations";
 import Images from "./resources/images";
 import Nonce from "./resources/nonce";
 import Tables from "./resources/tables";
+import Downloads from "./resources/downloads/downloads";
 
 /**
  * Client for interacting with the F19 API
@@ -27,6 +28,7 @@ import Tables from "./resources/tables";
  * @property {Images} images
  * @property {Nonce} nonce
  * @property {Tables} tables
+ * @property {Downloads} items
  */
 export default class Client {
     projects: Projects;
@@ -40,6 +42,7 @@ export default class Client {
     images: Images;
     nonce: Nonce;
     tables: Tables;
+    downloads: Downloads;
 
     /**
      * Create a new instance of the client
@@ -68,5 +71,6 @@ export default class Client {
         this.images = new Images(config);
         this.nonce = new Nonce(config);
         this.tables = new Tables(config);
+        this.downloads = new Downloads(config);
     }
 }

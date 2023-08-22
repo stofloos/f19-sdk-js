@@ -2,7 +2,8 @@ import Client from "./index";
 import "isomorphic-fetch";
 import Reports from "./resources/reports";
 import Projects from "./resources/projects";
-import Index from "./resources/channel";
+import Channel from "./resources/channel";
+import Downloads from "./resources/downloads/downloads";
 
 const config = {
     apiKey: process.env.F19_API_KEY!,
@@ -85,7 +86,14 @@ describe("Index instance", () => {
 
     it("should contain Channel instance", () => {
         expect(client).toHaveProperty("channel");
-        expect(client.channel).toBeInstanceOf(Index);
+        expect(client.channel).toBeInstanceOf(Channel);
         expect(client.channel).toHaveProperty("getAll");
+    });
+
+    it("should contain Downloads instance", () => {
+        expect(client).toHaveProperty("downloads");
+        expect(client.downloads).toBeInstanceOf(Downloads);
+        expect(client.downloads).toHaveProperty("getById");
+        expect(client.downloads).toHaveProperty("getAllByProjectId");
     });
 });

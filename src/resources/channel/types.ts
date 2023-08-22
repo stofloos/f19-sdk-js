@@ -1,4 +1,6 @@
-export declare interface ChannelResponse extends Response {
+import { BaseResponse } from "../../types";
+
+export declare interface ChannelResponse extends BaseResponse {
     nextNonce: string;
     statusCode: number;
     errors: null;

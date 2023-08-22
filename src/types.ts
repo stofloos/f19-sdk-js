@@ -3,7 +3,7 @@ export declare type Config = {
     baseUrl: string; // Base url of the F19 instance to connect to.
 };
 
-interface Response {
+export declare interface BaseResponse {
     errors: null;
     payload: any;
     statusCode: number;

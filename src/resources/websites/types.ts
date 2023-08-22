@@ -1,3 +1,5 @@
+import { BaseResponse } from "../../types";
+
 export declare type Event = {
     message: string;
     type: string;
@@ -60,14 +62,14 @@ export declare type Website = {
     routes: Array<Route> | [];
 };
 
-export declare type WebsitesResponse = {
+export declare interface WebsitesResponse extends BaseResponse{
     nextNonce: string;
     statusCode: number;
     errors: null;
     payload: Array<Website>;
 };
 
-export declare type WebsiteResponse = {
+export declare interface WebsiteResponse extends BaseResponse {
     nextNonce: string;
     statusCode: number;
     errors: null;

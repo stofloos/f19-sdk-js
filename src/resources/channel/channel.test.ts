@@ -1,4 +1,4 @@
-import Index from "./channel";
+import Index from "./";
 import "isomorphic-fetch";
 
 const apiKey = process.env.F19_API_KEY!;

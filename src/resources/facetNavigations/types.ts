@@ -16,9 +16,9 @@ export declare type FacetNavigation = {
 };
 
 export declare interface FacetNavigationsResponse extends BaseResponse {
-    payload: FacetNavigation[];
+    payload: Array<FacetNavigation> | [];
 }
 
 export declare interface FacetNavigationResponse extends BaseResponse {
-    payload: FacetNavigation;
+    payload: FacetNavigation | null;
 }

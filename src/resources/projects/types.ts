@@ -8,13 +8,9 @@ export declare type Project = {
 };
 
 export declare interface ProjectResponse extends BaseResponse {
-    errors: null;
-    payload: Project;
-    statusCode: number;
+    payload: Project | null;
 }
 
 export declare interface ProjectsResponse extends BaseResponse {
-    errors: null;
     payload: Array<Project> | [];
-    statusCode: number;
 }

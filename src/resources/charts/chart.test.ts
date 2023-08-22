@@ -1,6 +1,6 @@
-import Charts from "./chart";
+import Charts from "./";
 import "isomorphic-fetch";
-import Projects from "../projects/project";
+import Projects from "../projects";
 
 const config = {
     apiKey: process.env.F19_API_KEY!,

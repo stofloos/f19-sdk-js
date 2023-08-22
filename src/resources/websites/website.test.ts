@@ -1,8 +1,4 @@
-// Generate tests for a websites resource
-// Path: src/resources/websites/website.test.ts
-// Compare this snippet from src/resources/websites/website.ts:
-
-import Websites from "./website";
+import Websites from "./";
 import "isomorphic-fetch";
 
 const apiKey = process.env.F19_API_KEY!;

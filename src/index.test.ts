@@ -1,8 +1,8 @@
 import Client from "./index";
 import "isomorphic-fetch";
-import Reports from "./resources/reports/report";
-import Projects from "./resources/projects/project";
-import Index from "./resources/channel/channel";
+import Reports from "./resources/reports";
+import Projects from "./resources/projects";
+import Index from "./resources/channel";
 
 const config = {
     apiKey: process.env.F19_API_KEY!,

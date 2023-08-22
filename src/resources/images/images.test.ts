@@ -1,6 +1,6 @@
 import "isomorphic-fetch";
-import { Images } from "./index";
-import Projects from "../projects/project";
+import Images from "./";
+import Projects from "../projects";
 import { Config } from "../../types";
 
 const config: Config = {
@@ -33,7 +33,7 @@ describe("Images resource", () => {
         // Get all images for the project
         const imagesResponse = await imagesResource.getAll(projectId);
 
-        imageId = imagesResponse.payload[0].id;
+        imageId = imagesResponse?.payload?.[0] && imagesResponse.payload[0]?.id;
 
         expect(imagesResponse).toHaveProperty("payload");
     });
@@ -48,6 +48,9 @@ describe("Images resource", () => {
         const imageResponse = await imagesResource.getById(imageId);
         expect(imageResponse).toHaveProperty("payload");
         expect(imageResponse.payload).toHaveProperty("id");
-        expect(imageResponse.payload.id).toEqual(imageId);
+
+        if (imageResponse?.payload && imageResponse.payload.id) {
+            expect(imageResponse.payload.id).toEqual(imageId);
+        }
     });
 });

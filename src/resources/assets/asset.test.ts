@@ -1,6 +1,6 @@
-import Assets from "./asset";
-import Projects from "../projects/project";
-import Reports from "../reports/report";
+import Assets from "./";
+import Projects from "../projects";
+import Reports from "../reports";
 import "isomorphic-fetch";
 
 const config = {

@@ -1,4 +1,4 @@
-import { Block, ChannelTag } from "../reports/types";
+import { Block, ChannelTag } from "../../types";
 import { BaseResponse } from "../../types";
 
 export declare type Article = {
@@ -24,5 +24,5 @@ export declare interface ArticlesResponse extends BaseResponse {
 }
 
 export declare interface ArticleResponse extends BaseResponse {
-    payload: Article;
+    payload: Article | null;
 }

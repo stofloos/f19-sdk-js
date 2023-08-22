@@ -18,15 +18,9 @@ export declare type Website = {
 };
 
 export declare interface WebsitesResponse extends BaseResponse {
-    nextNonce: string;
-    statusCode: number;
-    errors: null;
-    payload: Array<Website>;
+    payload: Array<Website> | [];
 }
 
 export declare interface WebsiteResponse extends BaseResponse {
-    nextNonce: string;
-    statusCode: number;
-    errors: null;
     payload: Website | null;
 }

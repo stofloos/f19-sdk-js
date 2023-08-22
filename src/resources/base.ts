@@ -11,28 +11,27 @@ import type { Config } from "../types";
  * @property {string} baseUrl
  * @method request
  * */
-export abstract class Base {
+export default abstract class Base {
     readonly apiKey: string;
     readonly baseUrl: string;
 
     /**
      * Create a new instance of the base class
-     * @param apiKey
-     * @param baseUrl
+     * @param {Config} config
      * @throws Error
      * @constructor Base
      */
-    constructor({ apiKey, baseUrl }: Config) {
-        if (!apiKey || apiKey === "") {
+    constructor(config: Config) {
+        if (!config.apiKey || config.apiKey === "") {
             throw new Error("Api key not configured");
         }
 
-        if (!baseUrl || baseUrl === "") {
+        if (!config.baseUrl || config.baseUrl === "") {
             throw new Error("Base URL not configured");
         }
 
-        this.apiKey = apiKey;
-        this.baseUrl = baseUrl;
+        this.apiKey = config.apiKey;
+        this.baseUrl = config.baseUrl;
     }
 
     /**

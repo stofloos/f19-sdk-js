@@ -1,4 +1,4 @@
-import { Base } from "../base";
+import Base from "../base";
 
 /**
  * Assets resource
@@ -58,26 +58,19 @@ export default class Assets extends Base {
     }
 
     /**
-     * Get asset blob by name
+     * Get asset blob by token
      * @param token
-     * @returns {Promise<string>}
+     * @returns {Promise<Blob>}
      */
-    async getAssetBlobByToken(token: string): Promise<string> {
+    async getBlobByToken(token: string): Promise<Blob> {
         if (!token || token === "") {
             throw new Error("No token provided");
         }
 
-        return this.request(
-            `GET /cms/api/public/v1/assets/blob/ticket/${token}`,
-            {
-                method: "GET"
-            }
-        )
-            .then(response => {
-                return response.blob();
-            })
-            .then(blob => {
-                return URL.createObjectURL(blob);
-            });
+        return this.request(`/cms/api/public/v1/assets/blob/ticket/${token}`, {
+            method: "GET"
+        }).then(response => {
+            return response.blob();
+        });
     }
 }

@@ -1,3 +1,5 @@
+import { BaseResponse } from "../../types";
+
 export declare type Project = {
     id: string;
     name: string;
@@ -5,14 +7,14 @@ export declare type Project = {
     publishDate: string;
 };
 
-export declare type ProjectResponse = {
+export declare interface ProjectResponse extends BaseResponse {
     errors: null;
     payload: Project;
     statusCode: number;
-};
+}
 
-export declare type ProjectsResponse = {
+export declare interface ProjectsResponse extends BaseResponse {
     errors: null;
     payload: Array<Project> | [];
     statusCode: number;
-};
+}

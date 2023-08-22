@@ -1,7 +1,7 @@
-import { Base } from "../base";
+import Base from "../base";
 import { ChannelResponse } from "./types";
 
-export default class Channel extends Base {
+export default class Index extends Base {
     /**
      * Get all channels
      * @returns {Promise<ChannelResponse>}

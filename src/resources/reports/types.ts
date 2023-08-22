@@ -1,32 +1,4 @@
-export declare type Event =  {
-    message: string;
-    type: string;
-    category: string;
-    level: string;
-    tags: {
-        [key: string]: string | number | boolean;
-    };
-    channels: Array<string> | [];
-};
-
-export declare type ChannelResource = {};
-
-export declare type Block = {
-    multiChannelTags: Array<ChannelTag>;
-    blocks: Array<Block>;
-    text: string;
-    id: string;
-    type: string;
-    multiChannelResources: Array<ChannelResource>;
-    events: Array<Event>;
-};
-
-export declare type ChannelTag = {
-    channel: string;
-    tags: {
-        [key: string]: string | number | boolean;
-    };
-};
+import { BaseResponse, Block, ChannelResource, ChannelTag } from "../../types";
 
 export declare type Component = {
     id: string;
@@ -62,10 +34,10 @@ export declare type Report = {
     articleIds: Array<string>[];
 };
 
-export declare interface ReportResponse extends Response {
+export declare interface ReportResponse extends BaseResponse {
     payload: Report;
 }
 
-export declare interface ReportsResponse extends Response {
+export declare interface ReportsResponse extends BaseResponse {
     payload: Array<Report> | [];
 }

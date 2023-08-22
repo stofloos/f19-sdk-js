@@ -1,5 +1,5 @@
 import Articles from "./article";
-import { Projects } from "../projects/project";
+import Projects from "../projects/project";
 import "isomorphic-fetch";
 
 const config = {
@@ -15,7 +15,9 @@ describe("Articles resource", () => {
     });
 
     it("should throw error if project id is not provided", async () => {
-        await expect( articles.getAllByProjectId("")).rejects.toThrowError("Project id not provided");
+        await expect(articles.getAllByProjectId("")).rejects.toThrowError(
+            "Project id not provided"
+        );
     });
 
     it("should throw error if invalid project id is provided", async () => {

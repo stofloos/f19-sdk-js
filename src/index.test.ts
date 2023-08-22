@@ -1,7 +1,8 @@
 import Client from "./index";
 import "isomorphic-fetch";
 import Reports from "./resources/reports/report";
-import { Projects } from "./resources/projects/project";
+import Projects from "./resources/projects/project";
+import Index from "./resources/channel/channel";
 import Channel from "./resources/channel/channel";
 import Downloads from "./resources/downloads/downloads";
 
@@ -71,9 +72,22 @@ describe("Index instance", () => {
         expect(client.articles).toHaveProperty("getById");
     });
 
+    it("should contain Assets instance", () => {
+        expect(client).toHaveProperty("assets");
+        expect(client.assets).toHaveProperty("getImageByName");
+        expect(client.assets).toHaveProperty("getDownloadByName");
+        expect(client.assets).toHaveProperty("getBlobByToken");
+    });
+
+    it("should contain Charts instance", () => {
+        expect(client).toHaveProperty("charts");
+        expect(client.charts).toHaveProperty("getAll");
+        expect(client.charts).toHaveProperty("getById");
+    });
+
     it("should contain Channel instance", () => {
         expect(client).toHaveProperty("channel");
-        expect(client.channel).toBeInstanceOf(Channel);
+        expect(client.channel).toBeInstanceOf(Index);
         expect(client.channel).toHaveProperty("getAll");
     });
 

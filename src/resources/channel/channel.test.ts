@@ -1,4 +1,4 @@
-import Channel from "./channel";
+import Index from "./channel";
 import "isomorphic-fetch";
 
 const apiKey = process.env.F19_API_KEY!;
@@ -9,13 +9,13 @@ beforeAll(() => {
 });
 
 describe("Channel Resource", () => {
-    const getChannel = new Channel({
+    const getChannel = new Index({
         apiKey: apiKey,
         baseUrl: baseUrl
     });
 
     it("should be instance of Channel", () => {
-        expect(getChannel).toBeInstanceOf(Channel);
+        expect(getChannel).toBeInstanceOf(Index);
     });
 
     it("should return channel", async () => {

@@ -1,7 +1,7 @@
-import { Base } from "../base";
+import Base from "../base";
 import { ProjectResponse, ProjectsResponse } from "./types";
 
-export class Projects extends Base {
+export default class Projects extends Base {
     /**
      * Get all projects
      * @returns {Promise<ProjectsResponse>}

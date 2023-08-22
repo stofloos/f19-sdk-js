@@ -1,5 +1,5 @@
 import Assets from "./asset";
-import { Projects } from "../projects/project";
+import Projects from "../projects/project";
 import Reports from "../reports/report";
 import "isomorphic-fetch";
 
@@ -50,10 +50,14 @@ describe("Asset Resource", () => {
     });
 
     it("should throw error if asset name is not provided", async () => {
-       await expect( assets.getImageByName("123", "")).rejects.toThrowError("No asset name provided");
+        await expect(assets.getImageByName("123", "")).rejects.toThrowError(
+            "No asset name provided"
+        );
     });
 
     it("should throw error if no token is provided", async () => {
-      await  expect( assets.getAssetBlobByToken("")).rejects.toThrowError("No token provided");
+        await expect(assets.getBlobByToken("")).rejects.toThrowError(
+            "No token provided"
+        );
     });
 });

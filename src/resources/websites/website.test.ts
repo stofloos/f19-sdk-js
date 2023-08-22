@@ -36,7 +36,9 @@ describe("Websites resource", () => {
     });
 
     it("should throw error if alias is not provided", async () => {
-       await expect(websites.getByAlias("")).rejects.toThrowError("No alias provided");
+        await expect(websites.getByAlias("")).rejects.toThrowError(
+            "No alias provided"
+        );
     });
 
     it("should get a website by alias", async () => {
@@ -47,12 +49,12 @@ describe("Websites resource", () => {
                 statusCode: 200,
                 errors: null,
                 payload: expect.objectContaining({
-                    id: expect.any(String),
+                    id: expect.any(String)
                 })
             })
         );
         expect(websiteResponse?.payload).toHaveProperty("alias");
-        expect(websiteResponse?.payload?.alias).toEqual(websiteAlias)
+        expect(websiteResponse?.payload?.alias).toEqual(websiteAlias);
     });
 
     // TODO: Fix getCurrent test

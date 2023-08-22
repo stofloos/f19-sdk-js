@@ -17,16 +17,16 @@ export declare type Website = {
     routes: Array<Route> | [];
 };
 
-export declare interface WebsitesResponse extends BaseResponse{
+export declare interface WebsitesResponse extends BaseResponse {
     nextNonce: string;
     statusCode: number;
     errors: null;
     payload: Array<Website>;
-};
+}
 
 export declare interface WebsiteResponse extends BaseResponse {
     nextNonce: string;
     statusCode: number;
     errors: null;
     payload: Website | null;
-};
+}

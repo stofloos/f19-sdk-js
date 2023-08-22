@@ -18,7 +18,7 @@ import Images from "./resources/images";
  * @property {Websites} websites
  * @property {Reports} reports
  * @property {Articles} articles
- * @property  {Assets} assets
+ * @property {Assets} assets
  * @property {Charts} charts
  * @property {Channel} items
  * @property {FacetNavigations} facetNavigations

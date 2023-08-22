@@ -1,12 +1,11 @@
-import "isomorphic-fetch"
-import Nonce from "./index";
+import "isomorphic-fetch";
+import Nonce from "./";
 import { Config } from "../../types";
 
 const config: Config = {
     apiKey: process.env.F19_API_KEY!,
     baseUrl: process.env.F19_BASE_URL!
 };
-
 
 describe("Nonce resource", () => {
     const nonceResource = new Nonce(config);
@@ -16,4 +15,4 @@ describe("Nonce resource", () => {
         expect(nonce).toHaveProperty("payload");
         expect(nonce.payload).toEqual(expect.any(String));
     });
-})
+});

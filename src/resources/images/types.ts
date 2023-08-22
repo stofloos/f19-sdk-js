@@ -1,4 +1,4 @@
-import { Block, ChannelResource, ChannelTag } from "../reports/types";
+import { Block, ChannelResource, ChannelTag } from "../../types";
 import { BaseResponse } from "../../types";
 
 export declare type Image = {
@@ -12,8 +12,8 @@ export declare type Image = {
 };
 
 export declare interface ImagesResponse extends BaseResponse {
-    payload: Array<Image>;
+    payload: Array<Image> | [];
 }
 export declare interface ImageResponse extends BaseResponse {
-    payload: Image;
+    payload: Image | null;
 }

@@ -35,7 +35,7 @@ export declare type Report = {
 };
 
 export declare interface ReportResponse extends BaseResponse {
-    payload: Report;
+    payload: Report | null;
 }
 
 export declare interface ReportsResponse extends BaseResponse {

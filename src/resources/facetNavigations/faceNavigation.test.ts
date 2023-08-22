@@ -1,5 +1,5 @@
-import FacetNavigations from "./facetNavigation";
-import Projects from "../projects/project";
+import FacetNavigations from "../facetNavigations";
+import Projects from "../projects";
 import "isomorphic-fetch";
 
 const config = {
@@ -26,7 +26,9 @@ describe("FacetNavigations Resource", () => {
         const projectsResource = new Projects(config);
         const projectsResponse = await projectsResource.getAll();
 
-        const projectId = projectsResponse?.payload?.[0]?.id;
+        const projectId =
+            projectsResponse?.payload?.[0] &&
+            projectsResponse?.payload?.[0]?.id;
 
         const facetNavigationsResponse = await facetNavigations.getAll(
             projectId
@@ -46,6 +48,14 @@ describe("FacetNavigations Resource", () => {
         expect(faceNavigationResponse).toHaveProperty("payload");
         expect(faceNavigationResponse.payload).toBeInstanceOf(Object);
         expect(faceNavigationResponse.payload).toHaveProperty("id");
-        expect(faceNavigationResponse.payload.id).toEqual(facetNavigationId);
+
+        if (
+            faceNavigationResponse?.payload &&
+            faceNavigationResponse.payload.id
+        ) {
+            expect(faceNavigationResponse.payload.id).toEqual(
+                facetNavigationId
+            );
+        }
     });
 });

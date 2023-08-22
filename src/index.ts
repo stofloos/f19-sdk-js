@@ -39,7 +39,7 @@ export default class Client {
     facetNavigations: FacetNavigations;
     images: Images;
     nonce: Nonce;
-    tables: Tables
+    tables: Tables;
 
     /**
      * Create a new instance of the client

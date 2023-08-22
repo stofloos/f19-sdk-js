@@ -1,4 +1,4 @@
-import { Block, ChannelResource, ChannelTag } from "../reports/types";
+import { Block, ChannelResource, ChannelTag } from "../../types";
 import { BaseResponse } from "../../types";
 
 export type Chart = {
@@ -12,9 +12,9 @@ export type Chart = {
 };
 
 export declare interface ChartResponse extends BaseResponse {
-    payload: Chart;
+    payload: Chart | null;
 }
 
 export declare interface ChartsResponse extends BaseResponse {
-    payload: Array<Chart>;
+    payload: Array<Chart> | [];
 }

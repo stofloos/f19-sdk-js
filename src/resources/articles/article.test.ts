@@ -1,5 +1,5 @@
-import Articles from "./article";
-import Projects from "../projects/project";
+import Articles from "./";
+import Projects from "../projects";
 import "isomorphic-fetch";
 
 const config = {

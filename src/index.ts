@@ -4,6 +4,7 @@ import Websites from "./resources/websites/website";
 import Reports from "./resources/reports/report";
 import Articles from "./resources/articles/article";
 import Channel from "./resources/channel/channel";
+import Downloads from "./resources/downloads/downloads";
 
 /**
  * Client for interacting with the F19 API
@@ -15,6 +16,7 @@ import Channel from "./resources/channel/channel";
  * @property {Reports} reports
  * @property {Articles} articles
  * @property {Channel} items
+ * @property {Downloads} items
  */
 export default class Client {
     projects: Projects;
@@ -22,6 +24,7 @@ export default class Client {
     reports: Reports;
     articles: Articles;
     channel: Channel;
+    downloads: Downloads;
 
     /**
      * Create a new instance of the client
@@ -44,5 +47,6 @@ export default class Client {
         this.reports = new Reports(config);
         this.articles = new Articles(config);
         this.channel = new Channel(config);
+        this.downloads = new Downloads(config);
     }
 }

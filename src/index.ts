@@ -1,12 +1,12 @@
-import Projects from "./resources/projects/project";
+import Projects from "./resources/projects";
 import type { Config } from "./types";
-import Websites from "./resources/websites/website";
-import Reports from "./resources/reports/report";
-import Articles from "./resources/articles/article";
-import Charts from "./resources/charts/chart";
-import Assets from "./resources/assets/asset";
-import Channel from "./resources/channel/channel";
-import FacetNavigations from "./resources/facetNavigations/facetNavigation";
+import Websites from "./resources/websites";
+import Reports from "./resources/reports";
+import Articles from "./resources/articles";
+import Charts from "./resources/charts";
+import Assets from "./resources/assets";
+import Channel from "./resources/channel";
+import FacetNavigations from "./resources/facetNavigations";
 import Images from "./resources/images";
 
 /**

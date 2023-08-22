@@ -8,6 +8,7 @@ import Assets from "./resources/assets";
 import Channel from "./resources/channel";
 import FacetNavigations from "./resources/facetNavigations";
 import Images from "./resources/images";
+import Nonce from "./resources/nonce";
 
 /**
  * Client for interacting with the F19 API
@@ -23,6 +24,7 @@ import Images from "./resources/images";
  * @property {Channel} items
  * @property {FacetNavigations} facetNavigations
  * @property {Images} images
+ * @property {Nonce} nonce
  */
 export default class Client {
     projects: Projects;
@@ -34,6 +36,7 @@ export default class Client {
     channel: Channel;
     facetNavigations: FacetNavigations;
     images: Images;
+    nonce: Nonce;
 
     /**
      * Create a new instance of the client
@@ -60,5 +63,6 @@ export default class Client {
         this.channel = new Channel(config);
         this.facetNavigations = new FacetNavigations(config);
         this.images = new Images(config);
+        this.nonce = new Nonce(config);
     }
 }

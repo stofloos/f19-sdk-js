@@ -25,7 +25,6 @@ describe("Tokens resource", () => {
         );
     });
 
-
     // TODO: Fix token tests by providing a valid authorization token.
     it.skip("should get a personal token", async () => {
         const tokenResponse = await tokensResource.getPersonal("test");

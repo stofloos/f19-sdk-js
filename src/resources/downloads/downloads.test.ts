@@ -1,6 +1,6 @@
 import Downloads from "./downloads";
 import "isomorphic-fetch";
-import { Projects } from "../projects/project";
+import Projects from "../projects";
 
 const apiKey = process.env.F19_API_KEY!;
 const baseUrl = process.env.F19_BASE_URL!;

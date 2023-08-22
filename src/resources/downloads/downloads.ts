@@ -1,4 +1,4 @@
-import { Base } from "../base";
+import Base from "../base";
 import { DownloadResponse, DownloadsFromProjectResponse } from "./types";
 
 export default class Downloads extends Base {

@@ -1,0 +1,68 @@
+import type { Config } from "../types";
+
+/**
+ * Base class for all resources
+ * @class Base
+ * @abstract
+ * @throws Error
+ * @constructor Base
+ * @param {Config} config
+ * @property {string} apiKey
+ * @property {string} baseUrl
+ * @method request
+ * */
+export default abstract class Base {
+    readonly apiKey: string;
+    readonly baseUrl: string;
+
+    /**
+     * Create a new instance of the base class
+     * @param {Config} config
+     * @throws Error
+     * @constructor Base
+     */
+    constructor(config: Config) {
+        if (!config.apiKey || config.apiKey === "") {
+            throw new Error("Api key not configured");
+        }
+
+        if (!config.baseUrl || config.baseUrl === "") {
+            throw new Error("Base URL not configured");
+        }
+
+        this.apiKey = config.apiKey;
+        this.baseUrl = config.baseUrl;
+    }
+
+    /**
+     * Make a request to the API using fetch and return the serialized response
+     * @param endpoint
+     * @param options
+     * @returns {Promise<Response>}
+     */
+    async request<T>(
+        endpoint: string,
+        options?: RequestInit
+    ): Promise<Response> {
+        const url = `${this.baseUrl}${endpoint}`;
+
+        if (!endpoint || endpoint === "") {
+            throw new Error("Endpoint not found");
+        }
+
+        const response = await fetch(url, {
+            ...options,
+            headers: {
+                "Content-Type": "application/json",
+                "X-API-Key": this.apiKey,
+                ...options?.headers
+            },
+            mode: "no-cors"
+        });
+
+        if (response.ok) {
+            return response;
+        }
+        throw new Error(response.statusText);
+    }
+}

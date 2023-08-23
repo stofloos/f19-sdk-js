@@ -1,0 +1,60 @@
+import Websites from "./";
+import "isomorphic-fetch";
+
+const apiKey = process.env.F19_API_KEY!;
+const baseUrl = process.env.F19_BASE_URL!;
+
+const config = {
+    apiKey,
+    baseUrl
+};
+
+beforeAll(() => {
+    jest.resetModules();
+});
+
+describe("Websites resource", () => {
+    const websites = new Websites(config);
+
+    let websiteAlias: string;
+
+    it("should be instance of Websites", () => {
+        expect(websites).toBeInstanceOf(Websites);
+    });
+
+    it("should get all websites", async () => {
+        const websitesResponse = await websites.getAll();
+
+        websiteAlias = websitesResponse?.payload?.[0]?.alias;
+
+        expect(websitesResponse).toHaveProperty("payload");
+        expect(websitesResponse.payload).toBeInstanceOf(Array);
+    });
+
+    it("should throw error if alias is not provided", async () => {
+        await expect(websites.getByAlias("")).rejects.toThrowError(
+            "No alias provided"
+        );
+    });
+
+    it("should get a website by alias", async () => {
+        const websiteResponse = await websites.getByAlias(websiteAlias);
+        expect(websiteResponse).toEqual(
+            expect.objectContaining({
+                nextNonce: expect.any(String),
+                statusCode: 200,
+                errors: null,
+                payload: expect.objectContaining({
+                    id: expect.any(String)
+                })
+            })
+        );
+        expect(websiteResponse?.payload).toHaveProperty("alias");
+        expect(websiteResponse?.payload?.alias).toEqual(websiteAlias);
+    });
+
+    // TODO: Fix getCurrent test
+    it("throws error getting current website", async () => {
+        await expect(websites.getCurrent()).rejects.toThrowError("Not Found");
+    });
+});

@@ -96,10 +96,11 @@ Please read our [coding guidelines](https://graciousstudios.atlassian.net/wiki/s
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://git.gracious.nl/[group]/[repository]/tags).
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/Happy-Horizon/f19-sdk-js/tags).
 
 ## Authors
 
 * **Yuraymar Stewart** - *Initial work* - [ywtstewart](https://github.com/ywtstewart)
+* **Jim van der Veen** - *Initial work* - [jimvandeven](
 
-See also the list of [contributors](<https://git.gracious.nl/f19/f19-sdk-js/graphs/[default> branch]) who participated in this project.
+See also the list of [contributors](https://github.com/Happy-Horizon/f19-sdk-js/graphs/contributors) who participated in this project.

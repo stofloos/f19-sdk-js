@@ -12,7 +12,7 @@ Javascript SDK for the F19 digital reporting platform.
 A step by step series of examples that tell you how to get a development env running
 
 ```bash
-npm install f19-sdk-js
+npm install @happy-horizon/f19-sdk-js
 ```
 
 
@@ -21,7 +21,7 @@ npm install f19-sdk-js
 Create a new folder in root called "lib" and add a file called "f19.js" with the following content:
 
 ```javascript
-import F19 from 'f19-sdk-js';
+import F19 from '@happy-horizon/f19-sdk-js';
 
 const client = new F19({
     apiKey: "[F19_API_KEY]",
@@ -31,7 +31,7 @@ const client = new F19({
 or
 
 ```javascript
-const F19 = require('f19-sdk-js');
+const F19 = require('@happy-horizon/f19-sdk-js');
 
 const client = new F19({
     apiKey: "[F19_API_KEY]",

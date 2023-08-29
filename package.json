@@ -52,6 +52,10 @@
         }
     },
     "lint-staged": {
-        "*": "npm test"
+        "*.{js,jsx,ts,tsx}": [
+            "npm test",
+            "prettier --write",
+            "eslint --fix"
+        ]
     }
 }

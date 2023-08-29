@@ -7,7 +7,7 @@ Javascript SDK for the F19 digital reporting platform.
 
 ## How to install
 
-### Installing (TODO: Add to npm registry and update this section)
+### Installing
 
 A step by step series of examples that tell you how to get a development env running
 

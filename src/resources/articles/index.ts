@@ -39,7 +39,7 @@ export default class Articles extends Base {
      */
     async getById(articleId: string): Promise<ArticleResponse> {
         if (!articleId || articleId === "") {
-                throw new Error("Article id not provided");
+            throw new Error("Article id not provided");
         }
 
         return this.request(`/cms/api/public/v1/article/${articleId}`, {

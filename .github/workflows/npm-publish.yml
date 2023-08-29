@@ -7,6 +7,9 @@ on:
         types: [published]
 jobs:
     build:
+        env:
+            F19_BASE_URL: ${{vars.F19_BASE_URL}}
+            F19_API_KEY: ${{vars.F19_API_KEY}}
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3

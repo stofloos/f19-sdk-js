@@ -5,41 +5,23 @@ Javascript SDK for the F19 digital reporting platform.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+## How to install
 
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```text
-- Node.JS
-- Typescript
-```
-
-### Installing (TODO)
+### Installing (TODO: Add to npm registry and update this section)
 
 A step by step series of examples that tell you how to get a development env running
 
 ```bash
-npm install 
+npm install @happy-horizon/f19-sdk-js
 ```
 
-or
 
-```bash
-yarn
-```
+## Usage 
 
-or
-
-```bash
-pnpm i
-```
-
-## Usage (TODO)
+Create a new folder in root called "lib" and add a file called "f19.js" with the following content:
 
 ```javascript
-import F19 from 'f19-sdk-js';
+import F19 from '@happy-horizon/f19-sdk-js';
 
 const client = new F19({
     apiKey: "[F19_API_KEY]",
@@ -49,7 +31,7 @@ const client = new F19({
 or
 
 ```javascript
-const F19 = require('f19-sdk-js');
+const F19 = require('@happy-horizon/f19-sdk-js');
 
 const client = new F19({
     apiKey: "[F19_API_KEY]",
@@ -57,49 +39,52 @@ const client = new F19({
 })
 ```
 
-## Running the tests (TODO)
+## Available methods
 
-Explain how to run the automated tests for this system
+| Grouping         | Method Name       | Parameters                                  |
+|------------------|-------------------|---------------------------------------------|
+| articles         | getAllByProjectId | projectId: string                           |
+|                  | getById           | articleId: string                           |
+| assets           | getImageByName    | projectId: string, name: string             |
+|                  | getDownloadByName | projectId: string, name: string             |
+|                  | getBlobByToken    | token: string                               |
+| channel          | getAll            |                                             |
+| charts           | getAll            | projectId: string                           |
+|                  | getById           | chartId: string                             |
+| downloads        | getById           | id: string                                  |
+|                  | getAllByProjectId | projectId: string                           |
+| facetNavigations | getAll            | projectId: string                           |
+|                  | getById           | facetId: string                             |
+| images           | getAll            | projectId: string                           |
+|                  | getById           | imageId: string                             |
+| nonce            | getNonce          |                                             |
+| projects         | getAll            |                                             |
+|                  | getById           | id: string                                  |
+| reports          | getById           | id: string                                  |
+|                  | getAllByProjectId | id: string                                  |
+| tables           | getAll            | projectId: string                           |
+|                  | getById           | tableId: string                             |
+| tokens           | tokenRequest      | url: string, authorizationToken: string     |
+|                  | getPersonal       | authorizationToken: string                  |
+|                  | getAnonymous      | authorizationToken: string                  |
+| websites         | getAll            |                                             |
+|                  | getByAlias        | alias: string                               |
+|                  | getCurrent        |                                             |
 
-### Break down into end to end tests
+### Example usage
 
-Explain what these tests test and why 
+```javascript
+// Define the projectId (you would replace this with your actual project ID)
+const projectId = "your_project_id_here";
 
-```text
-Give an example
+// Call the getAllByProjectId method
+client.article.getAllByProjectId(projectId)
+    .then((result) => {
+        // Handle the result here
+        console.log("Result:", result);
+    })
+    .catch((error) => {
+        // Handle any errors that occur
+        console.error("Error:", error);
+    });
 ```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```text
-Give an example
-```
-
-## Scripts
-
-| Command                                           | Description                            |
-|---------------------------------------------------|----------------------------------------|
-| `npm run build` or `yarn build`                   | Compile typescript into javascript     |
-| `npm run prettier:write` or `yarn prettier:write` | Format all files that match RegEx      |
-| `npm run prettier:check` or `yarn prettier:check` | Check if files are formatted correctly |
-
-
-## Built With
-
-* [Typescript](https://www.typescriptlang.org/docs/) - The programming language used
-
-## Contributing
-
-Please read our [coding guidelines](https://graciousstudios.atlassian.net/wiki/spaces/GS/pages/374734849/Development) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://git.gracious.nl/[group]/[repository]/tags).
-
-## Authors
-
-* **Yuraymar Stewart** - *Initial work* - [ywtstewart](https://github.com/ywtstewart)
-
-See also the list of [contributors](<https://git.gracious.nl/f19/f19-sdk-js/graphs/[default> branch]) who participated in this project.

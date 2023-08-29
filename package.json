@@ -1,11 +1,14 @@
 {
     "name": "@happy-horizon/f19-sdk-js",
-    "version": "0.1.0",
+    "version": "0.1.2",
     "description": "Javascript SDK for F19 digital reporting platform",
     "repository": {
         "type": "git",
         "url": "https://github.com/Happy-Horizon/f19-sdk-js.git"
     },
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/types/index.d.ts",
     "exports": {
         "types": "./dist/types/*.d.ts",
         "import": "./dist/esm/index.js",

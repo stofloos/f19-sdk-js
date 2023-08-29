@@ -1,9 +1,11 @@
 {
-    "name": "@happyhorizon/f19-sdk-js",
+    "name": "@happy-horizon/f19-sdk-js",
     "version": "0.0.1",
     "description": "Javascript SDK for F19 digital reporting platform",
-    "main": "./dist/esm/index.js",
-    "types": "./dist/types/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Happy-Horizon/f19-sdk-js.git"
+    },
     "exports": {
         "types": "./dist/types/*.d.ts",
         "import": "./dist/esm/index.js",
@@ -20,10 +22,6 @@
         "prettier:check": "prettier --ignore-path .gitignore --check \"**/*.ts\"",
         "prettier:write": "prettier --ignore-path .gitignore --write \"**/*.ts\"",
         "artifactregistry-login": "npx google-artifactregistry-auth"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://git.gracious.nl/f19/f19-sdk-js"
     },
     "author": "gracious",
     "license": "MIT",

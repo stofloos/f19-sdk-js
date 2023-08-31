@@ -7,6 +7,10 @@ const config = {
     baseUrl: process.env.F19_BASE_URL!
 };
 
+beforeAll(() => {
+    jest.resetModules();
+});
+
 describe("Tables Resource", () => {
     const tablesResource = new Tables(config);
     let tableId: string;

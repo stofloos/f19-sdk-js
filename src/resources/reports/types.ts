@@ -1,5 +1,13 @@
 import { BaseResponse, Block, ChannelResource, ChannelTag } from "../../types";
 
+export enum ReportChannel {
+    WEBSITE = "chwebsite",
+    TABLET = "chtablet",
+    PHONE = "chphone",
+    PDF = "chpdf",
+    ALL = "*"
+}
+
 export declare type Component = {
     id: string;
     reportId: string;

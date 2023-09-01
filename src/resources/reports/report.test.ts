@@ -56,6 +56,7 @@ describe("Reports resource", () => {
 
     it("should return report by id", async () => {
         const report = await reports.getById(reportId);
+
         expect(report.payload?.id).toEqual(reportId);
     });
 });

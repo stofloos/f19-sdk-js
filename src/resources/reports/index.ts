@@ -2,10 +2,10 @@ import Base from "../base";
 import {
     ReportComponent,
     Report,
-    ReportChannel,
     ReportResponse,
     ReportsResponse
 } from "./types";
+import { Channel } from "../../types";
 
 /**
  * Client for interacting with the F19 API
@@ -24,10 +24,7 @@ export default class Reports extends Base {
      * @param channel
      * @returns {Promise<ReportResponse>}
      */
-    async getById(
-        id: string,
-        channel?: ReportChannel
-    ): Promise<ReportResponse> {
+    async getById(id: string, channel?: Channel): Promise<ReportResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
@@ -62,7 +59,7 @@ export default class Reports extends Base {
      */
     async getAllByProjectId(
         id: string,
-        channel?: ReportChannel
+        channel?: Channel
     ): Promise<ReportsResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");

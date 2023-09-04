@@ -8,14 +8,6 @@ import {
 } from "../../types";
 import { Article } from "../articles/types";
 
-export enum ReportChannel {
-    WEBSITE = "chwebsite",
-    TABLET = "chtablet",
-    PHONE = "chphone",
-    PDF = "chpdf",
-    ALL = "*"
-}
-
 export declare type ReportComponent =
     | Cover
     | Article

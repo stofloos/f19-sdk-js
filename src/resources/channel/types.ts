@@ -7,5 +7,5 @@ export declare type ChannelItem = {
 };
 
 export declare interface ChannelResponse extends BaseResponse {
-    payload: Array<ChannelItem> | [];
+    payload: Array<ChannelItem>;
 }

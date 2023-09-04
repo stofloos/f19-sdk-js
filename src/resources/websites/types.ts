@@ -14,11 +14,11 @@ export declare type Website = {
     id: string;
     name: string;
     alias: string;
-    routes: Array<Route> | [];
+    routes: Array<Route>;
 };
 
 export declare interface WebsitesResponse extends BaseResponse {
-    payload: Array<Website> | [];
+    payload: Array<Website>;
 }
 
 export declare interface WebsiteResponse extends BaseResponse {

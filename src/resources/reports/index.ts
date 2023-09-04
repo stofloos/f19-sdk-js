@@ -1,6 +1,6 @@
 import Base from "../base";
 import {
-    Component,
+    ReportComponent,
     Report,
     ReportChannel,
     ReportResponse,
@@ -42,7 +42,7 @@ export default class Reports extends Base {
                 if (channel && data.payload) {
                     // If channel is provided, filter out components without the specified channel
                     data.payload.components = data.payload.components.filter(
-                        (component: Component) => {
+                        (component: ReportComponent) => {
                             return component.multiChannelTags.some(
                                 tag => tag.channel === channel
                             );
@@ -79,7 +79,7 @@ export default class Reports extends Base {
                     // If channel is provided, filter out reports without the specified channel
                     data.payload = data.payload.filter((report: Report) => {
                         return report.components.some(
-                            (component: Component) => {
+                            (component: ReportComponent) => {
                                 return component.multiChannelTags.some(
                                     tag => tag.channel === channel
                                 );

@@ -61,7 +61,7 @@ export default class Websites extends Base {
     }
 
     /**
-     * Get currrent website
+     * Get current website
      * @async
      * @return {Promise<WebsiteResponse>} A promise that returns a {@link WebsiteResponse}
      * @example

@@ -1,26 +1,37 @@
-import { Block, ChannelTag } from "../../types";
-import { BaseResponse } from "../../types";
+import {
+    BaseResponse,
+    BlockInterface,
+    ComponentInterface,
+    MultiChannelTag,
+    Tags
+} from "../../types";
+export declare interface ArticleTags extends Tags {
+    articleCode?: string;
+    publication?: string;
+    "parent-id"?: string;
+}
 
-export declare type Article = {
-    id: string;
+export declare interface ArticleMultiChannelTag extends MultiChannelTag {
+    tags: ArticleTags;
+}
+
+export declare interface Article extends ComponentInterface {
+    type: "article";
+    multiChannelTags: Array<ArticleMultiChannelTag>;
     urlSegment: string;
     projectId: string;
     language: string;
-    heading: Block;
     summary: string;
-    type: string;
-    teaserImage: Block;
-    headerImage: Block;
-    blocks: Array<Block> | [];
-    facetIds: Array<string> | [];
-    relatedArticleIds: Array<string> | [];
-    reportIds: Array<string> | [];
-    multiChannelTags: Array<ChannelTag> | [];
+    teaserImage: BlockInterface;
+    headerImage: BlockInterface;
+    facetIds: Array<string>;
+    relatedArticleIds: Array<string>;
+    reportIds: Array<string>;
     summaryLevel: number;
-};
+}
 
 export declare interface ArticlesResponse extends BaseResponse {
-    payload: Array<Article> | [];
+    payload: Array<Article>;
 }
 
 export declare interface ArticleResponse extends BaseResponse {

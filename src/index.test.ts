@@ -5,10 +5,7 @@ import Projects from "./resources/projects";
 import Channel from "./resources/channel";
 import Downloads from "./resources/downloads/downloads";
 
-const config = {
-    apiKey: process.env.F19_API_KEY!,
-    baseUrl: process.env.F19_BASE_URL!
-};
+import { config } from "./helpers/testing";
 
 describe("Index instance", () => {
     const client = new Client(config);

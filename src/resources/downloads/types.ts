@@ -2,7 +2,7 @@ export declare interface DownloadsFromProjectResponse extends Response {
     nextNonce: string;
     statusCode: number;
     errors: null;
-    payload: Array<Download> | [];
+    payload: Array<Download>;
 }
 
 export declare interface DownloadResponse extends Response {
@@ -17,10 +17,10 @@ interface Download {
     securedProjectId: number;
     id: string;
     type: string;
-    blocks: Array<any> | [];
-    multiChannelResources: Array<any> | [];
+    blocks: Array<any>;
+    multiChannelResources: Array<any>;
     multiChannelTags: Array<MultiChannelTag>;
-    events: Array<any> | [];
+    events: Array<any>;
 }
 
 interface MultiChannelTag {

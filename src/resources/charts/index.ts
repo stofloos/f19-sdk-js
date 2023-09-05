@@ -16,7 +16,10 @@ export default class Charts extends Base {
      * @param preview
      * @returns {Promise<ChartsResponse>}
      */
-    async getAll(projectId: string, preview: boolean = false): Promise<ChartsResponse> {
+    async getAll(
+        projectId: string,
+        preview: boolean = false
+    ): Promise<ChartsResponse> {
         return this.get(`/${resource}/project/${projectId}`, preview).then(
             response => {
                 return response.json();
@@ -30,7 +33,10 @@ export default class Charts extends Base {
      * @param preview
      * @returns {Promise<ChartResponse>}
      */
-    async getById(chartId: string, preview: boolean = false): Promise<ChartResponse> {
+    async getById(
+        chartId: string,
+        preview: boolean = false
+    ): Promise<ChartResponse> {
         if (!chartId || chartId === "") {
             throw new Error("No chart id provided");
         }

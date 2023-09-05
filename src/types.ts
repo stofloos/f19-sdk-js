@@ -112,6 +112,24 @@ export interface Block extends BlockInterface {
     blocks: Array<Block>;
 }
 
+export interface ImageTags extends Tags {
+    id: string;
+    name: string;
+    "name-url": string;
+    "project-id": string;
+    "focal-point-x": number;
+    "focal-point-y": number;
+    "version-id": string | null;
+}
+
+export interface ImageMultiChannelTag extends MultiChannelTag {
+    tags: ImageTags;
+}
+export interface Image extends BlockInterface {
+    type: "image";
+    multiChannelTags: Array<ImageMultiChannelTag>;
+}
+
 export interface HeadingTags extends Tags {
     "first-of-sequence"?: string;
     "last-of-sequence"?: string;
@@ -151,7 +169,7 @@ export interface ComponentInterface extends BlockInterface {
     heading: ComponentHeading;
     level: number;
     language: string;
-    blocks: Array<Block>;
+    blocks: Array<Block | Image>;
     text: string;
     multiChannelTags: Array<ComponentMultiChannelTag>;
 }
@@ -209,4 +227,29 @@ export interface TableOfContents extends ComponentInterface {
     multiChannelTags: Array<TableOfContentsMultiChannelTag>;
 }
 
-export type Component = Cover & SlipSheet & Heading & TableOfContents;
+export declare interface ArticleTags extends Tags {
+    articleCode?: string;
+    publication?: string;
+    "parent-id"?: string;
+}
+
+export declare interface ArticleMultiChannelTag extends MultiChannelTag {
+    tags: ArticleTags;
+}
+
+export declare interface Article extends ComponentInterface {
+    type: "article";
+    multiChannelTags: Array<ArticleMultiChannelTag>;
+    urlSegment: string;
+    projectId: string;
+    language: string;
+    summary: string;
+    teaserImage: BlockInterface;
+    headerImage: BlockInterface;
+    facetIds: Array<string>;
+    relatedArticleIds: Array<string>;
+    reportIds: Array<string>;
+    summaryLevel: number;
+}
+
+export type Component = Cover | SlipSheet | Heading | TableOfContents | Article;

@@ -2,11 +2,7 @@ import "isomorphic-fetch";
 import Images from "./";
 import Projects from "../projects";
 import { Config } from "../../types";
-
-const config: Config = {
-    apiKey: process.env.F19_API_KEY!,
-    baseUrl: process.env.F19_BASE_URL!
-};
+import { config } from "../../helpers/testing";
 
 describe("Images resource", () => {
     const imagesResource = new Images(config);

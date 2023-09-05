@@ -1,10 +1,5 @@
 import Tokens from "./";
-import { Config } from "../../types";
-
-const config: Config = {
-    apiKey: process.env.F19_API_KEY!,
-    baseUrl: process.env.F19_BASE_URL!
-};
+import { config } from "../../helpers/testing";
 
 describe("Tokens resource", () => {
     const tokensResource = new Tokens(config);
@@ -19,33 +14,28 @@ describe("Tokens resource", () => {
 
     it("should contain getAnonymous", () => {
         expect(tokensResource).toHaveProperty("getAnonymous");
-
     });
 
     it("should contain getThumbprint", () => {
         expect(tokensResource).toHaveProperty("getThumbprint");
-    })
+    });
 
     it("should throw an error if authorizationToken  is not provided", async () => {
         await expect(tokensResource.getPersonal("")).rejects.toThrow(
             "Authorization token is required"
         );
-
     });
 
     it("should throw an error if userId is not provided", async () => {
-
-
-        await expect(tokensResource.getThumbprint("", "test")).rejects.toThrowError(
-            "UserId token is required"
-        );
+        await expect(
+            tokensResource.getThumbprint("", "test")
+        ).rejects.toThrowError("UserId token is required");
     });
 
     it("should throw an error if thumbprint is not provided", async () => {
-
-        await expect(tokensResource.getThumbprint("test", "")).rejects.toThrowError(
-            "Thumbprint token is required"
-        );
+        await expect(
+            tokensResource.getThumbprint("test", "")
+        ).rejects.toThrowError("Thumbprint token is required");
     });
 
     // TODO: Fix token tests by providing a valid authorization token.

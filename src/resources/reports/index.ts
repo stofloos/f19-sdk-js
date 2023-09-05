@@ -1,12 +1,7 @@
 import Base from "../base";
 
-import {
-    ReportComponent,
-    Report,
-    ReportResponse,
-    ReportsResponse
-} from "./types";
-import { Channel } from "../../types";
+import { Report, ReportResponse, ReportsResponse } from "./types";
+import { Channel, Component } from "../../types";
 
 const resource = "report";
 
@@ -28,7 +23,11 @@ export default class Reports extends Base {
      * @param preview
      * @returns {Promise<ReportResponse>}
      */
-    async getById(id: string, channel: Channel = "*", preview: boolean = false): Promise<ReportResponse> {
+    async getById(
+        id: string,
+        channel: Channel = "*",
+        preview: boolean = false
+    ): Promise<ReportResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
@@ -41,7 +40,7 @@ export default class Reports extends Base {
                 if (channel && data.payload) {
                     // If channel is provided, filter out components without the specified channel
                     data.payload.components = data.payload.components.filter(
-                        (component: ReportComponent) => {
+                        (component: Component) => {
                             return component.multiChannelTags.some(
                                 tag => tag.channel === channel
                             );
@@ -78,7 +77,7 @@ export default class Reports extends Base {
                     // If channel is provided, filter out reports without the specified channel
                     data.payload = data.payload.filter((report: Report) => {
                         return report.components.some(
-                            (component: ReportComponent) => {
+                            (component: Component) => {
                                 return component.multiChannelTags.some(
                                     tag => tag.channel === channel
                                 );

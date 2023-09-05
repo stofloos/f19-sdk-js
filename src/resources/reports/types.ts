@@ -1,19 +1,4 @@
-import {
-    BaseResponse,
-    BlockInterface,
-    Cover,
-    Heading,
-    SlipSheet,
-    TableOfContents
-} from "../../types";
-import { Article } from "../articles/types";
-
-export declare type ReportComponent =
-    | Cover
-    | Article
-    | SlipSheet
-    | Heading
-    | TableOfContents;
+import { BaseResponse, BlockInterface, Component } from "../../types";
 
 export declare interface Report extends BlockInterface {
     summaryLevel: number;
@@ -21,7 +6,7 @@ export declare interface Report extends BlockInterface {
     urlSegment: string;
     projectId: string;
     language: string;
-    components: Array<ReportComponent>;
+    components: Array<Component>;
     facetNavigations: null;
     articleIds: Array<string>;
 }

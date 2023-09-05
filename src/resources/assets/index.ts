@@ -69,7 +69,10 @@ export default class Assets extends Base {
      * @param preview
      * @returns {Promise<Blob>}
      */
-    async getBlobByToken(token: string, preview: boolean = false): Promise<Blob> {
+    async getBlobByToken(
+        token: string,
+        preview: boolean = false
+    ): Promise<Blob> {
         if (!token || token === "") {
             throw new Error("No token provided");
         }

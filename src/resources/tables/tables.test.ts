@@ -4,6 +4,10 @@ import Projects from "../projects";
 
 import { config } from "../../helpers/testing";
 
+beforeAll(() => {
+    jest.resetModules();
+});
+
 describe("Tables Resource", () => {
     const tablesResource = new Tables(config);
     let tableId: string;

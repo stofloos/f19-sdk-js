@@ -3,7 +3,7 @@ import "isomorphic-fetch";
 import Reports from "./resources/reports";
 import Projects from "./resources/projects";
 import Channel from "./resources/channel";
-import Downloads from "./resources/downloads/downloads";
+import Index from "./resources/downloads";
 
 import { config } from "./helpers/testing";
 
@@ -89,7 +89,7 @@ describe("Index instance", () => {
 
     it("should contain Downloads instance", () => {
         expect(client).toHaveProperty("downloads");
-        expect(client.downloads).toBeInstanceOf(Downloads);
+        expect(client.downloads).toBeInstanceOf(Index);
         expect(client.downloads).toHaveProperty("getById");
         expect(client.downloads).toHaveProperty("getAllByProjectId");
     });

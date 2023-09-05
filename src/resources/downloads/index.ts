@@ -1,20 +1,20 @@
 import Base from "../base";
 import { DownloadResponse, DownloadsFromProjectResponse } from "./types";
 
-export default class Downloads extends Base {
+const resource = "download";
+export default class Index extends Base {
     /**
      * Get a report by id
      * @param id
+     * @param preview
      * @returns {Promise<DownloadResponse>}
      */
-    async getById(id: string): Promise<DownloadResponse> {
+    async getById(id: string, preview = false): Promise<DownloadResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.request(`/cms/api/public/v1/download/id/${id}`, {
-            method: "GET"
-        }).then(response => {
+        return this.get(`/${resource}/id/${id}`, preview).then(response => {
             return response.json();
         });
     }
@@ -22,24 +22,21 @@ export default class Downloads extends Base {
     /**
      * Get all downloads by projectId
      * @param projectId
+     * @param preview
      * @returns {Promise<DownloadsFromProjectResponse>}
-     * @example
-     * const downloads = awaits client.downloads.getById("[PROJECT_ID]]")
      */
     async getAllByProjectId(
-        projectId: string
+        projectId: string,
+        preview = false
     ): Promise<DownloadsFromProjectResponse> {
         if (!projectId || projectId === "") {
             throw new Error("No id provided");
         }
 
-        return this.request(
-            `/cms/api/public/v1/download/project/${projectId}`,
-            {
-                method: "GET"
+        return this.get(`/${resource}/project/${projectId}`, preview).then(
+            response => {
+                return response.json();
             }
-        ).then(response => {
-            return response.json();
-        });
+        );
     }
 }

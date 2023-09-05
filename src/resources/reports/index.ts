@@ -1,6 +1,6 @@
 import Base from "../base";
 import { ReportResponse, ReportsResponse } from "./types";
-
+const resource = "report";
 /**
  * Client for interacting with the F19 API
  * @class Reports
@@ -15,16 +15,15 @@ export default class Reports extends Base {
     /**
      * Get a report by id
      * @param id
+     * @param preview
      * @returns {Promise<ReportResponse>}
      */
-    async getById(id: string): Promise<ReportResponse> {
+    async getById(id: string, preview = false): Promise<ReportResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.request(`/cms/api/public/v1/report/id/${id}`, {
-            method: "GET"
-        }).then(response => {
+        return this.get(`/${resource}/id/${id}`, preview).then(response => {
             return response.json();
         });
     }
@@ -40,7 +39,7 @@ export default class Reports extends Base {
             throw new Error("No id provided");
         }
 
-        return this.request(`/cms/api/public/v1/report/project/${id}`, {
+        return this.request(`/${resource}/project/${id}`, {
             method: "GET"
         }).then(response => {
             return response.json();

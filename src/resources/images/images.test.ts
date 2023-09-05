@@ -31,9 +31,12 @@ describe("Images resource", () => {
         // Get the first project id
         const projectId = projects.payload[0].id;
         // Get all images for the project
+
+        expect(projectId).toBeDefined();
+
         const imagesResponse = await imagesResource.getAll(projectId);
 
-        imageId = imagesResponse?.payload?.[0] && imagesResponse.payload[0]?.id;
+        imageId = imagesResponse?.payload?.[0]?.id;
 
         expect(imagesResponse).toHaveProperty("payload");
     });

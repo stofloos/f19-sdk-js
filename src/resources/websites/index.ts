@@ -1,7 +1,7 @@
 import type { WebsitesResponse, WebsiteResponse } from "./types";
 import { Config } from "../../types";
 import Base from "../base";
-
+const resource = "website";
 /**
  * Websites resource
  * @class
@@ -32,10 +32,8 @@ export default class Websites extends Base {
      * @example
      * const websites = await client.websites.getAll()
      */
-    async getAll(): Promise<WebsitesResponse> {
-        return this.request("/cms/api/public/v1/website", {
-            method: "GET"
-        }).then(response => {
+    async getAll(preview = false): Promise<WebsitesResponse> {
+        return this.get(`/${resource}`, preview).then(response => {
             return response.json();
         });
     }
@@ -43,35 +41,35 @@ export default class Websites extends Base {
     /**
      * Get a website by alias
      * @param alias
+     * @param preview
      * @async
      * @return {Promise<WebsiteResponse>} A promise that returns a {@link WebsiteResponse}
      * @example
      * const website = awaits client.websites.getByAlias("my-website")
      */
-    async getByAlias(alias: string): Promise<WebsiteResponse> {
+    async getByAlias(alias: string, preview = false): Promise<WebsiteResponse> {
         if (!alias || alias === "") {
             throw new Error("No alias provided");
         }
 
-        return this.request(`/cms/api/public/v1/website/alias/${alias}`, {
-            method: "GET"
-        }).then(response => {
-            return response.json();
-        });
+        return this.get(`/${resource}/alias/${alias}`, preview).then(
+            response => {
+                return response.json();
+            }
+        );
     }
 
     /**
      * Get current website
      * @async
+     * @param preview
      * @return {Promise<WebsiteResponse>} A promise that returns a {@link WebsiteResponse}
      * @example
      * const website = awaits client.websites.getCurrent()
      */
     // TODO: Fix getCurrent call. It's not working.
-    async getCurrent(): Promise<WebsiteResponse> {
-        return this.request(`/cms/api/public/v1/website/current`, {
-            method: "GET"
-        }).then(response => {
+    async getCurrent(preview = false): Promise<WebsiteResponse> {
+        return this.get(`/${resource}/current`, preview).then(response => {
             return response.json();
         });
     }

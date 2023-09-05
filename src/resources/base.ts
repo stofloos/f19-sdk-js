@@ -14,6 +14,7 @@ import type { Config } from "../types";
 export default abstract class Base {
     readonly apiKey: string;
     readonly baseUrl: string;
+    readonly apiPath: string;
 
     /**
      * Create a new instance of the base class
@@ -30,6 +31,7 @@ export default abstract class Base {
             throw new Error("Base URL not configured");
         }
 
+        this.apiPath = config.apiPath || "/cms/api/public/v1";
         this.apiKey = config.apiKey;
         this.baseUrl = config.baseUrl;
     }
@@ -38,31 +40,64 @@ export default abstract class Base {
      * Make a request to the API using fetch and return the serialized response
      * @param endpoint
      * @param options
+     * @param preview
      * @returns {Promise<Response>}
      */
     async request<T>(
         endpoint: string,
-        options?: RequestInit
+        options: RequestInit,
+        preview = false
     ): Promise<Response> {
-        const url = `${this.baseUrl}${endpoint}`;
-
         if (!endpoint || endpoint === "") {
             throw new Error("Endpoint not found");
         }
 
+        const url = `${this.baseUrl}${this.apiPath}${endpoint}`;
+
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("X-API-Key", this.apiKey);
+
         const response = await fetch(url, {
             ...options,
-            headers: {
-                "Content-Type": "application/json",
-                "X-API-Key": this.apiKey,
-                ...options?.headers
-            },
-            mode: "no-cors"
+            cache: preview ? "no-cache" : "default",
+            headers
         });
 
-        if (response.ok) {
-            return response;
+        if (!response.ok) {
+            throw new Error(response.statusText);
         }
-        throw new Error(response.statusText);
+
+        return response;
+    }
+
+    /**
+     * Make a GET request to the API
+     * @param endpoint
+     * @param preview
+     */
+    async get<T>(endpoint: string, preview = false): Promise<Response> {
+        return await this.request<T>(
+            endpoint,
+            {
+                method: "GET"
+            },
+            preview
+        );
+    }
+
+    /**
+     * Make a POST request to the API
+     * @param endpoint
+     * @param preview
+     */
+    async post<T>(endpoint: string, preview = false): Promise<Response> {
+        return await this.request<T>(
+            endpoint,
+            {
+                method: "POST"
+            },
+            preview
+        );
     }
 }

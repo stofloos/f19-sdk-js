@@ -98,19 +98,13 @@ export interface BlockChannelTag extends MultiChannelTag {
     tags: BlokTags;
 }
 
-export interface BlockInterface {
+export interface Block {
     multiChannelTags: Array<{ [key: string]: any }>;
     id: string;
     events: Array<Event>;
-}
-
-export interface Block extends BlockInterface {
-    type: BlockType;
-    text: string | null;
-    multiChannelResources: Array<ChannelResource>;
-    multiChannelTags: Array<BlockChannelTag>;
     blocks: Array<Block>;
 }
+
 
 export interface ImageTags extends Tags {
     id: string;
@@ -125,9 +119,10 @@ export interface ImageTags extends Tags {
 export interface ImageMultiChannelTag extends MultiChannelTag {
     tags: ImageTags;
 }
-export interface Image extends BlockInterface {
+export interface Image extends Block {
     type: "image";
     multiChannelTags: Array<ImageMultiChannelTag>;
+    blocks: Array<Block>;
 }
 
 export interface HeadingTags extends Tags {
@@ -162,7 +157,7 @@ interface ComponentMultiChannelTag {
     tags: ComponentTags;
 }
 
-export interface ComponentInterface extends BlockInterface {
+export interface ComponentInterface extends Block {
     type: ComponentType;
     reportId: string;
     urlSegment: string;
@@ -244,8 +239,8 @@ export declare interface Article extends ComponentInterface {
     projectId: string;
     language: string;
     summary: string;
-    teaserImage: BlockInterface;
-    headerImage: BlockInterface;
+    teaserImage: Image;
+    headerImage: Image;
     facetIds: Array<string>;
     relatedArticleIds: Array<string>;
     reportIds: Array<string>;

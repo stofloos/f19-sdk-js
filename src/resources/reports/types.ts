@@ -1,6 +1,6 @@
-import { BaseResponse, BlockInterface, Component } from "../../types";
+import { BaseResponse, Block, Component } from "../../types";
 
-export declare interface Report extends BlockInterface {
+export declare interface Report extends Block {
     summaryLevel: number;
     name: string;
     urlSegment: string;

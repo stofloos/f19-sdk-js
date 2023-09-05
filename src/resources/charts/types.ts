@@ -1,4 +1,4 @@
-import { BlockInterface, ChannelResource } from "../../types";
+import { Block, ChannelResource } from "../../types";
 import { BaseResponse } from "../../types";
 
 export declare interface ChartTags {}
@@ -8,7 +8,7 @@ export type Chart = {
     id: string;
     text: string;
     type: string;
-    blocks: Array<BlockInterface>;
+    blocks: Array<Block>;
     multiChannelTags: Array<ChartTags>;
     events: Array<Event>;
 };

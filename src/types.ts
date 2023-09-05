@@ -128,6 +128,7 @@ export interface ImageMultiChannelTag extends MultiChannelTag {
 export interface Image extends BlockInterface {
     type: "image";
     multiChannelTags: Array<ImageMultiChannelTag>;
+    blocks: Array<Block>;
 }
 
 export interface HeadingTags extends Tags {

@@ -1,4 +1,5 @@
 import Base from "../base";
+
 import {
     ReportComponent,
     Report,
@@ -6,6 +7,8 @@ import {
     ReportsResponse
 } from "./types";
 import { Channel } from "../../types";
+
+const resource = "report";
 
 /**
  * Client for interacting with the F19 API
@@ -21,17 +24,16 @@ export default class Reports extends Base {
     /**
      * Get a report by id
      * @param id
-     * @param channel
+     * @param channel - Optional channel to filter by
+     * @param preview
      * @returns {Promise<ReportResponse>}
      */
-    async getById(id: string, channel?: Channel): Promise<ReportResponse> {
+    async getById(id: string, channel: Channel = "*", preview: boolean = false): Promise<ReportResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.request(`/cms/api/public/v1/report/id/${id}`, {
-            method: "GET"
-        })
+        return this.get(`/${resource}/id/${id}`, preview)
             .then(response => {
                 return response.json();
             })
@@ -53,21 +55,21 @@ export default class Reports extends Base {
     /**
      * Get all reports by project id
      * @param id
-     * @param channel
+     * @param channel - Optional channel to filter by
+     * @param preview
      * @returns {Promise<ReportResponse>}
      *
      */
     async getAllByProjectId(
         id: string,
-        channel?: Channel
+        channel: Channel = "*",
+        preview: boolean = false
     ): Promise<ReportsResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.request(`/cms/api/public/v1/report/project/${id}`, {
-            method: "GET"
-        })
+        return this.get(`/${resource}/project/${id}`, preview)
             .then(response => {
                 return response.json();
             })

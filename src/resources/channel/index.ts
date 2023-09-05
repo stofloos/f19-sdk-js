@@ -1,6 +1,7 @@
 import Base from "../base";
 import { ChannelResponse } from "./types";
 
+const resource = "channel";
 export default class Index extends Base {
     /**
      * Get all channels
@@ -8,10 +9,8 @@ export default class Index extends Base {
      * @example
      * const channel = await client.channel.getAll()
      */
-    async getAll(): Promise<ChannelResponse> {
-        return this.request(`/cms/api/public/v1/channel`, {
-            method: "GET"
-        }).then(response => {
+    async getAll(preview: boolean = false): Promise<ChannelResponse> {
+        return this.get(`/${resource}`, preview).then(response => {
             return response.json();
         });
     }

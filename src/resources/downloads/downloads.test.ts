@@ -1,4 +1,4 @@
-import Downloads from "./downloads";
+import Index from "./index";
 import "isomorphic-fetch";
 import Projects from "../projects";
 
@@ -15,12 +15,12 @@ beforeAll(() => {
 });
 
 describe("Downloads resource", () => {
-    const downloads = new Downloads(config);
+    const downloads = new Index(config);
 
     let downloadId: string;
 
     it("should be instance of Projects", () => {
-        expect(downloads).toBeInstanceOf(Downloads);
+        expect(downloads).toBeInstanceOf(Index);
     });
 
     it("should throw error if id is not provided", async () => {

@@ -1,6 +1,6 @@
 import Base from "../base";
 import { ChartsResponse, ChartResponse } from "./types";
-
+const resource = "chart";
 /**
  * Charts resource
  * @class Charts
@@ -13,30 +13,32 @@ export default class Charts extends Base {
     /**
      * Get all charts by project id
      * @param projectId
+     * @param preview
      * @returns {Promise<ChartsResponse>}
      */
-    async getAll(projectId: string): Promise<ChartsResponse> {
-        return this.request(`/cms/api/public/v1/chart/project/${projectId}`, {
-            method: "GET"
-        }).then(response => {
-            return response.json();
-        });
+    async getAll(projectId: string, preview: boolean = false): Promise<ChartsResponse> {
+        return this.get(`/${resource}/project/${projectId}`, preview).then(
+            response => {
+                return response.json();
+            }
+        );
     }
 
     /**
      * Get chart by id
      * @param chartId
+     * @param preview
      * @returns {Promise<ChartResponse>}
      */
-    async getById(chartId: string): Promise<ChartResponse> {
+    async getById(chartId: string, preview: boolean = false): Promise<ChartResponse> {
         if (!chartId || chartId === "") {
             throw new Error("No chart id provided");
         }
 
-        return this.request(`/cms/api/public/v1/chart/id/${chartId}`, {
-            method: "GET"
-        }).then(response => {
-            return response.json();
-        });
+        return this.get(`/${resource}/id/${chartId}`, preview).then(
+            response => {
+                return response.json();
+            }
+        );
     }
 }

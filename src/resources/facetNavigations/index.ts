@@ -1,34 +1,44 @@
 import Base from "../base";
 import { FacetNavigationResponse, FacetNavigationsResponse } from "./types";
-
+const resource = "facetnavigation";
 export default class FacetNavigations extends Base {
-    async getAll(projectId: string): Promise<FacetNavigationsResponse> {
+    /**
+     * @method getAll
+     * @param projectId
+     * @param preview
+     */
+    async getAll(
+        projectId: string,
+        preview: boolean = false
+    ): Promise<FacetNavigationsResponse> {
         if (!projectId || projectId === "") {
             throw new Error("No project id provided");
         }
 
-        return this.request(
-            `/cms/api/public/v1/facetnavigation/project/${projectId}`,
-            {
-                method: "GET"
+        return this.get(`/${resource}/project/${projectId}`, preview).then(
+            response => {
+                return response.json();
             }
-        ).then(response => {
-            return response.json();
-        });
+        );
     }
 
-    async getById(facetId: string): Promise<FacetNavigationResponse> {
+    /**
+     * @method getById
+     * @param facetId
+     * @param preview
+     */
+    async getById(
+        facetId: string,
+        preview: boolean = false
+    ): Promise<FacetNavigationResponse> {
         if (!facetId || facetId === "") {
             throw new Error("No facet id provided");
         }
 
-        return this.request(
-            `/cms/api/public/v1/facetnavigation/id/${facetId}`,
-            {
-                method: "GET"
+        return this.get(`/${resource}/id/${facetId}`, preview).then(
+            response => {
+                return response.json();
             }
-        ).then(response => {
-            return response.json();
-        });
+        );
     }
 }

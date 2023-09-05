@@ -1,5 +1,6 @@
 import Base from "../base";
 import { ArticleResponse, ArticlesResponse } from "./types";
+import { Channel } from "../../types";
 
 /**
  * Articles instance
@@ -9,11 +10,14 @@ import { ArticleResponse, ArticlesResponse } from "./types";
  * @extends Base
  *
  */
+
+const resource = "article";
 export default class Articles extends Base {
     /**
      * Get all articles for a project
      * @method getAllByProjectId
      * @param projectId
+     * @param preview
      * @param channel
      * @returns {Promise<ArticlesResponse>}
      * @throws Error
@@ -21,15 +25,14 @@ export default class Articles extends Base {
      */
     async getAllByProjectId(
         projectId: string,
-        channel?: string
+        channel: Channel = "*",
+        preview: boolean = false
     ): Promise<ArticlesResponse> {
         if (!projectId || projectId === "") {
             throw new Error("Project id not provided");
         }
 
-        return this.request(`/cms/api/public/v1/article/project/${projectId}`, {
-            method: "GET"
-        })
+        return this.get(`/${resource}/project/${projectId}`, preview)
             .then(response => {
                 return response.json();
             })
@@ -51,20 +54,20 @@ export default class Articles extends Base {
      * @method getById
      * @param articleId
      * @param channel
+     * @param preview
      * @returns {Promise<ArticleResponse>}
      * @throws Error
      */
     async getById(
         articleId: string,
-        channel?: string
+        channel: Channel = "*",
+        preview: boolean = false
     ): Promise<ArticleResponse> {
         if (!articleId || articleId === "") {
             throw new Error("Article id not provided");
         }
 
-        return this.request(`/cms/api/public/v1/article/${articleId}`, {
-            method: "GET"
-        })
+        return this.get(`/${resource}/${articleId}`, preview)
             .then(response => {
                 return response.json();
             })

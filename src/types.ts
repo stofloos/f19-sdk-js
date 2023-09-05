@@ -46,6 +46,7 @@ export type EventType = "image-not-available" | "article-not-available";
 export type Config = {
     apiKey: string; // API key to use for authentication.
     baseUrl: string; // Base url of the F19 instance to connect to.
+    apiPath?: string; // Path to the API on the F19 instance.
 };
 
 export type Error = {

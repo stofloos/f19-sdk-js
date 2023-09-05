@@ -39,10 +39,14 @@ describe("Asset Resource", () => {
         // Get image blob by name
         expect(imageName).toBeDefined();
         expect(projectId).toBeDefined();
-        if(!imageName) {
-            await expect(assets.getImageByName(projectId, imageName!)).rejects.toThrowError();
+        if (!imageName) {
+            await expect(
+                assets.getImageByName(projectId, imageName!)
+            ).rejects.toThrowError();
         } else {
-            await expect(assets.getImageByName(projectId, imageName!)).resolves.toBeDefined();
+            await expect(
+                assets.getImageByName(projectId, imageName!)
+            ).resolves.toBeDefined();
         }
     });
 

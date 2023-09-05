@@ -27,8 +27,15 @@ describe("Base Instance", () => {
             baseUrl: "https://api.f19.rocks"
         });
 
-        await expect(base.request("")).rejects.toThrowError(
-            "Endpoint not found"
-        );
+        await expect(base.get("")).rejects.toThrowError("Endpoint not found");
+    });
+
+    it("should throw error if endpoint is not configured", async () => {
+        const base = new TestBase({
+            apiKey: "123",
+            baseUrl: "https://api.f19.rocks"
+        });
+
+        await expect(base.post("")).rejects.toThrowError("Endpoint not found");
     });
 });

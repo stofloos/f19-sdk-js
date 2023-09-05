@@ -47,7 +47,10 @@ export default class Websites extends Base {
      * @example
      * const website = awaits client.websites.getByAlias("my-website")
      */
-    async getByAlias(alias: string, preview: boolean = false): Promise<WebsiteResponse> {
+    async getByAlias(
+        alias: string,
+        preview: boolean = false
+    ): Promise<WebsiteResponse> {
         if (!alias || alias === "") {
             throw new Error("No alias provided");
         }

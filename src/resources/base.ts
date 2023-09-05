@@ -76,7 +76,10 @@ export default abstract class Base {
      * @param endpoint
      * @param preview
      */
-    async get<T>(endpoint: string, preview: boolean = false): Promise<Response> {
+    async get<T>(
+        endpoint: string,
+        preview: boolean = false
+    ): Promise<Response> {
         return await this.request<T>(
             endpoint,
             {
@@ -91,7 +94,10 @@ export default abstract class Base {
      * @param endpoint
      * @param preview
      */
-    async post<T>(endpoint: string, preview: boolean = false): Promise<Response> {
+    async post<T>(
+        endpoint: string,
+        preview: boolean = false
+    ): Promise<Response> {
         return await this.request<T>(
             endpoint,
             {

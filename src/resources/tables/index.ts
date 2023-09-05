@@ -14,7 +14,10 @@ export default class Tables extends Base {
      * @returns {Promise<TablesResponse>}
      * @throws Error
      */
-    async getAll(projectId: string, preview: boolean = false): Promise<TablesResponse> {
+    async getAll(
+        projectId: string,
+        preview: boolean = false
+    ): Promise<TablesResponse> {
         if (!projectId) {
             throw new Error("No project id provided");
         }
@@ -33,7 +36,10 @@ export default class Tables extends Base {
      * @returns {Promise<TableResponse>}
      * @throws Error
      */
-    async getById(tableId: string, preview: boolean = false): Promise<TableResponse> {
+    async getById(
+        tableId: string,
+        preview: boolean = false
+    ): Promise<TableResponse> {
         if (!tableId) {
             throw new Error("No table id provided");
         }

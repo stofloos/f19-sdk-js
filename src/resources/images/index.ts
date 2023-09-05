@@ -15,7 +15,10 @@ export default class Images extends Base {
      * @param preview
      * @returns {Promise<any>}
      */
-    async getAll(projectId: string, preview: boolean = false): Promise<ImagesResponse> {
+    async getAll(
+        projectId: string,
+        preview: boolean = false
+    ): Promise<ImagesResponse> {
         if (!projectId) {
             throw new Error("Project id is required");
         }

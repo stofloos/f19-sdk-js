@@ -24,7 +24,10 @@ export default class Projects extends Base {
      * @example
      * const project = awaits client.projects.getById("[PROJECT_ID]]")
      */
-    async getById(id: string, preview: boolean = false): Promise<ProjectResponse> {
+    async getById(
+        id: string,
+        preview: boolean = false
+    ): Promise<ProjectResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }

@@ -1,11 +1,6 @@
 import "isomorphic-fetch";
 import Nonce from "./";
-import { Config } from "../../types";
-
-const config: Config = {
-    apiKey: process.env.F19_API_KEY!,
-    baseUrl: process.env.F19_BASE_URL!
-};
+import { config } from "../../helpers/testing";
 
 describe("Nonce resource", () => {
     const nonceResource = new Nonce(config);

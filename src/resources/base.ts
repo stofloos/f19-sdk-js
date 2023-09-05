@@ -46,7 +46,7 @@ export default abstract class Base {
     async request<T>(
         endpoint: string,
         options: RequestInit,
-        preview = false
+        preview: boolean = false
     ): Promise<Response> {
         if (!endpoint || endpoint === "") {
             throw new Error("Endpoint not found");
@@ -76,7 +76,7 @@ export default abstract class Base {
      * @param endpoint
      * @param preview
      */
-    async get<T>(endpoint: string, preview = false): Promise<Response> {
+    async get<T>(endpoint: string, preview: boolean = false): Promise<Response> {
         return await this.request<T>(
             endpoint,
             {
@@ -91,7 +91,7 @@ export default abstract class Base {
      * @param endpoint
      * @param preview
      */
-    async post<T>(endpoint: string, preview = false): Promise<Response> {
+    async post<T>(endpoint: string, preview: boolean = false): Promise<Response> {
         return await this.request<T>(
             endpoint,
             {

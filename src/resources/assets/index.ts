@@ -17,7 +17,7 @@ export default class Assets extends Base {
     async getImageByName(
         projectId: string,
         name: string,
-        preview = false
+        preview: boolean = false
     ): Promise<Blob> {
         if (!projectId || projectId === "") {
             throw new Error("No project id provided");
@@ -45,7 +45,7 @@ export default class Assets extends Base {
     async getDownloadByName(
         projectId: string,
         name: string,
-        preview = false
+        preview: boolean = false
     ): Promise<Blob> {
         if (!projectId || projectId === "") {
             throw new Error("No project id provided");
@@ -69,7 +69,7 @@ export default class Assets extends Base {
      * @param preview
      * @returns {Promise<Blob>}
      */
-    async getBlobByToken(token: string, preview = false): Promise<Blob> {
+    async getBlobByToken(token: string, preview: boolean = false): Promise<Blob> {
         if (!token || token === "") {
             throw new Error("No token provided");
         }

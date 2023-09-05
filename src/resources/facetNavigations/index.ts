@@ -9,7 +9,7 @@ export default class FacetNavigations extends Base {
      */
     async getAll(
         projectId: string,
-        preview = false
+        preview: boolean = false
     ): Promise<FacetNavigationsResponse> {
         if (!projectId || projectId === "") {
             throw new Error("No project id provided");
@@ -29,7 +29,7 @@ export default class FacetNavigations extends Base {
      */
     async getById(
         facetId: string,
-        preview = false
+        preview: boolean = false
     ): Promise<FacetNavigationResponse> {
         if (!facetId || facetId === "") {
             throw new Error("No facet id provided");

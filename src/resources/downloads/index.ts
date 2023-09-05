@@ -9,7 +9,7 @@ export default class Index extends Base {
      * @param preview
      * @returns {Promise<DownloadResponse>}
      */
-    async getById(id: string, preview = false): Promise<DownloadResponse> {
+    async getById(id: string, preview: boolean = false): Promise<DownloadResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
@@ -27,7 +27,7 @@ export default class Index extends Base {
      */
     async getAllByProjectId(
         projectId: string,
-        preview = false
+        preview: boolean = false
     ): Promise<DownloadsFromProjectResponse> {
         if (!projectId || projectId === "") {
             throw new Error("No id provided");

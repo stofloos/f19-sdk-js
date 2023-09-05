@@ -9,7 +9,7 @@ export default class Index extends Base {
      * @example
      * const channel = await client.channel.getAll()
      */
-    async getAll(preview = false): Promise<ChannelResponse> {
+    async getAll(preview: boolean = false): Promise<ChannelResponse> {
         return this.get(`/${resource}`, preview).then(response => {
             return response.json();
         });

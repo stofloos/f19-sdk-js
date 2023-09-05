@@ -32,7 +32,7 @@ export default class Websites extends Base {
      * @example
      * const websites = await client.websites.getAll()
      */
-    async getAll(preview = false): Promise<WebsitesResponse> {
+    async getAll(preview: boolean = false): Promise<WebsitesResponse> {
         return this.get(`/${resource}`, preview).then(response => {
             return response.json();
         });
@@ -47,7 +47,7 @@ export default class Websites extends Base {
      * @example
      * const website = awaits client.websites.getByAlias("my-website")
      */
-    async getByAlias(alias: string, preview = false): Promise<WebsiteResponse> {
+    async getByAlias(alias: string, preview: boolean = false): Promise<WebsiteResponse> {
         if (!alias || alias === "") {
             throw new Error("No alias provided");
         }
@@ -68,7 +68,7 @@ export default class Websites extends Base {
      * const website = awaits client.websites.getCurrent()
      */
     // TODO: Fix getCurrent call. It's not working.
-    async getCurrent(preview = false): Promise<WebsiteResponse> {
+    async getCurrent(preview: boolean = false): Promise<WebsiteResponse> {
         return this.get(`/${resource}/current`, preview).then(response => {
             return response.json();
         });

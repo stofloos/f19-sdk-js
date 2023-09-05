@@ -12,7 +12,7 @@ export default class Nonce extends Base {
      * @method getNonce
      * @return {Promise<string>}
      * */
-    async getNonce(preview = false): Promise<NonceResponse> {
+    async getNonce(preview: boolean = false): Promise<NonceResponse> {
         return this.get(`/${resource}/generate`, preview).then(response => {
             return response.json();
         });

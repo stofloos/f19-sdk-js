@@ -24,11 +24,11 @@ export default class Reports extends Base {
     /**
      * Get a report by id
      * @param id
-     * @param channel
+     * @param channel - Optional channel to filter by
      * @param preview
      * @returns {Promise<ReportResponse>}
      */
-    async getById(id: string, channel: Channel = "*", preview = false): Promise<ReportResponse> {
+    async getById(id: string, channel: Channel = "*", preview: boolean = false): Promise<ReportResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
@@ -55,7 +55,7 @@ export default class Reports extends Base {
     /**
      * Get all reports by project id
      * @param id
-     * @param channel
+     * @param channel - Optional channel to filter by
      * @param preview
      * @returns {Promise<ReportResponse>}
      *

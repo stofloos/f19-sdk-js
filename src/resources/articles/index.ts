@@ -26,7 +26,7 @@ export default class Articles extends Base {
     async getAllByProjectId(
         projectId: string,
         channel: Channel = "*",
-        preview = false
+        preview: boolean = false
     ): Promise<ArticlesResponse> {
         if (!projectId || projectId === "") {
             throw new Error("Project id not provided");

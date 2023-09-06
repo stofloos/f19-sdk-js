@@ -1,14 +1,7 @@
 import Index from "./index";
 import "isomorphic-fetch";
 import Projects from "../projects";
-
-const apiKey = process.env.F19_API_KEY!;
-const baseUrl = process.env.F19_BASE_URL!;
-
-const config = {
-    apiKey: apiKey,
-    baseUrl: baseUrl
-};
+import { config } from "../../helpers/testing";
 
 beforeAll(() => {
     jest.resetModules();

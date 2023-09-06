@@ -1,14 +1,7 @@
 import Reports from "./";
 import Projects from "../projects";
 import "isomorphic-fetch";
-
-const apiKey = process.env.F19_API_KEY!;
-const baseUrl = process.env.F19_BASE_URL!;
-
-const config = {
-    apiKey,
-    baseUrl
-};
+import { config } from "../../helpers/testing";
 
 describe("Reports resource", () => {
     const reports = new Reports(config);
@@ -62,8 +55,6 @@ describe("Reports resource", () => {
 
         expect(report.payload?.id).toEqual(reportId);
     });
-
-
 
     describe("Custom reports", () => {
         it("should throw error if invalid report id is provided", async () => {

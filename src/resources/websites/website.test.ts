@@ -1,13 +1,6 @@
 import Websites from "./";
 import "isomorphic-fetch";
-
-const apiKey = process.env.F19_API_KEY!;
-const baseUrl = process.env.F19_BASE_URL!;
-
-const config = {
-    apiKey,
-    baseUrl
-};
+import { config } from "../../helpers/testing";
 
 beforeAll(() => {
     jest.resetModules();

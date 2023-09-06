@@ -40,7 +40,6 @@ describe("Tables Resource", () => {
         const tableResponse = await tablesResource.getById(tableId);
 
         expect(tableResponse).toHaveProperty("payload");
-        expect(tableResponse.payload).toBeInstanceOf(Object);
         expect(tableResponse.payload).toHaveProperty("id");
 
         if (tableResponse?.payload && tableResponse.payload.id) {

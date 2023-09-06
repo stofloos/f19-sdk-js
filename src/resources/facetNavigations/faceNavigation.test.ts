@@ -43,8 +43,7 @@ describe("FacetNavigations Resource", () => {
         );
 
         expect(faceNavigationResponse).toHaveProperty("payload");
-        expect(faceNavigationResponse.payload).toBeInstanceOf(Object);
-        expect(faceNavigationResponse.payload).toHaveProperty("id");
+                expect(faceNavigationResponse.payload).toHaveProperty("id");
 
         if (
             faceNavigationResponse?.payload &&

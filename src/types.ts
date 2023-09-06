@@ -101,6 +101,7 @@ export interface BlockChannelTag extends MultiChannelTag {
 export interface Block {
     multiChannelTags: Array<{ [key: string]: any }>;
     id: string;
+    type: string;
     events: Array<Event>;
     blocks: Array<Block>;
 }

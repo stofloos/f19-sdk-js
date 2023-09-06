@@ -15,6 +15,8 @@ A step by step series of examples that tell you how to get a development env run
 npm install @happy-horizon/f19-sdk-js
 ```
 
+> ⚠️ This SDK uses the Fetch API under the hood. If your environment doesn't support it, you need to install a polyfill like [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch) or [node-fetch](https://github.com/node-fetch/node-fetch)
+
 
 ## Usage 
 

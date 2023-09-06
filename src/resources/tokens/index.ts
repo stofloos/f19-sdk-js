@@ -1,6 +1,7 @@
 import Base from "../base";
 import { TokenResponse } from "./types";
 import "isomorphic-fetch";
+
 const resource = "token";
 /**
  * Tokens resource
@@ -20,8 +21,7 @@ export default class Tokens extends Base {
         }
 
         return this.post(
-            `/${resource}/personal?authorizationToken=${authorizationToken}`,
-            false
+            `/${resource}/personal?authorizationToken=${authorizationToken}`
         ).then(response => response.json());
     }
 
@@ -31,7 +31,7 @@ export default class Tokens extends Base {
      * @return {Promise<TokenResponse>}
      */
     async getAnonymous(): Promise<TokenResponse> {
-        return this.post(`/${resource}/anonymous`, false).then(response =>
+        return this.post(`/${resource}/anonymous`).then(response =>
             response.json()
         );
     }
@@ -55,8 +55,7 @@ export default class Tokens extends Base {
             throw new Error("Thumbprint token is required");
         }
         return this.post(
-            `/${resource}/thumbprint?userId=${userId}&thumbprint=${thumbPrint}`,
-            false
+            `/${resource}/thumbprint?userId=${userId}&thumbprint=${thumbPrint}`
         ).then(response => response.json());
     }
 }

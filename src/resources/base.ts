@@ -39,13 +39,13 @@ export default abstract class Base {
     /**
      * Make a request to the API using fetch and return the serialized response
      * @param endpoint
-     * @param options
-     * @param preview
+     * @param [options={}]
+     * @param [preview=false]
      * @returns {Promise<Response>}
      */
     async request<T>(
         endpoint: string,
-        options: RequestInit,
+        options: RequestInit = {},
         preview: boolean = false
     ): Promise<Response> {
         if (!endpoint || endpoint === "") {
@@ -74,7 +74,7 @@ export default abstract class Base {
     /**
      * Make a GET request to the API
      * @param endpoint
-     * @param preview
+     * @param [preview=false]
      */
     async get<T>(
         endpoint: string,
@@ -92,15 +92,18 @@ export default abstract class Base {
     /**
      * Make a POST request to the API
      * @param endpoint
-     * @param preview
+     * @param [options={}]
+     * @param [preview=false]
      */
     async post<T>(
         endpoint: string,
-        preview: boolean = false
+        options: RequestInit = {},
+        preview: boolean = true
     ): Promise<Response> {
         return await this.request<T>(
             endpoint,
             {
+                ...options,
                 method: "POST"
             },
             preview

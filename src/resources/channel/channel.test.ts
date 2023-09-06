@@ -1,18 +1,12 @@
 import Index from "./";
 import "isomorphic-fetch";
-
-const apiKey = process.env.F19_API_KEY!;
-const baseUrl = process.env.F19_BASE_URL!;
-
+import { config } from "../../helpers/testing";
 beforeAll(() => {
     jest.resetModules();
 });
 
 describe("Channel Resource", () => {
-    const getChannel = new Index({
-        apiKey: apiKey,
-        baseUrl: baseUrl
-    });
+    const getChannel = new Index(config);
 
     it("should be instance of Channel", () => {
         expect(getChannel).toBeInstanceOf(Index);

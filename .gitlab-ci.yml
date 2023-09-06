@@ -41,6 +41,9 @@ yarn:
 test:
     extends: .node-modules
     allow_failure: false
+    variables:
+        F19_API_URL: $F19_API_URL
+        F19_BASE_URL: $F19_BASE_URL
     rules:
         - <<: *rule_mr
         - <<: *rule_test

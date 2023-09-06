@@ -36,6 +36,6 @@ describe("Base Instance", () => {
             baseUrl: "https://api.f19.rocks"
         });
 
-        await expect(base.post("")).rejects.toThrowError("Endpoint not found");
+        await expect(base.post("", {})).rejects.toThrowError("Endpoint not found");
     });
 });

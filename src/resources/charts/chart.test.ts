@@ -31,7 +31,6 @@ describe("Charts resource", () => {
         chartId = charts?.payload?.[0]?.id;
 
         expect(charts).toHaveProperty("payload");
-        ;
     });
 
     it("should throw error if id is not provided", async () => {

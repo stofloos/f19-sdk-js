@@ -37,7 +37,6 @@ describe("Reports resource", () => {
         componentId = report?.payload?.[0]?.components?.[0]?.id;
 
         expect(report).toHaveProperty("payload");
-        ;
     });
 
     it("should throw error if id is not provided", async () => {
@@ -64,19 +63,16 @@ describe("Reports resource", () => {
         });
 
         it("should throw error if invalid report id is provided", async () => {
-            await expect(
-                reports.getReportProgress("123")
-            ).rejects.toThrowError("Not Found");
-
+            await expect(reports.getReportProgress("123")).rejects.toThrowError(
+                "Not Found"
+            );
         });
 
         it.skip("should return custom report progress", async () => {
             const report = await reports.getReportProgress(customReportId);
 
             expect(report.payload?.id).toEqual(customReportId);
-
         });
-
 
         it("should throw error if invalid report id is provided", async () => {
             await expect(reports.createCustomReport("")).rejects.toThrowError(
@@ -91,13 +87,14 @@ describe("Reports resource", () => {
         });
 
         it.skip("should create custom report", async () => {
-            const report = await reports.createCustomReport(customReportId, "chpdf", [
-                componentId
-            ]);
+            const report = await reports.createCustomReport(
+                customReportId,
+                "chpdf",
+                [componentId]
+            );
 
             expect(report.payload?.id).toEqual(reportId);
         });
-
     });
 
     describe("Custom async reports", () => {
@@ -113,14 +110,14 @@ describe("Reports resource", () => {
             ).rejects.toThrowError("Bad Request");
         });
 
-
         it.skip("should create custom async report", async () => {
-            const report = await reports.createCustomAsyncReport(customReportId, "chpdf", [
-                componentId
-            ]);
+            const report = await reports.createCustomAsyncReport(
+                customReportId,
+                "chpdf",
+                [componentId]
+            );
 
             expect(report.payload?.id).toEqual(customReportId);
         });
-
     });
 });

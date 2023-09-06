@@ -38,7 +38,6 @@ describe("Downloads resource", () => {
         downloadId = downloadsResponse?.payload?.[0]?.id;
 
         expect(downloadsResponse).toHaveProperty("payload");
-        ;
     });
 
     it("should throw error if id is not provided", async () => {

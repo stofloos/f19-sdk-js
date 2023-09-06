@@ -22,12 +22,17 @@ export default class Reports extends Base {
      * @param [preview = false]
      * @returns {Promise<ReportResponse>}
      */
-    async getReportProgress(id: string, preview:boolean = false): Promise<ReportResponse> {
+    async getReportProgress(
+        id: string,
+        preview: boolean = false
+    ): Promise<ReportResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.get(`/${resource}/custom_progress/id/${id}`, preview).then(response => response.json());
+        return this.get(`/${resource}/custom_progress/id/${id}`, preview).then(
+            response => response.json()
+        );
     }
 
     /**
@@ -56,7 +61,8 @@ export default class Reports extends Base {
                     data.payload.components = data.payload.components.filter(
                         (component: Component) => {
                             return component.multiChannelTags.some(
-                                (tag: MultiChannelTag) => tag.channel === channel
+                                (tag: MultiChannelTag) =>
+                                    tag.channel === channel
                             );
                         }
                     );
@@ -93,7 +99,8 @@ export default class Reports extends Base {
                         return report.components.some(
                             (component: Component) => {
                                 return component.multiChannelTags.some(
-                                    (tag: MultiChannelTag) => tag.channel === channel
+                                    (tag: MultiChannelTag) =>
+                                        tag.channel === channel
                                 );
                             }
                         );
@@ -119,14 +126,11 @@ export default class Reports extends Base {
             throw new Error("No id provided");
         }
 
-        return this.post(
-            `/${resource}/custom/id/${id}/channel/${channel}`,
-            {
-                body: JSON.stringify({
-                    componentIds
-                }),
-            }
-        ).then(response => response.json());
+        return this.post(`/${resource}/custom/id/${id}/channel/${channel}`, {
+            body: JSON.stringify({
+                componentIds
+            })
+        }).then(response => response.json());
     }
 
     /**
@@ -136,15 +140,22 @@ export default class Reports extends Base {
      * @param componentIds
      * @returns {Promise<ReportResponse>}
      */
-    async createCustomAsyncReport(id: string, channel: Channel = "*", componentIds: Array<string> = []): Promise<ReportResponse> {
+    async createCustomAsyncReport(
+        id: string,
+        channel: Channel = "*",
+        componentIds: Array<string> = []
+    ): Promise<ReportResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.post( `/${resource}/custom_async/id/${id}/channel/${channel}`, {
-            body: JSON.stringify({
-                componentIds
-            }),
-        }).then(response => response.json());
+        return this.post(
+            `/${resource}/custom_async/id/${id}/channel/${channel}`,
+            {
+                body: JSON.stringify({
+                    componentIds
+                })
+            }
+        ).then(response => response.json());
     }
 }

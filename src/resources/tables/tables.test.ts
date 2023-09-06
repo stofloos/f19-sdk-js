@@ -33,7 +33,6 @@ describe("Tables Resource", () => {
             tablesResponse?.payload?.[0] && tablesResponse?.payload?.[0]?.id;
 
         expect(tablesResponse).toHaveProperty("payload");
-        ;
     });
 
     it("should get a table by id", async () => {

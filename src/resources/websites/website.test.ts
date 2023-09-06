@@ -21,7 +21,6 @@ describe("Websites resource", () => {
         websiteAlias = websitesResponse?.payload?.[0]?.alias;
 
         expect(websitesResponse).toHaveProperty("payload");
-        ;
     });
 
     it("should throw error if alias is not provided", async () => {

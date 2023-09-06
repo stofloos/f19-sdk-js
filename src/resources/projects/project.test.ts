@@ -28,7 +28,6 @@ describe("Projects resource", () => {
         }
 
         expect(project).toHaveProperty("payload");
-        ;
     });
 
     it("should return project", async () => {

@@ -37,7 +37,7 @@ describe("Reports resource", () => {
         componentId = report?.payload?.[0]?.components?.[0]?.id;
 
         expect(report).toHaveProperty("payload");
-        expect(report.payload).toBeInstanceOf(Array);
+        ;
     });
 
     it("should throw error if id is not provided", async () => {

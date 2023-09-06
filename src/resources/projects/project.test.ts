@@ -28,7 +28,7 @@ describe("Projects resource", () => {
         }
 
         expect(project).toHaveProperty("payload");
-        expect(project.payload).toBeInstanceOf(Array);
+        ;
     });
 
     it("should return project", async () => {

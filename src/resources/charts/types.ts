@@ -1,5 +1,7 @@
-import { Block, ChannelResource, ChannelTag } from "../../types";
+import { Block, ChannelResource } from "../../types";
 import { BaseResponse } from "../../types";
+
+export declare interface ChartTags {}
 
 export type Chart = {
     multiChannelResources: Array<ChannelResource>;
@@ -7,7 +9,7 @@ export type Chart = {
     text: string;
     type: string;
     blocks: Array<Block>;
-    multiChannelTags: Array<ChannelTag>;
+    multiChannelTags: Array<ChartTags>;
     events: Array<Event>;
 };
 
@@ -16,5 +18,5 @@ export declare interface ChartResponse extends BaseResponse {
 }
 
 export declare interface ChartsResponse extends BaseResponse {
-    payload: Array<Chart> | [];
+    payload: Array<Chart>;
 }

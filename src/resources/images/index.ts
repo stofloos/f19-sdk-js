@@ -1,6 +1,7 @@
 import Base from "../base";
 import { ImageResponse, ImagesResponse } from "./types";
 
+const resource = "image";
 /**
  * Images resource
  * @export
@@ -11,15 +12,19 @@ export default class Images extends Base {
     /**
      * Get all images for a project
      * @param projectId
+     * @param preview
      * @returns {Promise<any>}
-     *
      */
-    async getAll(projectId: string): Promise<ImagesResponse> {
+    async getAll(
+        projectId: string,
+        preview: boolean = false
+    ): Promise<ImagesResponse> {
         if (!projectId) {
             throw new Error("Project id is required");
         }
-        return await this.request(
-            `/cms/api/public/v1/image/project/${projectId}`
+        return await this.get(
+            `/${resource}/project/${projectId}`,
+            preview
         ).then(response => {
             return response.json();
         });
@@ -35,9 +40,7 @@ export default class Images extends Base {
             throw new Error("Image id is required");
         }
 
-        return await this.request(
-            `/cms/api/public/v1/image/id/${imageId}`
-        ).then(response => {
+        return await this.get(`/${resource}/id/${imageId}`).then(response => {
             return response.json();
         });
     }

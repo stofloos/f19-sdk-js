@@ -12,5 +12,5 @@ export declare interface ProjectResponse extends BaseResponse {
 }
 
 export declare interface ProjectsResponse extends BaseResponse {
-    payload: Array<Project> | [];
+    payload: Array<Project>;
 }

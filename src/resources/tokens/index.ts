@@ -1,6 +1,8 @@
 import Base from "../base";
 import { TokenResponse } from "./types";
+import "isomorphic-fetch";
 
+const resource = "token";
 /**
  * Tokens resource
  * @class Tokens
@@ -8,63 +10,52 @@ import { TokenResponse } from "./types";
  */
 export default class Tokens extends Base {
     /**
-     * token request helper
-     * @param url
-     * @param authorizationToken
-     * @async
-     * @return {Promise<TokenResponse>}
-     */
-    async tokenRequest(
-        url: string,
-        authorizationToken: string
-    ): Promise<TokenResponse> {
-        if (!authorizationToken || authorizationToken === "") {
-            throw new Error("Authorization token is required");
-        }
-
-        return this.request(url, {
-            method: "GET"
-        }).then(response => {
-            return response.json();
-        });
-    }
-
-    /**
      * Get a personal token
      * @param authorizationToken
      * @async
      * @return {Promise<TokenResponse>}
      */
     async getPersonal(authorizationToken: string): Promise<TokenResponse> {
-        return this.tokenRequest(
-            "/cms/api/public/v1/token/personal",
-            authorizationToken
-        );
+        if (!authorizationToken || authorizationToken === "") {
+            throw new Error("Authorization token is required");
+        }
+
+        return this.post(
+            `/${resource}/personal?authorizationToken=${authorizationToken}`
+        ).then(response => response.json());
     }
 
     /**
      * Get an anonymous token
-     * @param authorizationToken
      * @async
      * @return {Promise<TokenResponse>}
      */
-    async getAnonymous(authorizationToken: string): Promise<TokenResponse> {
-        return this.tokenRequest(
-            "/cms/api/public/v1/token/anonymous",
-            authorizationToken
+    async getAnonymous(): Promise<TokenResponse> {
+        return this.post(`/${resource}/anonymous`).then(response =>
+            response.json()
         );
     }
 
     /**
      * Get a thumbprint token
-     * @param authorizationToken
      * @async
+     * @param userId
+     * @param thumbPrint
      * @return {Promise<TokenResponse>}
      */
-    async getThumbprint(authorizationToken: string): Promise<TokenResponse> {
-        return this.tokenRequest(
-            "/cms/api/public/v1/token/thumbprint",
-            authorizationToken
-        );
+    async getThumbprint(
+        userId: string,
+        thumbPrint: string
+    ): Promise<TokenResponse> {
+        if (!userId || userId === "") {
+            throw new Error("UserId token is required");
+        }
+
+        if (!thumbPrint || thumbPrint === "") {
+            throw new Error("Thumbprint token is required");
+        }
+        return this.post(
+            `/${resource}/thumbprint?userId=${userId}&thumbprint=${thumbPrint}`
+        ).then(response => response.json());
     }
 }

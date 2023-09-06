@@ -10,7 +10,7 @@ import FacetNavigations from "./resources/facetNavigations";
 import Images from "./resources/images";
 import Nonce from "./resources/nonce";
 import Tables from "./resources/tables";
-import Downloads from "./resources/downloads/downloads";
+import Downloads from "./resources/downloads";
 import Tokens from "./resources/tokens";
 
 /**
@@ -29,7 +29,7 @@ import Tokens from "./resources/tokens";
  * @property {Images} images
  * @property {Nonce} nonce
  * @property {Tables} tables
- * @property {Downloads} items
+ * @property {Index} items
  * @property {Tokens} tokens
  * @throws Error
  */

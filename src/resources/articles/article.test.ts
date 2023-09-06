@@ -2,10 +2,7 @@ import Articles from "./";
 import Projects from "../projects";
 import "isomorphic-fetch";
 
-const config = {
-    apiKey: process.env.F19_API_KEY!,
-    baseUrl: process.env.F19_BASE_URL!
-};
+import { config } from "../../helpers/testing";
 
 describe("Articles resource", () => {
     const articles = new Articles(config);

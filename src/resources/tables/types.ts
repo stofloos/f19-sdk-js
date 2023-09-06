@@ -3,7 +3,7 @@ import { BaseResponse, Block } from "../../types";
 export declare type Table = Block;
 
 export declare interface TablesResponse extends BaseResponse {
-    payload: Array<Table> | [];
+    payload: Array<Table>;
 }
 
 export declare interface TableResponse extends BaseResponse {

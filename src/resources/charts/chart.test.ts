@@ -2,10 +2,7 @@ import Charts from "./";
 import "isomorphic-fetch";
 import Projects from "../projects";
 
-const config = {
-    apiKey: process.env.F19_API_KEY!,
-    baseUrl: process.env.F19_BASE_URL!
-};
+import { config } from "../../helpers/testing";
 
 describe("Charts resource", () => {
     const chartsResource = new Charts(config);

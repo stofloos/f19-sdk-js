@@ -1,43 +1,20 @@
-import { BaseResponse, Block, ChannelResource, ChannelTag } from "../../types";
+import { BaseResponse, Block, Component } from "../../types";
 
-export declare type Component = {
-    id: string;
-    reportId: string;
-    type: string;
-    urlSegment: string;
-    heading: {
-        type: string;
-        id: string;
-        blocks: Array<Block> | [];
-        multiChannelResources: Array<ChannelResource>[];
-        multiChannelTags: Array<ChannelTag> | [];
-        text: null;
-        events: Array<Event> | [];
-    };
-    level: 0;
-    multiChannelTags: Array<ChannelTag> | [];
-    blocks: Array<Block>;
-    events: Array<Event>;
-};
-
-export declare type Report = {
+export declare interface Report extends Block {
     summaryLevel: number;
     name: string;
-    id: string;
     urlSegment: string;
     projectId: string;
     language: string;
     components: Array<Component>;
     facetNavigations: null;
-    multiChannelTags: Array<ChannelTag>;
-    events: Array<Event> | [];
-    articleIds: Array<string>[];
-};
+    articleIds: Array<string>;
+}
 
 export declare interface ReportResponse extends BaseResponse {
     payload: Report | null;
 }
 
 export declare interface ReportsResponse extends BaseResponse {
-    payload: Array<Report> | [];
+    payload: Array<Report>;
 }

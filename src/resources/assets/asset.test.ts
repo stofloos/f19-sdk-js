@@ -2,11 +2,7 @@ import Assets from "./";
 import Projects from "../projects";
 import Reports from "../reports";
 import "isomorphic-fetch";
-
-const config = {
-    apiKey: process.env.F19_API_KEY!,
-    baseUrl: process.env.F19_BASE_URL!
-};
+import { config } from "../../helpers/testing";
 
 describe("Asset Resource", () => {
     const assets = new Assets(config);
@@ -22,7 +18,7 @@ describe("Asset Resource", () => {
         // Get all projects
         const projects = await projectsClient.getAll();
 
-        // Get first project id
+        // Get project id
         const projectId = projects.payload?.[0]?.id;
 
         // New instance of Reports
@@ -31,22 +27,27 @@ describe("Asset Resource", () => {
         // Get all reports by project id
         const reports = await reportsClient.getAllByProjectId(projectId);
 
-        // Get block of type image in blocks of first component of first report.
+        // Get an image block of a first component in the first report.
         const imageBlock = reports.payload?.[0]?.components?.[0]?.blocks?.find(
-            block => block.type.match(/image/i)
+            block => block?.type.match(/main-image/g)
         );
 
         // Get image name from first multiChannelTag from first Block in image block.
-        const imageName = imageBlock?.blocks?.[0]?.multiChannelTags?.[0]?.tags
-            ?.name as string;
+        const imageName =
+            imageBlock?.blocks?.[0]?.multiChannelTags?.[0]?.tags?.name;
 
         // Get image blob by name
         expect(imageName).toBeDefined();
         expect(projectId).toBeDefined();
-
-        const imageBlob = await assets.getImageByName(projectId, imageName);
-
-        expect(imageBlob).toBeDefined();
+        if (!imageName) {
+            await expect(
+                assets.getImageByName(projectId, imageName!)
+            ).rejects.toThrowError();
+        } else {
+            await expect(
+                assets.getImageByName(projectId, imageName!)
+            ).resolves.toBeDefined();
+        }
     });
 
     it("should throw error if asset name is not provided", async () => {

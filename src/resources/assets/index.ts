@@ -1,5 +1,5 @@
 import Base from "../base";
-
+const resource = "assets";
 /**
  * Assets resource
  * @class
@@ -11,9 +11,14 @@ export default class Assets extends Base {
      * Get image by name
      * @param projectId
      * @param name
+     * @param preview
      * @returns {Promise<string>}
      */
-    async getImageByName(projectId: string, name: string): Promise<Blob> {
+    async getImageByName(
+        projectId: string,
+        name: string,
+        preview: boolean = false
+    ): Promise<Blob> {
         if (!projectId || projectId === "") {
             throw new Error("No project id provided");
         }
@@ -22,11 +27,9 @@ export default class Assets extends Base {
             throw new Error("No asset name provided");
         }
 
-        return this.request(
-            `/cms/api/public/v1/assets/image/project/${projectId}/name/${name}`,
-            {
-                method: "GET"
-            }
+        return this.get(
+            `/${resource}/image/project/${projectId}/name/${name}`,
+            preview
         ).then(response => {
             return response.blob();
         });
@@ -36,9 +39,14 @@ export default class Assets extends Base {
      * Get download by name
      * @param projectId
      * @param name
+     * @param preview
      * @returns {Promise<Blob>}
      */
-    async getDownloadByName(projectId: string, name: string): Promise<Blob> {
+    async getDownloadByName(
+        projectId: string,
+        name: string,
+        preview: boolean = false
+    ): Promise<Blob> {
         if (!projectId || projectId === "") {
             throw new Error("No project id provided");
         }
@@ -47,11 +55,9 @@ export default class Assets extends Base {
             throw new Error("No name provided");
         }
 
-        return this.request(
-            `/cms/api/public/v1/assets/download/project/${projectId}/name/${name}`,
-            {
-                method: "GET"
-            }
+        return this.get(
+            `/${resource}/download/project/${projectId}/name/${name}`,
+            preview
         ).then(response => {
             return response.blob();
         });
@@ -60,17 +66,21 @@ export default class Assets extends Base {
     /**
      * Get asset blob by token
      * @param token
+     * @param preview
      * @returns {Promise<Blob>}
      */
-    async getBlobByToken(token: string): Promise<Blob> {
+    async getBlobByToken(
+        token: string,
+        preview: boolean = false
+    ): Promise<Blob> {
         if (!token || token === "") {
             throw new Error("No token provided");
         }
 
-        return this.request(`/cms/api/public/v1/assets/blob/ticket/${token}`, {
-            method: "GET"
-        }).then(response => {
-            return response.blob();
-        });
+        return this.get(`/${resource}/blob/ticket/${token}`, preview).then(
+            response => {
+                return response.blob();
+            }
+        );
     }
 }

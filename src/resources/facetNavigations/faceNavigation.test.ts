@@ -2,10 +2,7 @@ import FacetNavigations from "../facetNavigations";
 import Projects from "../projects";
 import "isomorphic-fetch";
 
-const config = {
-    apiKey: process.env.F19_API_KEY!,
-    baseUrl: process.env.F19_BASE_URL!
-};
+import { config } from "../../helpers/testing";
 
 describe("FacetNavigations Resource", () => {
     const facetNavigations = new FacetNavigations(config);

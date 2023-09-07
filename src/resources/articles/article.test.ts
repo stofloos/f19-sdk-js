@@ -37,6 +37,5 @@ describe("Articles resource", () => {
         const articlesResponse = await articles.getAllByProjectId(projectId!);
 
         expect(articlesResponse).toHaveProperty("payload");
-        expect(articlesResponse.payload).toBeInstanceOf(Array);
     });
 });

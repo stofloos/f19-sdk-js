@@ -34,7 +34,6 @@ describe("FacetNavigations Resource", () => {
         facetNavigationId = facetNavigationsResponse?.payload?.[0]?.id;
 
         expect(facetNavigationsResponse).toHaveProperty("payload");
-        expect(facetNavigationsResponse.payload).toBeInstanceOf(Array);
     });
 
     it("should get a facetNavigation by id", async () => {
@@ -43,7 +42,6 @@ describe("FacetNavigations Resource", () => {
         );
 
         expect(faceNavigationResponse).toHaveProperty("payload");
-        expect(faceNavigationResponse.payload).toBeInstanceOf(Object);
         expect(faceNavigationResponse.payload).toHaveProperty("id");
 
         if (

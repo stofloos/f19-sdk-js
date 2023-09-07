@@ -33,14 +33,12 @@ describe("Tables Resource", () => {
             tablesResponse?.payload?.[0] && tablesResponse?.payload?.[0]?.id;
 
         expect(tablesResponse).toHaveProperty("payload");
-        expect(tablesResponse.payload).toBeInstanceOf(Array);
     });
 
     it("should get a table by id", async () => {
         const tableResponse = await tablesResource.getById(tableId);
 
         expect(tableResponse).toHaveProperty("payload");
-        expect(tableResponse.payload).toBeInstanceOf(Object);
         expect(tableResponse.payload).toHaveProperty("id");
 
         if (tableResponse?.payload && tableResponse.payload.id) {

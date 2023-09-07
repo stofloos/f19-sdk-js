@@ -106,7 +106,6 @@ export interface Block {
     blocks: Array<Block>;
 }
 
-
 export interface ImageTags extends Tags {
     id: string;
     name: string;

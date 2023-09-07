@@ -1,0 +1,69 @@
+stages:
+    - dependencies
+    - test
+    - build
+
+image: node:18-alpine
+
+variables:
+    GIT_DEPTH: 1
+
+.rule_merge_request: &rule_mr
+    if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+.rule_test: &rule_test
+    if: '$CI_COMMIT_BRANCH == "develop"'
+
+.rule_acceptance: &rule_acceptance
+    if: '$CI_COMMIT_BRANCH == "master"'
+
+.node-modules:
+    cache:
+        key:
+            files:
+                - yarn.lock
+        paths:
+            - node_modules/
+        policy: pull
+
+yarn:
+    extends: .node-modules
+    rules:
+        - <<: *rule_mr
+        - <<: *rule_test
+        - <<: *rule_acceptance
+    stage: dependencies
+    script:
+        - npm ci
+    cache:
+        policy: pull-push
+
+test:
+    extends: .node-modules
+    allow_failure: false
+    variables:
+        F19_API_URL: $F19_API_URL
+        F19_BASE_URL: $F19_BASE_URL
+    rules:
+        - <<: *rule_mr
+        - <<: *rule_test
+        - <<: *rule_acceptance
+    stage: test
+    script:
+        - npm run test
+        - npm run prettier:check
+
+build:
+    extends: .node-modules
+    rules:
+        - <<: *rule_mr
+        - <<: *rule_test
+        - <<: *rule_acceptance
+    stage: build
+    script:
+        - npm run build
+    artifacts:
+        paths:
+            - dist/
+        expire_in: 1 week
+        when: always

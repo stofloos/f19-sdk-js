@@ -1,3 +1,4 @@
+import "isomorphic-fetch";
 import Tokens from "./";
 import { config } from "../../helpers/testing";
 

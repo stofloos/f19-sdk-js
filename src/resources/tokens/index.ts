@@ -1,6 +1,6 @@
 import Base from "../base";
 import { TokenResponse } from "./types";
-import "isomorphic-fetch";
+
 
 const resource = "token";
 /**

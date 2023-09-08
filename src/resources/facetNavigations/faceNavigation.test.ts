@@ -27,9 +27,8 @@ describe("FacetNavigations Resource", () => {
             projectsResponse?.payload?.[0] &&
             projectsResponse?.payload?.[0]?.id;
 
-        const facetNavigationsResponse = await facetNavigations.getAll(
-            projectId
-        );
+        const facetNavigationsResponse =
+            await facetNavigations.getAll(projectId);
 
         facetNavigationId = facetNavigationsResponse?.payload?.[0]?.id;
 
@@ -37,9 +36,8 @@ describe("FacetNavigations Resource", () => {
     });
 
     it("should get a facetNavigation by id", async () => {
-        const faceNavigationResponse = await facetNavigations.getById(
-            facetNavigationId
-        );
+        const faceNavigationResponse =
+            await facetNavigations.getById(facetNavigationId);
 
         expect(faceNavigationResponse).toHaveProperty("payload");
         expect(faceNavigationResponse.payload).toHaveProperty("id");

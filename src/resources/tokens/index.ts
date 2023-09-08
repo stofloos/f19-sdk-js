@@ -1,7 +1,6 @@
 import Base from "../base";
 import { TokenResponse } from "./types";
 
-
 const resource = "token";
 /**
  * Tokens resource

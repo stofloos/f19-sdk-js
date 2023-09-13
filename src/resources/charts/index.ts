@@ -1,5 +1,27 @@
 import Base from "../base";
-import { ChartsResponse, ChartResponse } from "./types";
+import { Block, ChannelResource } from "../../index";
+import { BaseResponse } from "../../index";
+
+export declare interface ChartTags {}
+
+export type Chart = {
+    multiChannelResources: Array<ChannelResource>;
+    id: string;
+    text: string;
+    type: string;
+    blocks: Array<Block>;
+    multiChannelTags: Array<ChartTags>;
+    events: Array<Event>;
+};
+
+export declare interface ChartResponse extends BaseResponse {
+    payload: Chart | null;
+}
+
+export declare interface ChartsResponse extends BaseResponse {
+    payload: Array<Chart>;
+}
+
 const resource = "chart";
 /**
  * Charts resource

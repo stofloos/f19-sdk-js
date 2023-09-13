@@ -1,5 +1,29 @@
 import Base from "../base";
-import { FacetNavigationResponse, FacetNavigationsResponse } from "./types";
+import { BaseResponse } from "../../index";
+
+export declare type Facet = {
+    id: string;
+    name: string;
+    urlSegment: string;
+    facets: Array<Facet>;
+};
+
+export declare type FacetNavigation = {
+    id: string;
+    projectId: string;
+    name: string;
+    facets: Array<Facet>;
+    securedProjectId: number;
+};
+
+export declare interface FacetNavigationsResponse extends BaseResponse {
+    payload: Array<FacetNavigation>;
+}
+
+export declare interface FacetNavigationResponse extends BaseResponse {
+    payload: FacetNavigation | null;
+}
+
 const resource = "facetnavigation";
 export default class FacetNavigations extends Base {
     /**

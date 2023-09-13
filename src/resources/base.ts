@@ -1,4 +1,4 @@
-import type { Config } from "../types";
+import type { Config } from "../index";
 
 /**
  * Base class for all resources
@@ -55,6 +55,7 @@ export default abstract class Base {
         const url = `${this.baseUrl}${this.apiPath}${endpoint}`;
 
         const headers = new Headers();
+        headers.append("Accept", "application/json");
         headers.append("Content-Type", "application/json");
         headers.append("X-API-Key", this.apiKey);
 

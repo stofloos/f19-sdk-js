@@ -1,7 +1,30 @@
 import Base from "../base";
+import {
+    ChannelType,
+    Component,
+    MultiChannelTag,
+    BaseResponse,
+    Block
+} from "../../index";
 
-import { Report, ReportResponse, ReportsResponse } from "./types";
-import { Channel, Component, MultiChannelTag } from "../../types";
+export declare interface Report extends Block {
+    summaryLevel: number;
+    name: string;
+    urlSegment: string;
+    projectId: string;
+    language: string;
+    components: Array<Component>;
+    facetNavigations: null;
+    articleIds: Array<string>;
+}
+
+export declare interface ReportResponse extends BaseResponse {
+    payload: Report | null;
+}
+
+export declare interface ReportsResponse extends BaseResponse {
+    payload: Array<Report>;
+}
 
 const resource = "report";
 
@@ -44,7 +67,7 @@ export default class Reports extends Base {
      */
     async getById(
         id: string,
-        channel: Channel = "*",
+        channel: ChannelType = "*",
         preview: boolean = false
     ): Promise<ReportResponse> {
         if (!id || id === "") {
@@ -81,7 +104,7 @@ export default class Reports extends Base {
      */
     async getAllByProjectId(
         id: string,
-        channel: Channel = "*",
+        channel: ChannelType = "*",
         preview: boolean = false
     ): Promise<ReportsResponse> {
         if (!id || id === "") {
@@ -119,7 +142,7 @@ export default class Reports extends Base {
      */
     async createCustomReport(
         id: string,
-        channel: Channel = "*",
+        channel: ChannelType = "*",
         componentIds: Array<string> = []
     ): Promise<ReportResponse> {
         if (!id || id === "") {
@@ -142,7 +165,7 @@ export default class Reports extends Base {
      */
     async createCustomAsyncReport(
         id: string,
-        channel: Channel = "*",
+        channel: ChannelType = "*",
         componentIds: Array<string> = []
     ): Promise<ReportResponse> {
         if (!id || id === "") {

@@ -1,5 +1,15 @@
 import Base from "../base";
-import { TokenResponse } from "./types";
+import { BaseResponse } from "../../index";
+
+export declare type Token = {
+    userId: number;
+    thumbprint: string;
+    key: string;
+};
+
+export declare interface TokenResponse extends BaseResponse {
+    payload: Token | null;
+}
 
 const resource = "token";
 /**

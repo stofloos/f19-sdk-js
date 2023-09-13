@@ -1,8 +1,18 @@
 import Base from "../base";
-import { ChannelResponse } from "./types";
+import { BaseResponse } from "../../index";
+
+export type ChannelItem = {
+    alias: string;
+    name: string;
+    outputStandard: string;
+};
+
+export interface ChannelResponse extends BaseResponse {
+    payload: Array<ChannelItem>;
+}
 
 const resource = "channel";
-export default class Index extends Base {
+export default class Channel extends Base {
     /**
      * Get all channels
      * @returns {Promise<ChannelResponse>}

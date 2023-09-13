@@ -1,4 +1,4 @@
-import Index from "./";
+import Channel from "./";
 import "isomorphic-fetch";
 import { config } from "../../helpers/testing";
 beforeAll(() => {
@@ -6,10 +6,10 @@ beforeAll(() => {
 });
 
 describe("Channel Resource", () => {
-    const getChannel = new Index(config);
+    const getChannel = new Channel(config);
 
     it("should be instance of Channel", () => {
-        expect(getChannel).toBeInstanceOf(Index);
+        expect(getChannel).toBeInstanceOf(Channel);
     });
 
     it("should return channel", async () => {

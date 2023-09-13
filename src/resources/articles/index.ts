@@ -1,6 +1,15 @@
 import Base from "../base";
-import { ArticleResponse, ArticlesResponse } from "./types";
-import { Channel } from "../../types";
+import { ChannelType } from "../../index";
+
+import { Article, BaseResponse } from "../../index";
+
+export interface ArticlesResponse extends BaseResponse {
+    payload: Array<Article>;
+}
+
+export interface ArticleResponse extends BaseResponse {
+    payload: Article | null;
+}
 
 /**
  * Articles instance
@@ -25,7 +34,7 @@ export default class Articles extends Base {
      */
     async getAllByProjectId(
         projectId: string,
-        channel: Channel = "*",
+        channel: ChannelType = "*",
         preview: boolean = false
     ): Promise<ArticlesResponse> {
         if (!projectId || projectId === "") {
@@ -60,7 +69,7 @@ export default class Articles extends Base {
      */
     async getById(
         articleId: string,
-        channel: Channel = "*",
+        channel: ChannelType = "*",
         preview: boolean = false
     ): Promise<ArticleResponse> {
         if (!articleId || articleId === "") {

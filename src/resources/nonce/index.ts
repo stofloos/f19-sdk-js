@@ -1,5 +1,10 @@
 import Base from "../base";
-import { NonceResponse } from "./types";
+import { BaseResponse } from "../../index";
+
+export declare interface NonceResponse extends BaseResponse {
+    payload: string | null;
+}
+
 const resource = "nonce";
 /**
  * Nonce resource

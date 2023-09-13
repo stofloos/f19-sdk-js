@@ -1,5 +1,16 @@
 import Base from "../base";
-import { TablesResponse, TableResponse } from "./types";
+import { BaseResponse, Block } from "../../index";
+
+export declare type Table = Block;
+
+export declare interface TablesResponse extends BaseResponse {
+    payload: Array<Table>;
+}
+
+export declare interface TableResponse extends BaseResponse {
+    payload: Table | null;
+}
+
 const resource = "table";
 /**
  * Tables Resource

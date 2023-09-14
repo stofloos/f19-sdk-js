@@ -254,6 +254,7 @@ export declare interface Article extends ComponentInterface {
     projectId: string;
     language: string;
     summary: string;
+    article: Block;
     teaserImage: Image;
     headerImage: Image;
     facetIds: Array<string>;

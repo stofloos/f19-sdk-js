@@ -15,12 +15,13 @@ const resource = "channel";
 export default class Channel extends Base {
     /**
      * Get all channels
+     * @param options
      * @returns {Promise<ChannelResponse>}
      * @example
      * const channel = await client.channel.getAll()
      */
-    async getAll(preview: boolean = false): Promise<ChannelResponse> {
-        return this.get(`/${resource}`, preview).then(response => {
+    async getAll(options?: RequestInit): Promise<ChannelResponse> {
+        return this.get(`/${resource}`, options).then(response => {
             return response.json();
         });
     }

@@ -40,13 +40,12 @@ export default abstract class Base {
      * Make a request to the API using fetch and return the serialized response
      * @param endpoint
      * @param [options={}]
-     * @param [preview=false]
+     * @param [options =false]
      * @returns {Promise<Response>}
      */
     async request<T>(
         endpoint: string,
-        options: RequestInit = {},
-        preview: boolean = false
+        options?: RequestInit
     ): Promise<Response> {
         if (!endpoint || endpoint === "") {
             throw new Error("Endpoint not found");
@@ -54,15 +53,14 @@ export default abstract class Base {
 
         const url = `${this.baseUrl}${this.apiPath}${endpoint}`;
 
-        const headers = new Headers();
-        headers.append("Accept", "application/json");
-        headers.append("Content-Type", "application/json");
-        headers.append("X-API-Key", this.apiKey);
-
         const response = await fetch(url, {
             ...options,
-            cache: preview ? "no-cache" : "default",
-            headers
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                "X-API-Key": this.apiKey,
+                ...options?.headers
+            }
         });
 
         if (!response.ok) {
@@ -75,39 +73,24 @@ export default abstract class Base {
     /**
      * Make a GET request to the API
      * @param endpoint
-     * @param [preview=false]
+     * @param options
      */
-    async get<T>(
-        endpoint: string,
-        preview: boolean = false
-    ): Promise<Response> {
-        return await this.request<T>(
-            endpoint,
-            {
-                method: "GET"
-            },
-            preview
-        );
+    async get<T>(endpoint: string, options?: RequestInit): Promise<Response> {
+        return await this.request<T>(endpoint, {
+            ...options,
+            method: "GET"
+        });
     }
 
     /**
      * Make a POST request to the API
      * @param endpoint
      * @param [options={}]
-     * @param [preview=false]
      */
-    async post<T>(
-        endpoint: string,
-        options: RequestInit = {},
-        preview: boolean = true
-    ): Promise<Response> {
-        return await this.request<T>(
-            endpoint,
-            {
-                ...options,
-                method: "POST"
-            },
-            preview
-        );
+    async post<T>(endpoint: string, options?: RequestInit): Promise<Response> {
+        return await this.request<T>(endpoint, {
+            ...options,
+            method: "POST"
+        });
     }
 }

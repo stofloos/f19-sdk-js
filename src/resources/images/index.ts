@@ -36,19 +36,19 @@ export default class Images extends Base {
     /**
      * Get all images for a project
      * @param projectId
-     * @param preview
+     * @param options
      * @returns {Promise<any>}
      */
     async getAll(
         projectId: string,
-        preview: boolean = false
+        options?: RequestInit
     ): Promise<ImagesResponse> {
         if (!projectId) {
             throw new Error("Project id is required");
         }
         return await this.get(
             `/${resource}/project/${projectId}`,
-            preview
+            options
         ).then(response => {
             return response.json();
         });

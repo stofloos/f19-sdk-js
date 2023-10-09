@@ -35,22 +35,6 @@ export type BlockType =
     | "subtitle"
     | "tableofcontentsitem";
 
-export interface BlokTags {
-    id?: string;
-    name?: string;
-    "name-url"?: string;
-    "project-id"?: string;
-    "focal-point-x"?: number;
-    "focal-point-y"?: number;
-    "version-id"?: null;
-    level?: number | string;
-    target?: string;
-    "is-visible"?: boolean;
-    "first-of-sequence"?: string;
-    "last-of-sequence"?: string;
-    "next-item-level"?: number;
-}
-
 export type ChannelType = "*" | "chwebsite" | "chtablet" | "chphone" | "chpdf";
 
 export type TagsType = "image" | "article";
@@ -94,6 +78,13 @@ export interface Tags {
 
 export interface MultiChannelTag {
     channel: ChannelType;
+    tags: ImageTags &
+        ArticleTags &
+        HeadingTags &
+        ComponentTags &
+        CoverTags &
+        SlipSheetTags &
+        TableOfContentsTags;
 }
 
 export type Event = {
@@ -105,17 +96,18 @@ export type Event = {
     channels: Array<string>;
 };
 
-//TODO: Add typings to ChannelResource
-export type ChannelResource = {};
+export type ChannelResourceType = "json" | string;
 
-export interface BlockChannelTag extends MultiChannelTag {
-    tags: BlokTags;
-}
+export type ChannelResource = {
+    content: string;
+    name: string;
+    type: ChannelResourceType;
+};
 
 export interface Block {
-    multiChannelTags: Array<{ [key: string]: any }>;
+    multiChannelTags: Array<MultiChannelTag>;
     id: string;
-    type: string;
+    type: BlockType | string;
     text: string;
     events: Array<Event>;
     blocks: Array<Block>;
@@ -131,12 +123,8 @@ export interface ImageTags extends Tags {
     "version-id": string | null;
 }
 
-export interface ImageMultiChannelTag extends MultiChannelTag {
-    tags: ImageTags;
-}
 export interface Image extends Block {
     type: "image";
-    multiChannelTags: Array<ImageMultiChannelTag>;
     blocks: Array<Block>;
 }
 
@@ -146,16 +134,12 @@ export interface HeadingTags extends Tags {
     "next-item-level"?: number;
 }
 
-export interface HeadingMultiChannelTag extends MultiChannelTag {
-    tags: HeadingTags;
-}
-
 export interface ComponentHeading extends Block {
     type: "heading";
     blocks: Array<Block>;
-    multiChannelTags: Array<HeadingMultiChannelTag>;
 }
 
+// Components
 interface ComponentTags extends Tags {
     articleCode?: string;
     publication?: string;
@@ -167,11 +151,6 @@ interface ComponentTags extends Tags {
     "parent-id"?: string;
 }
 
-interface ComponentMultiChannelTag {
-    channel: ChannelType;
-    tags: ComponentTags;
-}
-
 export interface ComponentInterface extends Block {
     type: ComponentType;
     reportId: string;
@@ -181,7 +160,6 @@ export interface ComponentInterface extends Block {
     language: string;
     blocks: Array<Block | Image>;
     text: string;
-    multiChannelTags: Array<ComponentMultiChannelTag>;
 }
 
 interface CoverTags extends Tags {
@@ -191,14 +169,8 @@ interface CoverTags extends Tags {
     "f19-meta-headerfooter:"?: string;
 }
 
-interface CoverMultiChannelTag extends MultiChannelTag {
-    channel: ChannelType;
-    tags: CoverTags;
-}
-
 export interface Cover extends ComponentInterface {
     type: "cover";
-    multiChannelTags: Array<CoverMultiChannelTag>;
 }
 
 interface SlipSheetTags extends Tags {
@@ -209,18 +181,12 @@ interface SlipSheetTags extends Tags {
     "f19-meta-headerfooter:"?: string;
 }
 
-interface SlipSheetMultiChannelTag extends MultiChannelTag {
-    tags: SlipSheetTags;
-}
-
 export interface SlipSheet extends ComponentInterface {
     type: "slipsheet";
-    multiChannelTags: Array<SlipSheetMultiChannelTag>;
 }
 
 export interface Heading extends ComponentInterface {
     type: "heading";
-    multiChannelTags: Array<HeadingMultiChannelTag>;
 }
 
 export interface TableOfContentsTags extends Tags {
@@ -228,13 +194,8 @@ export interface TableOfContentsTags extends Tags {
     "f19-meta-headerfooter:"?: string;
 }
 
-export interface TableOfContentsMultiChannelTag extends MultiChannelTag {
-    tags: TableOfContentsTags;
-}
-
 export interface TableOfContents extends ComponentInterface {
     type: "tableofcontents";
-    multiChannelTags: Array<TableOfContentsMultiChannelTag>;
 }
 
 export declare interface ArticleTags extends Tags {
@@ -242,14 +203,8 @@ export declare interface ArticleTags extends Tags {
     publication?: string;
     "parent-id"?: string;
 }
-
-export declare interface ArticleMultiChannelTag extends MultiChannelTag {
-    tags: ArticleTags;
-}
-
 export declare interface Article extends ComponentInterface {
     type: "article";
-    multiChannelTags: Array<ArticleMultiChannelTag>;
     urlSegment: string;
     projectId: string;
     language: string;
@@ -261,6 +216,17 @@ export declare interface Article extends ComponentInterface {
     relatedArticleIds: Array<string>;
     reportIds: Array<string>;
     summaryLevel: number;
+}
+
+export declare interface Report extends Block {
+    summaryLevel: number;
+    name: string;
+    urlSegment: string;
+    projectId: string;
+    language: string;
+    components: Array<Component>;
+    facetNavigations: null;
+    articleIds: Array<string>;
 }
 
 export type Component = Cover | SlipSheet | Heading | TableOfContents | Article;

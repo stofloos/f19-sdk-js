@@ -37,18 +37,18 @@ export default class Index extends Base {
     /**
      * Get a report by id
      * @param id
-     * @param preview
+     * @param options
      * @returns {Promise<DownloadResponse>}
      */
     async getById(
         id: string,
-        preview: boolean = false
+        options?: RequestInit
     ): Promise<DownloadResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.get(`/${resource}/id/${id}`, preview).then(response => {
+        return this.get(`/${resource}/id/${id}`, options).then(response => {
             return response.json();
         });
     }
@@ -56,18 +56,18 @@ export default class Index extends Base {
     /**
      * Get all downloads by projectId
      * @param projectId
-     * @param preview
+     * @param options
      * @returns {Promise<DownloadsFromProjectResponse>}
      */
     async getAllByProjectId(
         projectId: string,
-        preview: boolean = false
+        options?: RequestInit
     ): Promise<DownloadsFromProjectResponse> {
         if (!projectId || projectId === "") {
             throw new Error("No id provided");
         }
 
-        return this.get(`/${resource}/project/${projectId}`, preview).then(
+        return this.get(`/${resource}/project/${projectId}`, options).then(
             response => {
                 return response.json();
             }

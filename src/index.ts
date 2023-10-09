@@ -35,22 +35,7 @@ export type BlockType =
     | "subtitle"
     | "tableofcontentsitem";
 
-export interface BlockTags {
-    id?: string;
-    name?: string;
-    "name-url"?: string;
-    "project-id"?: string;
-    "focal-point-x"?: number;
-    "focal-point-y"?: number;
-    "version-id"?: null;
-    level?: number | string;
-    target?: string;
-    "is-visible"?: boolean;
-    "first-of-sequence"?: string;
-    "last-of-sequence"?: string;
-    "next-item-level"?: number;
-    [key: string]: any;
-}
+
 
 export type ChannelType = "*" | "chwebsite" | "chtablet" | "chphone" | "chpdf";
 
@@ -115,7 +100,7 @@ export type ChannelResource = {
 };
 
 export interface Block {
-    multiChannelTags: Array<BlockTags>;
+    multiChannelTags: Array<{[key: string]: any}>;
     id: string;
     type: BlockType | string;
     text: string;

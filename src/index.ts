@@ -181,7 +181,6 @@ interface CoverTags extends Tags {
 }
 
 interface CoverMultiChannelTag extends MultiChannelTag {
-    channel: ChannelType;
     tags: CoverTags;
 }
 

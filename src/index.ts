@@ -114,7 +114,7 @@ export type ChannelResource = {
 };
 
 export interface Block {
-    multiChannelTags: Array<BlockTags& { [key: string]: any }>;
+    multiChannelTags: Array<BlockTags & { [key: string]: any }>;
     id: string;
     type: BlockType | string;
     text: string;
@@ -264,6 +264,17 @@ export declare interface Article extends ComponentInterface {
     relatedArticleIds: Array<string>;
     reportIds: Array<string>;
     summaryLevel: number;
+}
+
+export declare interface Report extends Block {
+    summaryLevel: number;
+    name: string;
+    urlSegment: string;
+    projectId: string;
+    language: string;
+    components: Array<Component>;
+    facetNavigations: null;
+    articleIds: Array<string>;
 }
 
 

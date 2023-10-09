@@ -49,6 +49,7 @@ export interface BlockTags {
     "first-of-sequence"?: string;
     "last-of-sequence"?: string;
     "next-item-level"?: number;
+    [key: string]: any;
 }
 
 export type ChannelType = "*" | "chwebsite" | "chtablet" | "chphone" | "chpdf";
@@ -114,7 +115,7 @@ export type ChannelResource = {
 };
 
 export interface Block {
-    multiChannelTags: Array<BlockTags & { [key: string]: any }>;
+    multiChannelTags: Array<BlockTags>;
     id: string;
     type: BlockType | string;
     text: string;
@@ -276,8 +277,6 @@ export declare interface Report extends Block {
     facetNavigations: null;
     articleIds: Array<string>;
 }
-
-
 
 export type Component = Cover | SlipSheet | Heading | TableOfContents | Article;
 

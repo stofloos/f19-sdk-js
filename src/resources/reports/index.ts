@@ -7,8 +7,6 @@ import {
     Report
 } from "../../index";
 
-
-
 export declare interface ReportResponse extends BaseResponse {
     payload: Report | null;
 }
@@ -38,13 +36,13 @@ export default class Reports extends Base {
      */
     async getReportProgress(
         id: string,
-       options?: RequestInit
+        options?: RequestInit
     ): Promise<ReportResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.get(`/${resource}/custom_progress/id/${id}`, options ).then(
+        return this.get(`/${resource}/custom_progress/id/${id}`, options).then(
             response => response.json()
         );
     }
@@ -59,13 +57,13 @@ export default class Reports extends Base {
     async getById(
         id: string,
         channel: ChannelType = "*",
-       options?: RequestInit
+        options?: RequestInit
     ): Promise<ReportResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.get(`/${resource}/id/${id}`, options )
+        return this.get(`/${resource}/id/${id}`, options)
             .then(response => {
                 return response.json();
             })
@@ -96,13 +94,13 @@ export default class Reports extends Base {
     async getAllByProjectId(
         id: string,
         channel: ChannelType = "*",
-       options?: RequestInit
+        options?: RequestInit
     ): Promise<ReportsResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.get(`/${resource}/project/${id}`, options )
+        return this.get(`/${resource}/project/${id}`, options)
             .then(response => {
                 return response.json();
             })
@@ -112,13 +110,17 @@ export default class Reports extends Base {
                     data.payload = data.payload.filter((report: Report) => {
                         return report.components.some(
                             (component: Component) => {
-                                if(channel !== "*") {
-                                    const channelTags = component?.multiChannelTags.find(
-                                        (tag: MultiChannelTag) =>
-                                            tag.channel === channel
-                                    );
+                                if (channel !== "*") {
+                                    const channelTags =
+                                        component?.multiChannelTags.find(
+                                            (tag: MultiChannelTag) =>
+                                                tag.channel === channel
+                                        );
 
-                                    return channelTags?.tags?.["is-visible"] !== false;
+                                    return (
+                                        channelTags?.tags?.["is-visible"] !==
+                                        false
+                                    );
                                 }
                                 return true;
                             }

@@ -35,13 +35,13 @@ export default class Articles extends Base {
     async getAllByProjectId(
         projectId: string,
         channel: ChannelType = "*",
-       options?: RequestInit
+        options?: RequestInit
     ): Promise<ArticlesResponse> {
         if (!projectId || projectId === "") {
             throw new Error("Project id not provided");
         }
 
-        return this.get(`/${resource}/project/${projectId}`, options )
+        return this.get(`/${resource}/project/${projectId}`, options)
             .then(response => {
                 return response.json();
             })
@@ -50,14 +50,13 @@ export default class Articles extends Base {
                     // If a channel is provided,
                     // filter out articles without the specified channel
                     data.payload = data.payload.filter(article => {
-                        if(channel !== "*") {
+                        if (channel !== "*") {
                             const channelTags = article.multiChannelTags.find(
                                 (tag: MultiChannelTag) =>
                                     tag.channel === channel
                             );
 
                             return channelTags?.tags?.["is-visible"] !== false;
-
                         }
                         return true;
                     });
@@ -78,13 +77,13 @@ export default class Articles extends Base {
     async getById(
         articleId: string,
         channel: ChannelType = "*",
-       options?: RequestInit
+        options?: RequestInit
     ): Promise<ArticleResponse> {
         if (!articleId || articleId === "") {
             throw new Error("Article id not provided");
         }
 
-        return this.get(`/${resource}/${articleId}`, options )
+        return this.get(`/${resource}/${articleId}`, options)
             .then(response => {
                 return response.json();
             })

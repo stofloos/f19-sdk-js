@@ -35,8 +35,6 @@ export type BlockType =
     | "subtitle"
     | "tableofcontentsitem";
 
-
-
 export type ChannelType = "*" | "chwebsite" | "chtablet" | "chphone" | "chpdf";
 
 export type TagsType = "image" | "article";
@@ -80,7 +78,13 @@ export interface Tags {
 
 export interface MultiChannelTag {
     channel: ChannelType;
-    tags: ImageTags & ArticleTags & HeadingTags & ComponentTags & CoverTags & SlipSheetTags & TableOfContentsTags;
+    tags: ImageTags &
+        ArticleTags &
+        HeadingTags &
+        ComponentTags &
+        CoverTags &
+        SlipSheetTags &
+        TableOfContentsTags;
 }
 
 export type Event = {
@@ -119,7 +123,6 @@ export interface ImageTags extends Tags {
     "version-id": string | null;
 }
 
-
 export interface Image extends Block {
     type: "image";
     blocks: Array<Block>;
@@ -131,13 +134,10 @@ export interface HeadingTags extends Tags {
     "next-item-level"?: number;
 }
 
-
 export interface ComponentHeading extends Block {
     type: "heading";
     blocks: Array<Block>;
-
 }
-
 
 // Components
 interface ComponentTags extends Tags {
@@ -150,8 +150,6 @@ interface ComponentTags extends Tags {
     "f19-meta-headerfooter:"?: string;
     "parent-id"?: string;
 }
-
-
 
 export interface ComponentInterface extends Block {
     type: ComponentType;
@@ -171,8 +169,6 @@ interface CoverTags extends Tags {
     "f19-meta-headerfooter:"?: string;
 }
 
-
-
 export interface Cover extends ComponentInterface {
     type: "cover";
 }
@@ -184,8 +180,6 @@ interface SlipSheetTags extends Tags {
     "f19-meta-page-break:"?: string;
     "f19-meta-headerfooter:"?: string;
 }
-
-
 
 export interface SlipSheet extends ComponentInterface {
     type: "slipsheet";
@@ -199,7 +193,6 @@ export interface TableOfContentsTags extends Tags {
     "f19-meta-page-break:"?: string;
     "f19-meta-headerfooter:"?: string;
 }
-
 
 export interface TableOfContents extends ComponentInterface {
     type: "tableofcontents";

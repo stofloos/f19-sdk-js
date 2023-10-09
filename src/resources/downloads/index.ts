@@ -42,13 +42,13 @@ export default class Index extends Base {
      */
     async getById(
         id: string,
-       options?: RequestInit
+        options?: RequestInit
     ): Promise<DownloadResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.get(`/${resource}/id/${id}`, options ).then(response => {
+        return this.get(`/${resource}/id/${id}`, options).then(response => {
             return response.json();
         });
     }
@@ -61,13 +61,13 @@ export default class Index extends Base {
      */
     async getAllByProjectId(
         projectId: string,
-       options?: RequestInit
+        options?: RequestInit
     ): Promise<DownloadsFromProjectResponse> {
         if (!projectId || projectId === "") {
             throw new Error("No id provided");
         }
 
-        return this.get(`/${resource}/project/${projectId}`, options ).then(
+        return this.get(`/${resource}/project/${projectId}`, options).then(
             response => {
                 return response.json();
             }

@@ -27,7 +27,7 @@ export default class Tables extends Base {
      */
     async getAll(
         projectId: string,
-       options?: RequestInit
+        options?: RequestInit
     ): Promise<TablesResponse> {
         if (!projectId) {
             throw new Error("No project id provided");
@@ -49,13 +49,13 @@ export default class Tables extends Base {
      */
     async getById(
         tableId: string,
-       options?: RequestInit
+        options?: RequestInit
     ): Promise<TableResponse> {
         if (!tableId) {
             throw new Error("No table id provided");
         }
 
-        return this.get(`/${resource}/id/${tableId}`, options ).then(response =>
+        return this.get(`/${resource}/id/${tableId}`, options).then(response =>
             response.json()
         );
     }

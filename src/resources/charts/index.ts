@@ -40,9 +40,9 @@ export default class Charts extends Base {
      */
     async getAll(
         projectId: string,
-       options?: RequestInit
+        options?: RequestInit
     ): Promise<ChartsResponse> {
-        return this.get(`/${resource}/project/${projectId}`, options ).then(
+        return this.get(`/${resource}/project/${projectId}`, options).then(
             response => {
                 return response.json();
             }
@@ -57,13 +57,13 @@ export default class Charts extends Base {
      */
     async getById(
         chartId: string,
-       options?: RequestInit
+        options?: RequestInit
     ): Promise<ChartResponse> {
         if (!chartId || chartId === "") {
             throw new Error("No chart id provided");
         }
 
-        return this.get(`/${resource}/id/${chartId}`, options ).then(
+        return this.get(`/${resource}/id/${chartId}`, options).then(
             response => {
                 return response.json();
             }

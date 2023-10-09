@@ -41,7 +41,7 @@ export default class Images extends Base {
      */
     async getAll(
         projectId: string,
-       options?: RequestInit
+        options?: RequestInit
     ): Promise<ImagesResponse> {
         if (!projectId) {
             throw new Error("Project id is required");

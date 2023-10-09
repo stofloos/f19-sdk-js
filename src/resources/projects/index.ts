@@ -28,7 +28,7 @@ export default class Projects extends Base {
      * const projects = await client.projects.getAll()
      */
     async getAll(options?: RequestInit): Promise<ProjectsResponse> {
-        return this.get(`/${resource}`, options ).then(response => {
+        return this.get(`/${resource}`, options).then(response => {
             return response.json();
         });
     }
@@ -41,15 +41,12 @@ export default class Projects extends Base {
      * @example
      * const project = awaits client.projects.getById("[PROJECT_ID]]")
      */
-    async getById(
-        id: string,
-       options?: RequestInit
-    ): Promise<ProjectResponse> {
+    async getById(id: string, options?: RequestInit): Promise<ProjectResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.get(`/${resource}/id/${id}`, options ).then(response => {
+        return this.get(`/${resource}/id/${id}`, options).then(response => {
             return response.json();
         });
     }

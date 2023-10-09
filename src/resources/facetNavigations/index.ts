@@ -33,13 +33,13 @@ export default class FacetNavigations extends Base {
      */
     async getAll(
         projectId: string,
-       options?: RequestInit
+        options?: RequestInit
     ): Promise<FacetNavigationsResponse> {
         if (!projectId || projectId === "") {
             throw new Error("No project id provided");
         }
 
-        return this.get(`/${resource}/project/${projectId}`, options ).then(
+        return this.get(`/${resource}/project/${projectId}`, options).then(
             response => {
                 return response.json();
             }
@@ -53,13 +53,13 @@ export default class FacetNavigations extends Base {
      */
     async getById(
         facetId: string,
-       options?: RequestInit
+        options?: RequestInit
     ): Promise<FacetNavigationResponse> {
         if (!facetId || facetId === "") {
             throw new Error("No facet id provided");
         }
 
-        return this.get(`/${resource}/id/${facetId}`, options ).then(
+        return this.get(`/${resource}/id/${facetId}`, options).then(
             response => {
                 return response.json();
             }

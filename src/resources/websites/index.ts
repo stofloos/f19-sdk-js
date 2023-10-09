@@ -60,7 +60,7 @@ export default class Websites extends Base {
      * const websites = await client.websites.getAll()
      */
     async getAll(options?: RequestInit): Promise<WebsitesResponse> {
-        return this.get(`/${resource}`,options).then(response => {
+        return this.get(`/${resource}`, options).then(response => {
             return response.json();
         });
     }
@@ -98,7 +98,7 @@ export default class Websites extends Base {
      * const website = awaits client.websites.getCurrent()
      */
     // TODO: Fix getCurrent call. It's not working.
-    async getCurrent( options?: RequestInit): Promise<WebsiteResponse> {
+    async getCurrent(options?: RequestInit): Promise<WebsiteResponse> {
         return this.get(`/${resource}/current`, options).then(response => {
             return response.json();
         });

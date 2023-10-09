@@ -45,7 +45,7 @@ export default abstract class Base {
      */
     async request<T>(
         endpoint: string,
-        options?: RequestInit,
+        options?: RequestInit
     ): Promise<Response> {
         if (!endpoint || endpoint === "") {
             throw new Error("Endpoint not found");
@@ -56,11 +56,11 @@ export default abstract class Base {
         const response = await fetch(url, {
             ...options,
             headers: {
-                "Accept": "application/json",
+                Accept: "application/json",
                 "Content-Type": "application/json",
                 "X-API-Key": this.apiKey,
-                ...options?.headers,
-            },
+                ...options?.headers
+            }
         });
 
         if (!response.ok) {
@@ -75,18 +75,11 @@ export default abstract class Base {
      * @param endpoint
      * @param options
      */
-    async get<T>(
-        endpoint: string,
-        options?: RequestInit,
-    ): Promise<Response> {
-        return await this.request<T>(
-            endpoint,
-            {
-                ...options,
-                method: "GET",
-            }
-
-        );
+    async get<T>(endpoint: string, options?: RequestInit): Promise<Response> {
+        return await this.request<T>(endpoint, {
+            ...options,
+            method: "GET"
+        });
     }
 
     /**
@@ -94,16 +87,10 @@ export default abstract class Base {
      * @param endpoint
      * @param [options={}]
      */
-    async post<T>(
-        endpoint: string,
-        options?: RequestInit
-    ): Promise<Response> {
-        return await this.request<T>(
-            endpoint,
-            {
-                ...options,
-                method: "POST"
-            }
-        );
+    async post<T>(endpoint: string, options?: RequestInit): Promise<Response> {
+        return await this.request<T>(endpoint, {
+            ...options,
+            method: "POST"
+        });
     }
 }

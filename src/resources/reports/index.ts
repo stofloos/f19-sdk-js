@@ -113,7 +113,7 @@ export default class Reports extends Base {
                         return report.components.some(
                             (component: Component) => {
                                 if(channel !== "*") {
-                                    const channelTags = component.multiChannelTags.find(
+                                    const channelTags = component?.multiChannelTags.find(
                                         (tag: MultiChannelTag) =>
                                             tag.channel === channel
                                     );

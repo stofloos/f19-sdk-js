@@ -35,7 +35,7 @@ export type BlockType =
     | "subtitle"
     | "tableofcontentsitem";
 
-export interface BlokTags {
+export interface BlockTags {
     id?: string;
     name?: string;
     "name-url"?: string;
@@ -105,17 +105,18 @@ export type Event = {
     channels: Array<string>;
 };
 
-//TODO: Add typings to ChannelResource
-export type ChannelResource = {};
+export type ChannelResourceType = "json" | string;
 
-export interface BlockChannelTag extends MultiChannelTag {
-    tags: BlokTags;
-}
+export type ChannelResource = {
+    content: string;
+    name: string;
+    type: ChannelResourceType;
+};
 
 export interface Block {
-    multiChannelTags: Array<{ [key: string]: any }>;
+    multiChannelTags: Array<BlockTags& { [key: string]: any }>;
     id: string;
-    type: string;
+    type: BlockType | string;
     text: string;
     events: Array<Event>;
     blocks: Array<Block>;
@@ -156,6 +157,8 @@ export interface ComponentHeading extends Block {
     multiChannelTags: Array<HeadingMultiChannelTag>;
 }
 
+
+// Components
 interface ComponentTags extends Tags {
     articleCode?: string;
     publication?: string;
@@ -262,6 +265,8 @@ export declare interface Article extends ComponentInterface {
     reportIds: Array<string>;
     summaryLevel: number;
 }
+
+
 
 export type Component = Cover | SlipSheet | Heading | TableOfContents | Article;
 

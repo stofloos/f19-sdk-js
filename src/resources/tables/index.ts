@@ -21,13 +21,13 @@ export default class Tables extends Base {
     /**
      * Get all tables for a project
      * @param projectId
-     * @param preview
+     * @param options
      * @returns {Promise<TablesResponse>}
      * @throws Error
      */
     async getAll(
         projectId: string,
-        preview: boolean = false
+       options?: RequestInit
     ): Promise<TablesResponse> {
         if (!projectId) {
             throw new Error("No project id provided");
@@ -36,26 +36,26 @@ export default class Tables extends Base {
         return this.get(
             `/${resource}/project/
         ${projectId}`,
-            preview
+            options
         ).then(response => response.json());
     }
 
     /**
      * Get a table by id
      * @param tableId
-     * @param preview
+     * @param options
      * @returns {Promise<TableResponse>}
      * @throws Error
      */
     async getById(
         tableId: string,
-        preview: boolean = false
+       options?: RequestInit
     ): Promise<TableResponse> {
         if (!tableId) {
             throw new Error("No table id provided");
         }
 
-        return this.get(`/${resource}/id/${tableId}`, preview).then(response =>
+        return this.get(`/${resource}/id/${tableId}`, options ).then(response =>
             response.json()
         );
     }

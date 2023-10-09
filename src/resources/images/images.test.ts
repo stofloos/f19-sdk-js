@@ -1,7 +1,6 @@
 import "isomorphic-fetch";
 import Images from "./";
 import Projects from "../projects";
-import { Config } from "../../index";
 import { config } from "../../helpers/testing";
 
 describe("Images resource", () => {

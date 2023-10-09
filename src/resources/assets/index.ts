@@ -11,13 +11,13 @@ export default class Assets extends Base {
      * Get image by name
      * @param projectId
      * @param name
-     * @param preview
+     * @param options
      * @returns {Promise<string>}
      */
     async getImageByName(
         projectId: string,
         name: string,
-        preview: boolean = false
+       options?: RequestInit
     ): Promise<Blob> {
         if (!projectId || projectId === "") {
             throw new Error("No project id provided");
@@ -29,7 +29,7 @@ export default class Assets extends Base {
 
         return this.get(
             `/${resource}/image/project/${projectId}/name/${name}`,
-            preview
+            options
         ).then(response => {
             return response.blob();
         });
@@ -39,13 +39,13 @@ export default class Assets extends Base {
      * Get download by name
      * @param projectId
      * @param name
-     * @param preview
+     * @param options
      * @returns {Promise<Blob>}
      */
     async getDownloadByName(
         projectId: string,
         name: string,
-        preview: boolean = false
+       options?: RequestInit
     ): Promise<Blob> {
         if (!projectId || projectId === "") {
             throw new Error("No project id provided");
@@ -57,7 +57,7 @@ export default class Assets extends Base {
 
         return this.get(
             `/${resource}/download/project/${projectId}/name/${name}`,
-            preview
+            options
         ).then(response => {
             return response.blob();
         });
@@ -66,18 +66,18 @@ export default class Assets extends Base {
     /**
      * Get asset blob by token
      * @param token
-     * @param preview
+     * @param options
      * @returns {Promise<Blob>}
      */
     async getBlobByToken(
         token: string,
-        preview: boolean = false
+       options?: RequestInit
     ): Promise<Blob> {
         if (!token || token === "") {
             throw new Error("No token provided");
         }
 
-        return this.get(`/${resource}/blob/ticket/${token}`, preview).then(
+        return this.get(`/${resource}/blob/ticket/${token}`, options ).then(
             response => {
                 return response.blob();
             }

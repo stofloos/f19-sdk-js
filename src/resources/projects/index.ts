@@ -21,12 +21,14 @@ const resource = "project";
 export default class Projects extends Base {
     /**
      * Get all projects
+     * @async
+     * @param options
      * @returns {Promise<ProjectsResponse>}
      * @example
      * const projects = await client.projects.getAll()
      */
-    async getAll(preview: boolean = false): Promise<ProjectsResponse> {
-        return this.get(`/${resource}`, preview).then(response => {
+    async getAll(options?: RequestInit): Promise<ProjectsResponse> {
+        return this.get(`/${resource}`, options ).then(response => {
             return response.json();
         });
     }
@@ -34,20 +36,20 @@ export default class Projects extends Base {
     /**
      * Get a project by id
      * @param id
-     * @param preview
+     * @param options
      * @returns {Promise<ProjectResponse>}
      * @example
      * const project = awaits client.projects.getById("[PROJECT_ID]]")
      */
     async getById(
         id: string,
-        preview: boolean = false
+       options?: RequestInit
     ): Promise<ProjectResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.get(`/${resource}/id/${id}`, preview).then(response => {
+        return this.get(`/${resource}/id/${id}`, options ).then(response => {
             return response.json();
         });
     }

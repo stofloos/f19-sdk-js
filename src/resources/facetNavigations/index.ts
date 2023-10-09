@@ -29,17 +29,17 @@ export default class FacetNavigations extends Base {
     /**
      * @method getAll
      * @param projectId
-     * @param preview
+     * @param options
      */
     async getAll(
         projectId: string,
-        preview: boolean = false
+       options?: RequestInit
     ): Promise<FacetNavigationsResponse> {
         if (!projectId || projectId === "") {
             throw new Error("No project id provided");
         }
 
-        return this.get(`/${resource}/project/${projectId}`, preview).then(
+        return this.get(`/${resource}/project/${projectId}`, options ).then(
             response => {
                 return response.json();
             }
@@ -49,17 +49,17 @@ export default class FacetNavigations extends Base {
     /**
      * @method getById
      * @param facetId
-     * @param preview
+     * @param options
      */
     async getById(
         facetId: string,
-        preview: boolean = false
+       options?: RequestInit
     ): Promise<FacetNavigationResponse> {
         if (!facetId || facetId === "") {
             throw new Error("No facet id provided");
         }
 
-        return this.get(`/${resource}/id/${facetId}`, preview).then(
+        return this.get(`/${resource}/id/${facetId}`, options ).then(
             response => {
                 return response.json();
             }

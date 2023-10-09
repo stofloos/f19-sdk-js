@@ -1,5 +1,5 @@
 import Base from "../base";
-import { ChannelType } from "../../index";
+import { ChannelType, MultiChannelTag } from "../../index";
 
 import { Article, BaseResponse } from "../../index";
 
@@ -26,7 +26,7 @@ export default class Articles extends Base {
      * Get all articles for a project
      * @method getAllByProjectId
      * @param projectId
-     * @param preview
+     * @param options
      * @param channel
      * @returns {Promise<ArticlesResponse>}
      * @throws Error
@@ -35,23 +35,31 @@ export default class Articles extends Base {
     async getAllByProjectId(
         projectId: string,
         channel: ChannelType = "*",
-        preview: boolean = false
+       options?: RequestInit
     ): Promise<ArticlesResponse> {
         if (!projectId || projectId === "") {
             throw new Error("Project id not provided");
         }
 
-        return this.get(`/${resource}/project/${projectId}`, preview)
+        return this.get(`/${resource}/project/${projectId}`, options )
             .then(response => {
                 return response.json();
             })
             .then((data: ArticlesResponse) => {
                 if (channel && data.payload) {
-                    // If channel is provided, filter out articles without the specified channel
+                    // If a channel is provided,
+                    // filter out articles without the specified channel
                     data.payload = data.payload.filter(article => {
-                        return article.multiChannelTags.some(
-                            tag => tag.channel === channel
-                        );
+                        if(channel !== "*") {
+                            const channelTags = article.multiChannelTags.find(
+                                (tag: MultiChannelTag) =>
+                                    tag.channel === channel
+                            );
+
+                            return channelTags?.tags?.["is-visible"] !== false;
+
+                        }
+                        return true;
                     });
                 }
                 return data;
@@ -63,26 +71,27 @@ export default class Articles extends Base {
      * @method getById
      * @param articleId
      * @param channel
-     * @param preview
+     * @param options
      * @returns {Promise<ArticleResponse>}
      * @throws Error
      */
     async getById(
         articleId: string,
         channel: ChannelType = "*",
-        preview: boolean = false
+       options?: RequestInit
     ): Promise<ArticleResponse> {
         if (!articleId || articleId === "") {
             throw new Error("Article id not provided");
         }
 
-        return this.get(`/${resource}/${articleId}`, preview)
+        return this.get(`/${resource}/${articleId}`, options )
             .then(response => {
                 return response.json();
             })
             .then((data: ArticleResponse) => {
                 if (channel && data.payload) {
-                    // If channel is provided, filter out articles without the specified channel
+                    // If a channel is provided,
+                    // filter out articles without the specified channel
                     data.payload.multiChannelTags =
                         data.payload.multiChannelTags.filter(tag => {
                             return tag.channel === channel;

@@ -76,6 +76,10 @@ export interface Tags {
     "settings-reference"?: string;
 }
 
+export interface VideoTags extends Tags {
+    "video-src": string;
+}
+
 export interface MultiChannelTag {
     channel: ChannelType;
     tags: ImageTags &
@@ -84,7 +88,10 @@ export interface MultiChannelTag {
         ComponentTags &
         CoverTags &
         SlipSheetTags &
-        TableOfContentsTags;
+        TableOfContentsTags &
+        VideoTags & {
+            [key: string]: any;
+        };
 }
 
 export type Event = {
@@ -203,6 +210,7 @@ export declare interface ArticleTags extends Tags {
     publication?: string;
     "parent-id"?: string;
 }
+
 export declare interface Article extends ComponentInterface {
     type: "article";
     urlSegment: string;

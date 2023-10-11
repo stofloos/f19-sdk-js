@@ -35,14 +35,14 @@ export default class Charts extends Base {
     /**
      * Get all charts by project id
      * @param projectId
-     * @param preview
+     * @param options
      * @returns {Promise<ChartsResponse>}
      */
     async getAll(
         projectId: string,
-        preview: boolean = false
+        options?: RequestInit
     ): Promise<ChartsResponse> {
-        return this.get(`/${resource}/project/${projectId}`, preview).then(
+        return this.get(`/${resource}/project/${projectId}`, options).then(
             response => {
                 return response.json();
             }
@@ -52,18 +52,18 @@ export default class Charts extends Base {
     /**
      * Get chart by id
      * @param chartId
-     * @param preview
+     * @param options
      * @returns {Promise<ChartResponse>}
      */
     async getById(
         chartId: string,
-        preview: boolean = false
+        options?: RequestInit
     ): Promise<ChartResponse> {
         if (!chartId || chartId === "") {
             throw new Error("No chart id provided");
         }
 
-        return this.get(`/${resource}/id/${chartId}`, preview).then(
+        return this.get(`/${resource}/id/${chartId}`, options).then(
             response => {
                 return response.json();
             }

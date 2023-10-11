@@ -54,12 +54,13 @@ export default class Websites extends Base {
     /**
      * Get all websites
      * @async
+     * @param options - Optional options to pass to fetch
      * @return {Promise<WebsitesResponse>} A promise that returns a {@link WebsitesResponse}
      * @example
      * const websites = await client.websites.getAll()
      */
-    async getAll(preview: boolean = false): Promise<WebsitesResponse> {
-        return this.get(`/${resource}`, preview).then(response => {
+    async getAll(options?: RequestInit): Promise<WebsitesResponse> {
+        return this.get(`/${resource}`, options).then(response => {
             return response.json();
         });
     }
@@ -67,7 +68,7 @@ export default class Websites extends Base {
     /**
      * Get a website by alias
      * @param alias
-     * @param preview
+     * @param options - Optional options to pass to fetch
      * @async
      * @return {Promise<WebsiteResponse>} A promise that returns a {@link WebsiteResponse}
      * @example
@@ -75,13 +76,13 @@ export default class Websites extends Base {
      */
     async getByAlias(
         alias: string,
-        preview: boolean = false
+        options?: RequestInit
     ): Promise<WebsiteResponse> {
         if (!alias || alias === "") {
             throw new Error("No alias provided");
         }
 
-        return this.get(`/${resource}/alias/${alias}`, preview).then(
+        return this.get(`/${resource}/alias/${alias}`, options).then(
             response => {
                 return response.json();
             }
@@ -91,14 +92,14 @@ export default class Websites extends Base {
     /**
      * Get current website
      * @async
-     * @param preview
+     * @param options - Optional options to pass to fetch
      * @return {Promise<WebsiteResponse>} A promise that returns a {@link WebsiteResponse}
      * @example
      * const website = awaits client.websites.getCurrent()
      */
     // TODO: Fix getCurrent call. It's not working.
-    async getCurrent(preview: boolean = false): Promise<WebsiteResponse> {
-        return this.get(`/${resource}/current`, preview).then(response => {
+    async getCurrent(options?: RequestInit): Promise<WebsiteResponse> {
+        return this.get(`/${resource}/current`, options).then(response => {
             return response.json();
         });
     }

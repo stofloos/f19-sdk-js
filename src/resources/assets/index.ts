@@ -67,16 +67,19 @@ export default class Assets extends Base {
      * Get asset blob by token
      * @param token
      * @param options
-     * @returns {Promise<Blob>}
+     * @returns {Promise<Response>}
      */
-    async getBlobByToken(token: string, options?: RequestInit): Promise<Blob> {
+    async getBlobByToken(
+        token: string,
+        options?: RequestInit
+    ): Promise<Response> {
         if (!token || token === "") {
             throw new Error("No token provided");
         }
 
         return this.get(`/${resource}/blob/ticket/${token}`, options).then(
             response => {
-                return response.blob();
+                return response;
             }
         );
     }

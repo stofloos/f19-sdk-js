@@ -59,7 +59,7 @@ export default abstract class Base {
                 "X-API-Key": this.apiKey,
                 ...(options?.headers ?? {})
             },
-            ...options,
+            ...options
         });
 
         if (!response.ok && response.statusText) {
@@ -90,7 +90,6 @@ export default abstract class Base {
         return await this.request<T>(endpoint, {
             method: "POST",
             ...options
-
         });
     }
 }

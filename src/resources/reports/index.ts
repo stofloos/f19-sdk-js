@@ -12,16 +12,15 @@ export declare interface ReportResponse extends BaseResponse {
     payload: Report | null;
 }
 
-
 export declare interface CustomReportResponse extends BaseResponse {
     payload: string | null;
 }
 
-export declare type ReportProgress =  {
-    "id": string,
-    "progress":number,
-    "state": number,
-    "downloadBlobToken": string
+export declare type ReportProgress = {
+    id: string;
+    progress: number;
+    state: number;
+    downloadBlobToken: string;
 };
 export declare interface CustomAsyncReportResponse extends BaseResponse {
     payload: ReportProgress | null;
@@ -44,7 +43,6 @@ const resource = "report";
  *
  */
 export default class Reports extends Base {
-
     /**
      * Get a report by id
      * @param id
@@ -66,7 +64,6 @@ export default class Reports extends Base {
                 return response.json();
             })
             .then((data: ReportResponse) => {
-
                 if (channel && data.payload) {
                     // If a channel is provided,
                     // filter out components without the specified channel
@@ -81,7 +78,7 @@ export default class Reports extends Base {
                             ...data.payload,
                             components: filteredComponents
                         }
-                    }
+                    };
                 }
 
                 return data;
@@ -187,7 +184,6 @@ export default class Reports extends Base {
         ).then(response => response.json());
     }
 
-
     /**
      * Get custom report progress by id
      * @param id
@@ -206,5 +202,4 @@ export default class Reports extends Base {
             response => response.json()
         );
     }
-
 }

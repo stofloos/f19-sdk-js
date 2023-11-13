@@ -113,6 +113,7 @@ export type ChannelResource = {
 
 export interface Block {
     multiChannelTags: Array<MultiChannelTag>;
+    multiChannelResources: Array<ChannelResource>;
     id: string;
     type: BlockType | string;
     text: string;
@@ -178,6 +179,7 @@ interface CoverTags extends Tags {
 
 export interface Cover extends ComponentInterface {
     type: "cover";
+    components: Array<Component>;
 }
 
 interface SlipSheetTags extends Tags {

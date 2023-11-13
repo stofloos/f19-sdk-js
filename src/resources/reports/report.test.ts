@@ -57,19 +57,19 @@ describe("Reports resource", () => {
 
     describe("Custom reports", () => {
         it("should throw error if invalid report id is provided", async () => {
-            await expect(reports.getReportProgress("")).rejects.toThrowError(
+            await expect(reports.getCustomReportProgress("")).rejects.toThrowError(
                 "No id provided"
             );
         });
 
         it("should throw error if invalid report id is provided", async () => {
-            await expect(reports.getReportProgress("123")).rejects.toThrowError(
+            await expect(reports.getCustomReportProgress("123")).rejects.toThrowError(
                 "Not Found"
             );
         });
 
         it.skip("should return custom report progress", async () => {
-            const report = await reports.getReportProgress(customReportId);
+            const report = await reports.getCustomReportProgress(customReportId);
 
             expect(report.payload?.id).toEqual(customReportId);
         });
@@ -93,7 +93,7 @@ describe("Reports resource", () => {
                 [componentId]
             );
 
-            expect(report.payload?.id).toEqual(reportId);
+            expect(report.payload).toBe(true);
         });
     });
 

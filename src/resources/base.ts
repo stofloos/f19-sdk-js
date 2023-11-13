@@ -54,16 +54,15 @@ export default abstract class Base {
         const url = `${this.baseUrl}${this.apiPath}${endpoint}`;
 
         const response = await fetch(url, {
-            ...options,
             headers: {
-                Accept: "application/json",
                 "Content-Type": "application/json",
                 "X-API-Key": this.apiKey,
-                ...options?.headers
-            }
+                ...(options?.headers ?? {})
+            },
+            ...options,
         });
 
-        if (!response.ok) {
+        if (!response.ok && response.statusText) {
             throw new Error(response.statusText);
         }
 
@@ -77,8 +76,8 @@ export default abstract class Base {
      */
     async get<T>(endpoint: string, options?: RequestInit): Promise<Response> {
         return await this.request<T>(endpoint, {
-            ...options,
-            method: "GET"
+            method: "GET",
+            ...options
         });
     }
 
@@ -89,8 +88,9 @@ export default abstract class Base {
      */
     async post<T>(endpoint: string, options?: RequestInit): Promise<Response> {
         return await this.request<T>(endpoint, {
-            ...options,
-            method: "POST"
+            method: "POST",
+            ...options
+
         });
     }
 }

@@ -111,10 +111,9 @@ type Resource = {
     type: ChannelResourceType;
 };
 
-
 export type ChannelResource = {
-   channel: ChannelType;
-   resources: Array<Resource>;
+    channel: ChannelType;
+    resources: Array<Resource>;
 };
 
 export interface Block {

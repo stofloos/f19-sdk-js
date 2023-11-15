@@ -61,9 +61,8 @@ export default abstract class Base {
             headers: {
                 ...(options?.headers ?? {}),
                 "Content-Type": "application/json",
-                "X-API-Key": this.apiKey,
-            },
-
+                "X-API-Key": this.apiKey
+            }
         };
 
         const response = await fetch(url, fetchOptions);
@@ -89,7 +88,7 @@ export default abstract class Base {
     ): Promise<Response> {
         return await this.request<T>(endpoint, token, {
             ...options,
-            method: "GET",
+            method: "GET"
         });
     }
 
@@ -107,8 +106,7 @@ export default abstract class Base {
     ): Promise<Response> {
         return await this.request<T>(endpoint, token, {
             ...options,
-            method: "POST",
-
+            method: "POST"
         });
     }
 }

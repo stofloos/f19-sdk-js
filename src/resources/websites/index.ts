@@ -54,13 +54,17 @@ export default class Websites extends Base {
     /**
      * Get all websites
      * @async
+     * @param token
      * @param options - Optional options to pass to fetch
      * @return {Promise<WebsitesResponse>} A promise that returns a {@link WebsitesResponse}
      * @example
      * const websites = await client.websites.getAll()
      */
-    async getAll(options?: RequestInit): Promise<WebsitesResponse> {
-        return this.get(`/${resource}`, options).then(response => {
+    async getAll(
+        options: RequestInit = {},
+        token?: string
+    ): Promise<WebsitesResponse> {
+        return this.get(`/${resource}`, token, options).then(response => {
             return response.json();
         });
     }
@@ -69,6 +73,7 @@ export default class Websites extends Base {
      * Get a website by alias
      * @param alias
      * @param options - Optional options to pass to fetch
+     * @param token
      * @async
      * @return {Promise<WebsiteResponse>} A promise that returns a {@link WebsiteResponse}
      * @example
@@ -76,13 +81,14 @@ export default class Websites extends Base {
      */
     async getByAlias(
         alias: string,
-        options?: RequestInit
+        options: RequestInit = {},
+        token?: string
     ): Promise<WebsiteResponse> {
         if (!alias || alias === "") {
             throw new Error("No alias provided");
         }
 
-        return this.get(`/${resource}/alias/${alias}`, options).then(
+        return this.get(`/${resource}/alias/${alias}`, token, options).then(
             response => {
                 return response.json();
             }
@@ -92,15 +98,21 @@ export default class Websites extends Base {
     /**
      * Get current website
      * @async
-     * @param options - Optional options to pass to fetch
+     * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param token - Optional token to be appended to the request
      * @return {Promise<WebsiteResponse>} A promise that returns a {@link WebsiteResponse}
      * @example
      * const website = awaits client.websites.getCurrent()
      */
     // TODO: Fix getCurrent call. It's not working.
-    async getCurrent(options?: RequestInit): Promise<WebsiteResponse> {
-        return this.get(`/${resource}/current`, options).then(response => {
-            return response.json();
-        });
+    async getCurrent(
+        options: RequestInit = {},
+        token?: string
+    ): Promise<WebsiteResponse> {
+        return this.get(`/${resource}/current`, token, options).then(
+            response => {
+                return response.json();
+            }
+        );
     }
 }

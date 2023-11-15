@@ -77,23 +77,27 @@ describe("Reports resource", () => {
         });
 
         it("should throw error if invalid report id is provided", async () => {
-            await expect(reports.createCustomReport("")).rejects.toThrowError(
-                "No id provided"
-            );
+            await expect(
+                reports.createCustomReport({ id: "" })
+            ).rejects.toThrowError("No id provided");
         });
 
         it("should throw error if invalid report id is provided", async () => {
             await expect(
-                reports.createCustomReport("123")
+                reports
+                    .createCustomReport({ id: "123" })
+                    .then(response => response.json())
             ).rejects.toThrowError("Bad Request");
         });
 
         it.skip("should create custom report", async () => {
-            const report = await reports.createCustomReport(
-                customReportId,
-                "chpdf",
-                [componentId]
-            );
+            const report = await reports
+                .createCustomReport({
+                    id: customReportId,
+                    channel: "chpdf",
+                    componentIds: [componentId]
+                })
+                .then(response => response.json());
 
             expect(report.payload).toBe(true);
         });
@@ -101,23 +105,23 @@ describe("Reports resource", () => {
 
     describe("Custom async reports", () => {
         it("should should throw error if invalid report id is provided ", () => {
-            expect(reports.createCustomAsyncReport("")).rejects.toThrowError(
-                "No id provided"
-            );
+            expect(
+                reports.createCustomAsyncReport({ id: "" })
+            ).rejects.toThrowError("No id provided");
         });
 
         it("should throw error if invalid report id is provided", async () => {
             await expect(
-                reports.createCustomAsyncReport("123")
+                reports.createCustomAsyncReport({ id: "123" })
             ).rejects.toThrowError("Bad Request");
         });
 
         it.skip("should create custom async report", async () => {
-            const report = await reports.createCustomAsyncReport(
-                customReportId,
-                "chpdf",
-                [componentId]
-            );
+            const report = await reports.createCustomAsyncReport({
+                id: customReportId,
+                channel: "chpdf",
+                componentIds: [componentId]
+            });
 
             expect(report.payload?.id).toEqual(customReportId);
         });

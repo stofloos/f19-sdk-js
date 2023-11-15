@@ -22,6 +22,7 @@ export declare type ReportProgress = {
     state: number;
     downloadBlobToken: string;
 };
+
 export declare interface CustomAsyncReportResponse extends BaseResponse {
     payload: ReportProgress | null;
 }
@@ -47,19 +48,21 @@ export default class Reports extends Base {
      * Get a report by id
      * @param id
      * @param channel - Optional channel to filter by
-     * @param options
+     * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param token - Optional token to be appended to the request
      * @returns {Promise<ReportResponse>}
      */
     async getById(
         id: string,
         channel: ChannelType = "*",
-        options?: RequestInit
+        options: RequestInit = {},
+        token?: string
     ): Promise<ReportResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.get(`/${resource}/id/${id}`, options)
+        return this.get(`/${resource}/id/${id}`, token, options)
             .then(response => {
                 return response.json();
             })
@@ -89,20 +92,22 @@ export default class Reports extends Base {
      * Get all reports by project id
      * @param id
      * @param channel - Optional channel to filter by
-     * @param options
+     * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param token - Optional token to be appended to the request
      * @returns {Promise<ReportResponse>}
      *
      */
     async getAllByProjectId(
         id: string,
         channel: ChannelType = "*",
+        token?: string,
         options?: RequestInit
     ): Promise<ReportsResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.get(`/${resource}/project/${id}`, options)
+        return this.get(`/${resource}/project/${id}`, token, options)
             .then(response => {
                 return response.json();
             })
@@ -139,23 +144,35 @@ export default class Reports extends Base {
      * @param id
      * @param channel
      * @param componentIds
-     * @returns {Promise<CustomReportResponse>}
+     * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param token - Optional token to be appended to the request
+     * @returns {Promise<Response>}
      */
     async createCustomReport(
-        id: string,
-        channel: ChannelType = "*",
-        componentIds: Array<string> = []
-    ): Promise<CustomReportResponse> {
+        {
+            id,
+            channel = "*",
+            componentIds = []
+        }: {
+            id: string;
+            channel?: ChannelType;
+            componentIds?: Array<string>;
+        },
+        options: RequestInit = {},
+        token?: string
+    ): Promise<Response> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.post(`/${resource}/custom/id/${id}/channel/${channel}`, {
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(componentIds)
-        }).then(response => response.json());
+        return this.post(
+            `/${resource}/custom/id/${id}/channel/${channel}`,
+            token,
+            {
+                body: JSON.stringify(componentIds),
+                ...options
+            }
+        ).then(response => response);
     }
 
     /**
@@ -163,12 +180,22 @@ export default class Reports extends Base {
      * @param id
      * @param channel
      * @param componentIds
+     * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param token - Optional token to be appended to the request
      * @returns {Promise<CustomAsyncReportResponse>}
      */
     async createCustomAsyncReport(
-        id: string,
-        channel: ChannelType = "*",
-        componentIds: Array<string> = []
+        {
+            id,
+            channel = "*",
+            componentIds = []
+        }: {
+            id: string;
+            channel?: ChannelType;
+            componentIds?: Array<string>;
+        },
+        options: RequestInit = {},
+        token?: string
     ): Promise<CustomAsyncReportResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
@@ -176,7 +203,9 @@ export default class Reports extends Base {
 
         return this.post(
             `/${resource}/custom_async/id/${id}/channel/${channel}`,
+            token,
             {
+                ...options,
                 body: JSON.stringify({
                     componentIds
                 })
@@ -187,19 +216,23 @@ export default class Reports extends Base {
     /**
      * Get custom report progress by id
      * @param id
-     * @param [options  = false]
+     * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param token - Optional token to be appended to the request
      * @returns {Promise<CustomAsyncReportResponse>}
      */
     async getCustomReportProgress(
         id: string,
-        options?: RequestInit
+        options: RequestInit = {},
+        token?: string
     ): Promise<CustomAsyncReportResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.get(`/${resource}/custom_progress/id/${id}`, options).then(
-            response => response.json()
-        );
+        return this.get(
+            `/${resource}/custom_progress/id/${id}`,
+            token,
+            options
+        ).then(response => response.json());
     }
 }

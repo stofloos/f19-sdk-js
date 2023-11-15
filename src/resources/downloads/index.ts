@@ -37,40 +37,48 @@ export default class Index extends Base {
     /**
      * Get a report by id
      * @param id
-     * @param options
+     * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param token - Optional token to be appended to the request
      * @returns {Promise<DownloadResponse>}
      */
     async getById(
         id: string,
-        options?: RequestInit
+        options: RequestInit = {},
+        token?: string
     ): Promise<DownloadResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        return this.get(`/${resource}/id/${id}`, options).then(response => {
-            return response.json();
-        });
+        return this.get(`/${resource}/id/${id}`, token, options).then(
+            response => {
+                return response.json();
+            }
+        );
     }
 
     /**
      * Get all downloads by projectId
      * @param projectId
-     * @param options
+     * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param token - Optional token to be appended to the request
      * @returns {Promise<DownloadsFromProjectResponse>}
      */
     async getAllByProjectId(
         projectId: string,
-        options?: RequestInit
+        options: RequestInit = {},
+        token?: string
     ): Promise<DownloadsFromProjectResponse> {
         if (!projectId || projectId === "") {
             throw new Error("No id provided");
         }
 
-        return this.get(`/${resource}/project/${projectId}`, options).then(
-            response => {
-                return response.json();
-            }
-        );
+        return this.get(
+            `/${resource}/project/${projectId}`,
+            token,
+            options
+        ).then(response => {
+            return response.json();
+        });
     }
 }

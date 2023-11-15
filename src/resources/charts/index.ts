@@ -36,34 +36,40 @@ export default class Charts extends Base {
      * Get all charts by project id
      * @param projectId
      * @param options
+     * @param token
      * @returns {Promise<ChartsResponse>}
      */
     async getAll(
         projectId: string,
-        options?: RequestInit
+        options: RequestInit = {},
+        token?: string
     ): Promise<ChartsResponse> {
-        return this.get(`/${resource}/project/${projectId}`, options).then(
-            response => {
-                return response.json();
-            }
-        );
+        return this.get(
+            `/${resource}/project/${projectId}`,
+            token,
+            options
+        ).then(response => {
+            return response.json();
+        });
     }
 
     /**
      * Get chart by id
      * @param chartId
-     * @param options
+     * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param token - Optional token to be appended to the request
      * @returns {Promise<ChartResponse>}
      */
     async getById(
         chartId: string,
-        options?: RequestInit
+        options: RequestInit = {},
+        token?: string
     ): Promise<ChartResponse> {
         if (!chartId || chartId === "") {
             throw new Error("No chart id provided");
         }
 
-        return this.get(`/${resource}/id/${chartId}`, options).then(
+        return this.get(`/${resource}/id/${chartId}`, token, options).then(
             response => {
                 return response.json();
             }

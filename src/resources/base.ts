@@ -38,29 +38,35 @@ export default abstract class Base {
 
     /**
      * Make a request to the API using fetch and return the serialized response
-     * @param endpoint
-     * @param [options={}]
-     * @param [options =false]
+     * @param endpoint - The endpoint to make the request to
+     * @param token - Optional token to be appended to the request
+     * @param [options={}] - Optional Fetch options to be passed to the request
      * @returns {Promise<Response>}
      */
     async request<T>(
         endpoint: string,
+        token?: string | null | undefined,
         options?: RequestInit
     ): Promise<Response> {
         if (!endpoint || endpoint === "") {
             throw new Error("Endpoint not found");
         }
 
-        const url = `${this.baseUrl}${this.apiPath}${endpoint}`;
+        const url = token
+            ? `${this.baseUrl}${this.apiPath}${endpoint}?t=${token}`
+            : `${this.baseUrl}${this.apiPath}${endpoint}`;
 
-        const response = await fetch(url, {
+        const fetchOptions = {
+            ...(options || {}),
             headers: {
+                ...(options?.headers ?? {}),
                 "Content-Type": "application/json",
                 "X-API-Key": this.apiKey,
-                ...(options?.headers ?? {})
             },
-            ...options
-        });
+
+        };
+
+        const response = await fetch(url, fetchOptions);
 
         if (!response.ok && response.statusText) {
             throw new Error(response.statusText);
@@ -71,25 +77,38 @@ export default abstract class Base {
 
     /**
      * Make a GET request to the API
-     * @param endpoint
-     * @param options
+     * @param endpoint - The endpoint to make the request to
+     * @param token - Optional token to be appended to the request
+     * @param [options={}] - Optional Fetch options to be passed to the request
+     * @returns {Promise<Response>}
      */
-    async get<T>(endpoint: string, options?: RequestInit): Promise<Response> {
-        return await this.request<T>(endpoint, {
+    async get<T>(
+        endpoint: string,
+        token: string | null | undefined = null,
+        options?: RequestInit
+    ): Promise<Response> {
+        return await this.request<T>(endpoint, token, {
+            ...options,
             method: "GET",
-            ...options
         });
     }
 
     /**
      * Make a POST request to the API
-     * @param endpoint
-     * @param [options={}]
+     * @param endpoint - The endpoint to make the request to
+     * @param token - Optional token to be appended to the request
+     * @param [options={}] - Optional Fetch options to be passed to the request
+     * @returns {Promise<Response>}
      */
-    async post<T>(endpoint: string, options?: RequestInit): Promise<Response> {
-        return await this.request<T>(endpoint, {
+    async post<T>(
+        endpoint: string,
+        token: string | null | undefined = null,
+        options?: RequestInit
+    ): Promise<Response> {
+        return await this.request<T>(endpoint, token, {
+            ...options,
             method: "POST",
-            ...options
+
         });
     }
 }

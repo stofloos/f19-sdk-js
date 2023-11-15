@@ -105,15 +105,21 @@ export type Event = {
 
 export type ChannelResourceType = "json" | string;
 
-export type ChannelResource = {
+type Resource = {
     content: string;
     name: string;
     type: ChannelResourceType;
 };
 
+
+export type ChannelResource = {
+   channel: ChannelType;
+   resources: Array<Resource>;
+};
+
 export interface Block {
     multiChannelTags: Array<MultiChannelTag>;
-    multiChannelResources: Array<ChannelResource>;
+    multiChannelResources?: Array<ChannelResource>;
     id: string;
     type: BlockType | string;
     text: string;
@@ -199,8 +205,8 @@ export interface Heading extends ComponentInterface {
 }
 
 export interface TableOfContentsTags extends Tags {
-    "f19-meta-page-break:"?: string;
-    "f19-meta-headerfooter:"?: string;
+    "f19-meta-page-break"?: string;
+    "f19-meta-headerfooter"?: string;
 }
 
 export interface TableOfContents extends ComponentInterface {

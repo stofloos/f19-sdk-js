@@ -21,27 +21,40 @@ export default class Tokens extends Base {
     /**
      * Get a personal token
      * @param authorizationToken
+     * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param token - Optional token to be appended to the request
      * @async
      * @return {Promise<TokenResponse>}
      */
-    async getPersonal(authorizationToken: string): Promise<TokenResponse> {
+    async getPersonal(
+        authorizationToken: string,
+        options: RequestInit = {},
+        token?: string
+    ): Promise<TokenResponse> {
         if (!authorizationToken || authorizationToken === "") {
             throw new Error("Authorization token is required");
         }
 
         return this.post(
-            `/${resource}/personal?authorizationToken=${authorizationToken}`
+            `/${resource}/personal?authorizationToken=${authorizationToken}`,
+            token,
+            options
         ).then(response => response.json());
     }
 
     /**
      * Get an anonymous token
      * @async
+     * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param token - Optional token to be appended to the request
      * @return {Promise<TokenResponse>}
      */
-    async getAnonymous(): Promise<TokenResponse> {
-        return this.post(`/${resource}/anonymous`).then(response =>
-            response.json()
+    async getAnonymous(
+        options: RequestInit = {},
+        token?: string
+    ): Promise<TokenResponse> {
+        return this.post(`/${resource}/anonymous`, token, options).then(
+            response => response.json()
         );
     }
 
@@ -50,11 +63,15 @@ export default class Tokens extends Base {
      * @async
      * @param userId
      * @param thumbPrint
+     * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param token - Optional token to be appended to the request
      * @return {Promise<TokenResponse>}
      */
     async getThumbprint(
         userId: string,
-        thumbPrint: string
+        thumbPrint: string,
+        options: RequestInit = {},
+        token?: string
     ): Promise<TokenResponse> {
         if (!userId || userId === "") {
             throw new Error("UserId token is required");
@@ -64,7 +81,9 @@ export default class Tokens extends Base {
             throw new Error("Thumbprint token is required");
         }
         return this.post(
-            `/${resource}/thumbprint?userId=${userId}&thumbprint=${thumbPrint}`
+            `/${resource}/thumbprint?userId=${userId}&thumbprint=${thumbPrint}`,
+            token,
+            options
         ).then(response => response.json());
     }
 }

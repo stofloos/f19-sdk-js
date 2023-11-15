@@ -26,8 +26,9 @@ export default class Articles extends Base {
      * Get all articles for a project
      * @method getAllByProjectId
      * @param projectId
-     * @param options
      * @param channel
+     * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param token - Optional token to be appended to the request
      * @returns {Promise<ArticlesResponse>}
      * @throws Error
      *
@@ -35,13 +36,14 @@ export default class Articles extends Base {
     async getAllByProjectId(
         projectId: string,
         channel: ChannelType = "*",
-        options?: RequestInit
+        options: RequestInit = {},
+        token?: string
     ): Promise<ArticlesResponse> {
         if (!projectId || projectId === "") {
             throw new Error("Project id not provided");
         }
 
-        return this.get(`/${resource}/project/${projectId}`, options)
+        return this.get(`/${resource}/project/${projectId}`, token, options)
             .then(response => {
                 return response.json();
             })
@@ -71,19 +73,21 @@ export default class Articles extends Base {
      * @param articleId
      * @param channel
      * @param options
+     * @param token
      * @returns {Promise<ArticleResponse>}
      * @throws Error
      */
     async getById(
         articleId: string,
         channel: ChannelType = "*",
-        options?: RequestInit
+        options: RequestInit = {},
+        token?: string
     ): Promise<ArticleResponse> {
         if (!articleId || articleId === "") {
             throw new Error("Article id not provided");
         }
 
-        return this.get(`/${resource}/${articleId}`, options)
+        return this.get(`/${resource}/${articleId}`, token, options)
             .then(response => {
                 return response.json();
             })

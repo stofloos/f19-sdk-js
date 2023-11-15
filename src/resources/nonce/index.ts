@@ -16,12 +16,18 @@ export default class Nonce extends Base {
      * Generate a nonce
      * @method getNonce
      * @async
-     * @param options - Optional options to pass to fetch
+     * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param token - Optional token to be appended to the request
      * @return {Promise<string>}
      * */
-    async getNonce(options?: RequestInit): Promise<NonceResponse> {
-        return this.get(`/${resource}/generate`, options).then(response => {
-            return response.json();
-        });
+    async getNonce(
+        options: RequestInit = {},
+        token?: string
+    ): Promise<NonceResponse> {
+        return this.get(`/${resource}/generate`, token, options).then(
+            response => {
+                return response.json();
+            }
+        );
     }
 }

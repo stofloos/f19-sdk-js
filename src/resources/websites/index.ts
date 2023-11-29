@@ -1,6 +1,6 @@
 import { Config } from "../../index";
-import Base from "../base";
 import { BaseResponse, Block } from "../../index";
+import Base from "../base";
 
 export declare type Route = {
     id: string;

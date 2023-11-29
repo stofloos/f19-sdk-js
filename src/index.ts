@@ -45,6 +45,7 @@ export type Config = {
     apiKey: string; // API key to use for authentication.
     baseUrl: string; // Base url of the F19 instance to connect to.
     apiPath?: string; // Path to the API on the F19 instance.
+    clientId: string; // Client id to use it for authentication.
 };
 
 export type Error = {
@@ -56,6 +57,7 @@ export type Error = {
 
 export interface BaseResponse {
     errors: Error;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     payload: any;
     statusCode: number;
 }
@@ -71,8 +73,8 @@ export interface Tags {
     editclass?: Editclass | string;
     "is-visible"?: boolean;
     "show-in-header-footer"?: string;
-    "f19-meta-level:"?: string;
-    "f19-meta-channel:"?: string;
+    "f19-meta-level"?: string;
+    "f19-meta-channel"?: string;
     "settings-reference"?: string;
 }
 
@@ -90,6 +92,7 @@ export interface MultiChannelTag {
         SlipSheetTags &
         TableOfContentsTags &
         VideoTags & {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             [key: string]: any;
         };
 }
@@ -156,11 +159,11 @@ export interface ComponentHeading extends Block {
 interface ComponentTags extends Tags {
     articleCode?: string;
     publication?: string;
-    "f19-meta-channel:"?: string;
+    "f19-meta-channel"?: string;
     spread?: string;
     hideHeading?: string;
-    "f19-meta-page-break:"?: string;
-    "f19-meta-headerfooter:"?: string;
+    "f19-meta-page-break"?: string;
+    "f19-meta-headerfooter"?: string;
     "parent-id"?: string;
 }
 
@@ -178,8 +181,8 @@ export interface ComponentInterface extends Block {
 interface CoverTags extends Tags {
     name?: string;
     "name-url"?: string;
-    "f19-meta-page-break:"?: string;
-    "f19-meta-headerfooter:"?: string;
+    "f19-meta-page-break"?: string;
+    "f19-meta-headerfooter"?: string;
 }
 
 export interface Cover extends ComponentInterface {
@@ -191,8 +194,8 @@ interface SlipSheetTags extends Tags {
     spread?: string;
     hideHeading?: string;
     "settings-reference"?: string;
-    "f19-meta-page-break:"?: string;
-    "f19-meta-headerfooter:"?: string;
+    "f19-meta-page-break"?: string;
+    "f19-meta-headerfooter"?: string;
 }
 
 export interface SlipSheet extends ComponentInterface {
@@ -242,6 +245,20 @@ export declare interface Report extends Block {
     components: Array<Component>;
     facetNavigations: null;
     articleIds: Array<string>;
+}
+
+export interface Download {
+    text: string;
+    securedProjectId: number;
+    id: string;
+    type: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    blocks: Array<any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    multiChannelResources: Array<any>;
+    multiChannelTags: Array<MultiChannelTag>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    events: Array<any>;
 }
 
 export type Component = Cover | SlipSheet | Heading | TableOfContents | Article;

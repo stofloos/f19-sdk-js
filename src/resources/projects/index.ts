@@ -29,8 +29,8 @@ export default class Projects extends Base {
      * const projects = await client.projects.getAll()
      */
     async getAll(
-        options: RequestInit = {},
-        token?: string
+        token?: string,
+        options: RequestInit = {}
     ): Promise<ProjectsResponse> {
         return this.get(`/${resource}`, token, options).then(response => {
             return response.json();

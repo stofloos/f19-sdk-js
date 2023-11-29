@@ -8,7 +8,7 @@ export declare type Token = {
 };
 
 export declare interface TokenResponse extends BaseResponse {
-    payload: Token | null;
+    payload: Token;
 }
 
 const resource = "token";
@@ -26,7 +26,7 @@ export default class Tokens extends Base {
      * @async
      * @return {Promise<TokenResponse>}
      */
-    async getPersonal(
+    async getPersonalToken(
         authorizationToken: string,
         options: RequestInit = {},
         token?: string
@@ -49,13 +49,11 @@ export default class Tokens extends Base {
      * @param token - Optional token to be appended to the request
      * @return {Promise<TokenResponse>}
      */
-    async getAnonymous(
+    async getAnonymousToken(
         options: RequestInit = {},
         token?: string
-    ): Promise<TokenResponse> {
-        return this.post(`/${resource}/anonymous`, token, options).then(
-            response => response.json()
-        );
+    ): Promise<Response> {
+        return this.post(`/${resource}/anonymous`, token, options);
     }
 
     /**

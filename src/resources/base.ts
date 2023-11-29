@@ -15,6 +15,7 @@ export default abstract class Base {
     readonly apiKey: string;
     readonly baseUrl: string;
     readonly apiPath: string;
+    readonly clientId?: string;
 
     /**
      * Create a new instance of the base class
@@ -34,43 +35,35 @@ export default abstract class Base {
         this.apiPath = config.apiPath || "/cms/api/public/v1";
         this.apiKey = config.apiKey;
         this.baseUrl = config.baseUrl;
+        this.clientId = config.clientId;
     }
 
     /**
      * Make a request to the API using fetch and return the serialized response
      * @param endpoint - The endpoint to make the request to
-     * @param token - Optional token to be appended to the request
      * @param [options={}] - Optional Fetch options to be passed to the request
      * @returns {Promise<Response>}
      */
-    async request<T>(
-        endpoint: string,
-        token?: string | null | undefined,
-        options?: RequestInit
-    ): Promise<Response> {
+    async request(endpoint: string, options?: RequestInit): Promise<Response> {
         if (!endpoint || endpoint === "") {
             throw new Error("Endpoint not found");
         }
 
-        const url = token
-            ? `${this.baseUrl}${this.apiPath}${endpoint}?t=${token}`
-            : `${this.baseUrl}${this.apiPath}${endpoint}`;
+        const url = `${this.baseUrl}${this.apiPath}${endpoint}`;
 
         const fetchOptions = {
             ...(options || {}),
             headers: {
                 ...(options?.headers ?? {}),
-                "Content-Type": "application/json",
-                "X-API-Key": this.apiKey
+                "Content-Type": "application/json"
             }
         };
 
         const response = await fetch(url, fetchOptions);
 
-        if (!response.ok && response.statusText) {
-            throw new Error(response.statusText);
+        if (response.status === 401) {
+            throw new Error("Unauthorized");
         }
-
         return response;
     }
 
@@ -81,14 +74,18 @@ export default abstract class Base {
      * @param [options={}] - Optional Fetch options to be passed to the request
      * @returns {Promise<Response>}
      */
-    async get<T>(
+    async get(
         endpoint: string,
         token: string | null | undefined = null,
         options?: RequestInit
     ): Promise<Response> {
-        return await this.request<T>(endpoint, token, {
+        // Add token as query parameter if provided and method is GET
+        const endpointWithToken = token ? `${endpoint}?t=${token}` : endpoint;
+
+        return await this.request(endpointWithToken, {
             ...options,
-            method: "GET"
+            method: "GET",
+                ...(!token ?   { headers: {"X-API-Key": this.apiKey}} : {})
         });
     }
 
@@ -99,14 +96,16 @@ export default abstract class Base {
      * @param [options={}] - Optional Fetch options to be passed to the request
      * @returns {Promise<Response>}
      */
-    async post<T>(
+    async post(
         endpoint: string,
         token: string | null | undefined = null,
         options?: RequestInit
     ): Promise<Response> {
-        return await this.request<T>(endpoint, token, {
+        // Add token as header if provided and method is POST
+        return await this.request(endpoint, {
             ...options,
-            method: "POST"
+            method: "POST",
+            ...(token ? { headers: { "X-F19-RequestToken": token } } : { headers: {"X-API-Key": this.apiKey}})
         });
     }
 }

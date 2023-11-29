@@ -1,5 +1,5 @@
-import Websites from "./";
 import "isomorphic-fetch";
+import Websites from "./";
 import { config } from "../../helpers/testing";
 
 beforeAll(() => {

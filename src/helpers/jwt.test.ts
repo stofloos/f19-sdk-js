@@ -4,7 +4,7 @@ import Client from "../index";
 
 describe("JWT Helpers", () => {
     const client = new Client(config);
-    const jwtSecret = config.secret;
+    const jwtSecret = config.secretApiKey;
     const claims = {
         ClientId: config.clientId
     };
@@ -45,7 +45,6 @@ describe("JWT Helpers", () => {
                     "X-F19-ClientToken": ClientToken
                 }
             });
-
             const token = await tokenResponse.json();
 
             const requestToken = await generateRequestToken({

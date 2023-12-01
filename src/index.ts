@@ -11,6 +11,7 @@ import Nonce from "./resources/nonce";
 import Tables from "./resources/tables";
 import Downloads from "./resources/downloads";
 import Tokens from "./resources/tokens";
+import { generateClientToken, generateRequestToken } from "./helpers/jwt";
 
 export type Editclass =
     | "f19-cover"
@@ -85,16 +86,16 @@ export interface VideoTags extends Tags {
 export interface MultiChannelTag {
     channel: ChannelType;
     tags: ImageTags &
-        ArticleTags &
-        HeadingTags &
-        ComponentTags &
-        CoverTags &
-        SlipSheetTags &
-        TableOfContentsTags &
-        VideoTags & {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            [key: string]: any;
-        };
+    ArticleTags &
+    HeadingTags &
+    ComponentTags &
+    CoverTags &
+    SlipSheetTags &
+    TableOfContentsTags &
+    VideoTags & {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        [key: string]: any;
+    };
 }
 
 export type Event = {
@@ -297,6 +298,7 @@ export default class Client {
     tables: Tables;
     downloads: Downloads;
     tokens: Tokens;
+    config: Config;
 
     /**
      * Create a new instance of the client
@@ -313,19 +315,53 @@ export default class Client {
         if (!config.baseUrl) {
             throw new Error("Base URL not configured");
         }
+        this.config = {
+            apiKey: config.apiKey,
+            baseUrl: config.baseUrl,
+            apiPath: config.apiPath || "/cms/api/public/v1",
+            clientId: config.clientId
+        };
+        this.projects = new Projects(this);
+        this.websites = new Websites(this);
+        this.reports = new Reports(this);
+        this.articles = new Articles(this);
+        this.assets = new Assets(this);
+        this.charts = new Charts(this);
+        this.channel = new Channel(this);
+        this.facetNavigations = new FacetNavigations(this);
+        this.images = new Images(this);
+        this.nonce = new Nonce(this);
+        this.tables = new Tables(this);
+        this.downloads = new Downloads(this);
+        this.tokens = new Tokens(this);
+    }
 
-        this.projects = new Projects(config);
-        this.websites = new Websites(config);
-        this.reports = new Reports(config);
-        this.articles = new Articles(config);
-        this.assets = new Assets(config);
-        this.charts = new Charts(config);
-        this.channel = new Channel(config);
-        this.facetNavigations = new FacetNavigations(config);
-        this.images = new Images(config);
-        this.nonce = new Nonce(config);
-        this.tables = new Tables(config);
-        this.downloads = new Downloads(config);
-        this.tokens = new Tokens(config);
+    public async getRequestToken(uri: string, method: string) {
+        const jwtSecret = this.config.apiKey;
+        const claims = {
+            ClientId: this.config.clientId
+        };
+
+        //Generate Client token
+        const clientToken = await generateClientToken(claims, jwtSecret);
+        if (!clientToken) throw new Error("no ClientToken");
+
+        //Use Client token to get anonymous session token
+        const token = await this.tokens.getAnonymousToken({
+            headers: {
+                "X-F19-ClientToken": clientToken
+            }
+        });
+        if (!token) throw new Error("no ClientToken");
+
+        //Use anonymous session token to generate request token
+        const requestToken = await generateRequestToken({
+            sessionKey: token.payload,
+            uri: uri,
+            clientId: this.config.clientId,
+            method: method
+        });
+
+        return requestToken;
     }
 }

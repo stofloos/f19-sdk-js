@@ -87,7 +87,7 @@ export default class Articles extends Base {
             throw new Error("Article id not provided");
         }
 
-        return this.get(`/${resource}/${articleId}`, token, options)
+        return this.get(`/${resource}/id/${articleId}`, token, options)
             .then(response => {
                 return response.json();
             })

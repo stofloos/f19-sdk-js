@@ -52,8 +52,10 @@ export default class Tokens extends Base {
     async getAnonymousToken(
         options: RequestInit = {},
         token?: string
-    ): Promise<Response> {
-        return this.post(`/${resource}/anonymous`, token, options);
+    ): Promise<TokenResponse> {
+        return this.post(`/${resource}/anonymous`, token, options, null).then(
+            response => response.json()
+        );
     }
 
     /**

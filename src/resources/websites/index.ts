@@ -47,9 +47,6 @@ export default class Websites extends Base {
      *  })
      *
      */
-    constructor(config: Config) {
-        super(config);
-    }
 
     /**
      * Get all websites

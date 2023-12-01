@@ -98,7 +98,7 @@ export async function generateRequestToken({
     const alg = "RS256";
 
     // Parse RSA key data from XML to JSON
-    const RSAKeyData = xmlToJson<RSAKeyData>(sessionKey.key);
+    const RSAKeyData = await xmlToJson<RSAKeyData>(sessionKey.key);
 
     // Transform RSA key data to JOSE format
     const parsedRSAKey = transformRSAKeyData(RSAKeyData);

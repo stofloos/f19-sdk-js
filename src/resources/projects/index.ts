@@ -32,9 +32,9 @@ export default class Projects extends Base {
         token?: string,
         options: RequestInit = {}
     ): Promise<ProjectsResponse> {
-        return this.get(`/${resource}`, token, options).then(response => {
-            return response.json();
-        });
+        const response = await this.get(`/${resource}`, token, options);
+        const json = await response.json();
+        return json;
     }
 
     /**

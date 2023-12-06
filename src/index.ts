@@ -49,6 +49,13 @@ export type Config = {
     clientId: string; // Client id to use it for authentication.
 };
 
+export type ImpersonationOptions = {
+    userId: string;
+    keyThumbprint: string;
+    cacheDifferentiator: string;
+    authorizationToken: string;
+};
+
 export type Error = {
     message: "string";
     details: {
@@ -299,6 +306,7 @@ export default class Client {
     downloads: Downloads;
     tokens: Tokens;
     config: Config;
+    impersonationOptions?: ImpersonationOptions;
 
     /**
      * Create a new instance of the client
@@ -307,11 +315,10 @@ export default class Client {
      * @constructor Index
      *
      */
-    constructor(config: Config) {
+    constructor(config: Config, impersonationOptions?: ImpersonationOptions) {
         if (!config.apiKey) {
             throw new Error("API-key not configured");
         }
-
         if (!config.baseUrl) {
             throw new Error("Base URL not configured");
         }
@@ -321,6 +328,7 @@ export default class Client {
             apiPath: config.apiPath || "/cms/api/public/v1",
             clientId: config.clientId
         };
+        this.impersonationOptions = impersonationOptions;
         this.projects = new Projects(this);
         this.websites = new Websites(this);
         this.reports = new Reports(this);
@@ -345,23 +353,29 @@ export default class Client {
         //Generate Client token
         const clientToken = await generateClientToken(claims, jwtSecret);
         if (!clientToken) throw new Error("no ClientToken");
-
-        //Use Client token to get anonymous session token
-        const token = await this.tokens.getAnonymousToken({
-            headers: {
-                "X-F19-ClientToken": clientToken
-            }
-        });
-        if (!token) throw new Error("no ClientToken");
+        let token;
+        if (this.impersonationOptions) {
+            token = await this.tokens.getPersonalToken(
+                clientToken,
+                this.impersonationOptions.authorizationToken
+            );
+            console.log(token);
+        } else token = await this.tokens.getAnonymousToken(clientToken);
+        if (!token) throw new Error("no SessionKey");
 
         //Use anonymous session token to generate request token
+
         const requestToken = await generateRequestToken({
             sessionKey: token.payload,
             uri: uri,
             clientId: this.config.clientId,
             method: method
         });
-
         return requestToken;
+    }
+
+    public getAuthUrl(currentUrl: string) {
+        const encodedCurrentUrl = encodeURIComponent(currentUrl);
+        return `${this.config.baseUrl}/cms/login/authorize/${this.config.clientId}?callback=${encodedCurrentUrl}`;
     }
 }

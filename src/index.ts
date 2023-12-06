@@ -353,6 +353,7 @@ export default class Client {
         //Generate Client token
         const clientToken = await generateClientToken(claims, jwtSecret);
         if (!clientToken) throw new Error("no ClientToken");
+
         let token;
         //If user is logged in get thumbprint token
         if (this.impersonationOptions) {
@@ -374,8 +375,8 @@ export default class Client {
         return requestToken;
     }
 
-    public getAuthUrl(currentUrl: string) {
-        const encodedCurrentUrl = encodeURIComponent(currentUrl);
-        return `${this.config.baseUrl}/cms/login/authorize/${this.config.clientId}?callback=${encodedCurrentUrl}`;
+    public getAuthUrl(callbackUrl: string) {
+        const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+        return `${this.config.baseUrl}/cms/login/authorize/${this.config.clientId}?callback=${encodedCallbackUrl}`;
     }
 }

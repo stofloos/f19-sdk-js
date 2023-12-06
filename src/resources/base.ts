@@ -78,7 +78,6 @@ export default abstract class Base {
      */
     async get(
         endpoint: string,
-        token: string | null | undefined = null,
         options?: RequestInit,
         requestTokenPlacement: RequestTokenPlacement = "HEADER"
     ): Promise<Response> {
@@ -101,7 +100,6 @@ export default abstract class Base {
      */
     async post(
         endpoint: string,
-        token: string | null | undefined = null,
         options?: RequestInit,
         requestTokenPlacement: RequestTokenPlacement = "HEADER"
     ): Promise<Response> {

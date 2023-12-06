@@ -12,6 +12,7 @@ export declare interface TableResponse extends BaseResponse {
 }
 
 const resource = "table";
+
 /**
  * Tables Resource
  * @class Tables
@@ -28,19 +29,18 @@ export default class Tables extends Base {
      */
     async getAll(
         projectId: string,
-        options?: RequestInit,
-        token?: string
+        options?: RequestInit
     ): Promise<TablesResponse> {
         if (!projectId) {
             throw new Error("No project id provided");
         }
 
-        return this.get(
-            `/${resource}/project/
-        ${projectId}`,
-            token,
+        const response = await this.get(
+            `/${resource}/project/${projectId}`,
             options
-        ).then(response => response.json());
+        );
+        const json = await response.json();
+        return json;
     }
 
     /**
@@ -53,15 +53,14 @@ export default class Tables extends Base {
      */
     async getById(
         tableId: string,
-        options?: RequestInit,
-        token?: string
+        options?: RequestInit
     ): Promise<TableResponse> {
         if (!tableId) {
             throw new Error("No table id provided");
         }
 
-        return this.get(`/${resource}/id/${tableId}`, token, options).then(
-            response => response.json()
-        );
+        const response = await this.get(`/${resource}/id/${tableId}`, options);
+        const json = await response.json();
+        return json;
     }
 }

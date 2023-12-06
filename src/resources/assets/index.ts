@@ -1,26 +1,20 @@
 import Base from "../base";
+
 const resource = "assets";
+
 /**
  * Assets resource
  * @class
  * @extends Base
- *
  */
 export default class Assets extends Base {
     /**
      * Get image by name
-     * @param projectId
-     * @param name
-     * @param token - Optional token to be appended to the request
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @returns {Promise<string>}
+     * @param {string} projectId - The project ID.
+     * @param {string} name - The name of the image.
+     * @returns {Promise<Blob>} A Promise that resolves to a Blob.
      */
-    async getImageByName(
-        projectId: string,
-        name: string,
-        options: RequestInit = {},
-        token?: string
-    ): Promise<Blob> {
+    async getImageByName(projectId, name, options = {}) {
         if (!projectId || projectId === "") {
             throw new Error("No project id provided");
         }
@@ -29,29 +23,20 @@ export default class Assets extends Base {
             throw new Error("No asset name provided");
         }
 
-        return this.get(
-            `/${resource}/image/project/${projectId}/name/${name}`,
-            token,
-            options
-        ).then(response => {
-            return response.blob();
-        });
+        const response = await this.get(
+            `/${resource}/image/project/${projectId}/name/${name}`
+        );
+        const blob = await response.blob();
+        return blob;
     }
 
     /**
      * Get download by name
-     * @param projectId
-     * @param name
-     * @param token - Optional token to be appended to the request
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @returns {Promise<Blob>}
+     * @param {string} projectId - The project ID.
+     * @param {string} name - The name of the download.
+     * @returns {Promise<Blob>} A Promise that resolves to a Blob.
      */
-    async getDownloadByName(
-        projectId: string,
-        name: string,
-        options: RequestInit = {},
-        token?: string
-    ): Promise<Blob> {
+    async getDownloadByName(projectId, name) {
         if (!projectId || projectId === "") {
             throw new Error("No project id provided");
         }
@@ -60,37 +45,25 @@ export default class Assets extends Base {
             throw new Error("No name provided");
         }
 
-        return this.get(
-            `/${resource}/download/project/${projectId}/name/${name}`,
-            token,
-            options
-        ).then(response => {
-            return response.blob();
-        });
+        const response = await this.get(
+            `/${resource}/download/project/${projectId}/name/${name}`
+        );
+        const blob = await response.blob();
+        return blob;
     }
 
     /**
      * Get asset blob by token
-     * @param ticket
-     * @param token - Optional token to be appended to the request
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @returns {Promise<Response>}
+     * @param {string} ticket - The ticket.
+     * @param {RequestInit} [options={}] - Optional Fetch options to be passed to the request.
+     * @returns {Promise<Response>} A Promise that resolves to a Response.
      */
-    async getBlobByToken(
-        ticket: string,
-        options: RequestInit = {},
-        token?: string
-    ): Promise<Response> {
+    async getBlobByToken(ticket) {
         if (!ticket || ticket === "") {
             throw new Error("No token provided");
         }
 
-        return this.get(
-            `/${resource}/blob/ticket/${ticket}`,
-            token,
-            options
-        ).then(response => {
-            return response;
-        });
+        const response = await this.get(`/${resource}/blob/ticket/${ticket}`);
+        return response;
     }
 }

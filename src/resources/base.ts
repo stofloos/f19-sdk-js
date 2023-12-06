@@ -42,6 +42,7 @@ export default abstract class Base {
             throw new Error("Endpoint not found");
         }
         const uri = `${this.client.config.apiPath}${endpoint}`;
+        console.log(uri);
         let requestToken = "";
         if (requestTokenPlacement)
             requestToken = await this.client.getRequestToken(uri, method);

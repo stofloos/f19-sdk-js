@@ -40,7 +40,7 @@ export default class Articles extends Base {
         const response = await this.get(`/${resource}/project/${projectId}`);
         const json = await response.json();
         if (channel && json.payload) {
-            json.payload = json.payload.filter(article => {
+            json.payload = json.payload.filter((article: any) => {
                 if (channel !== "*") {
                     const channelTags = article.multiChannelTags.find(
                         (tag: MultiChannelTag) => tag.channel === channel
@@ -74,7 +74,7 @@ export default class Articles extends Base {
         const json = await response.json();
         if (channel && json.payload) {
             json.payload.multiChannelTags =
-                json.payload.multiChannelTags.filter(tag => {
+                json.payload.multiChannelTags.filter((tag: any) => {
                     return tag.channel === channel;
                 });
         }

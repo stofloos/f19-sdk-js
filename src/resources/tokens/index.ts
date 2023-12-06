@@ -69,6 +69,7 @@ export default class Tokens extends Base {
      * @return {Promise<TokenResponse>}
      */
     async getThumbprint(
+        clientToken: string,
         userId: string,
         thumbPrint: string
     ): Promise<TokenResponse> {
@@ -81,7 +82,13 @@ export default class Tokens extends Base {
         }
 
         const response = await this.post(
-            `/${resource}/thumbprint?userId=${userId}&thumbprint=${thumbPrint}`
+            `/${resource}/thumbprint?userId=${userId}&thumbprint=${thumbPrint}`,
+            {
+                headers: {
+                    "X-F19-ClientToken": clientToken
+                }
+            },
+            null
         );
         const json = await response.json();
         return json;

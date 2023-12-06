@@ -354,17 +354,17 @@ export default class Client {
         const clientToken = await generateClientToken(claims, jwtSecret);
         if (!clientToken) throw new Error("no ClientToken");
         let token;
+        //If user is logged in get thumbprint token
         if (this.impersonationOptions) {
-            token = await this.tokens.getPersonalToken(
+            token = await this.tokens.getThumbprint(
                 clientToken,
-                this.impersonationOptions.authorizationToken
+                this.impersonationOptions.userId,
+                this.impersonationOptions.keyThumbprint
             );
-            console.log(token);
         } else token = await this.tokens.getAnonymousToken(clientToken);
         if (!token) throw new Error("no SessionKey");
 
-        //Use anonymous session token to generate request token
-
+        //Use session key to generate request token
         const requestToken = await generateRequestToken({
             sessionKey: token.payload,
             uri: uri,

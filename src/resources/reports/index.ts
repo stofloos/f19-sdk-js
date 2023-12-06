@@ -48,8 +48,6 @@ export default class Reports extends Base {
      * Get a report by id
      * @param id
      * @param channel - Optional channel to filter by
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @param token - Optional token to be appended to the request
      * @returns {Promise<ReportResponse>}
      */
     async getById(

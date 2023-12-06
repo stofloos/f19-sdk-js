@@ -14,7 +14,7 @@ export default class Assets extends Base {
      * @param {string} name - The name of the image.
      * @returns {Promise<Blob>} A Promise that resolves to a Blob.
      */
-    async getImageByName(projectId, name, options = {}) {
+    async getImageByName(projectId: string, name: string) {
         if (!projectId || projectId === "") {
             throw new Error("No project id provided");
         }
@@ -36,7 +36,7 @@ export default class Assets extends Base {
      * @param {string} name - The name of the download.
      * @returns {Promise<Blob>} A Promise that resolves to a Blob.
      */
-    async getDownloadByName(projectId, name) {
+    async getDownloadByName(projectId: string, name: string) {
         if (!projectId || projectId === "") {
             throw new Error("No project id provided");
         }
@@ -55,10 +55,9 @@ export default class Assets extends Base {
     /**
      * Get asset blob by token
      * @param {string} ticket - The ticket.
-     * @param {RequestInit} [options={}] - Optional Fetch options to be passed to the request.
      * @returns {Promise<Response>} A Promise that resolves to a Response.
      */
-    async getBlobByToken(ticket) {
+    async getBlobByToken(ticket: string) {
         if (!ticket || ticket === "") {
             throw new Error("No token provided");
         }

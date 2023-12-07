@@ -14,10 +14,7 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "plugins": [
-    "@typescript-eslint",
-    "sort-imports-es6-autofix",
-    "sort-keys-fix",
-    "import"
+    "@typescript-eslint"
   ],
   "overrides": [
     {
@@ -25,79 +22,12 @@
     }
   ],
   "rules": {
-    "import/order": [
-      "error",
-      {
-        "pathGroups": [
-          {
-            "pattern": "~/*",
-            "group": "external"
-          },
-          {
-            "pattern": "constants/**/*",
-            "group": "index"
-          },
-          {
-            "pattern": "mockData/**/*",
-            "group": "sibling"
-          },
-          {
-            "pattern": "helpers/**/*",
-            "group": "index"
-          },
-          {
-            "pattern": "config/**/*",
-            "group": "index"
-          },
-          {
-            "pattern": "lib/**/*",
-            "group": "index"
-          },
-          {
-            "pattern": "components",
-            "group": "index"
-          },
-          {
-            "pattern": "components/**/*",
-            "group": "sibling"
-          },
-          {
-            "pattern": "cached-data/**/*",
-            "group": "object"
-          },
-          {
-            "pattern": "types/**/*",
-            "group": "type"
-          }
-        ],
-        "pathGroupsExcludedImportTypes": [],
-        "groups": [
-          "external",
-          "builtin",
-          "internal",
-          "index",
-          "parent",
-          "sibling",
-          "object",
-          "type"
-        ],
-        "newlines-between": "always"
-      }
-    ],
+
     "@typescript-eslint/array-type": ["error", { "default": "generic" }],
     "no-console": "warn",
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "indent": "off",
-    "sort-imports-es6-autofix/sort-imports-es6": [
-      2,
-      {
-        "ignoreCase": false,
-        "ignoreMemberSort": false,
-        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
-      }
-    ],
-    "sort-keys-fix/sort-keys-fix": "error",
     "@typescript-eslint/no-inferrable-types": "error",
     "@typescript-eslint/member-delimiter-style": "error",
     "@typescript-eslint/naming-convention": [

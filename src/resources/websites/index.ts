@@ -1,6 +1,6 @@
 import { Config } from "../../index";
-import Base from "../base";
 import { BaseResponse, Block } from "../../index";
+import Base from "../base";
 
 export declare type Route = {
     id: string;
@@ -47,72 +47,49 @@ export default class Websites extends Base {
      *  })
      *
      */
-    constructor(config: Config) {
-        super(config);
-    }
 
     /**
      * Get all websites
      * @async
-     * @param token
-     * @param options - Optional options to pass to fetch
      * @return {Promise<WebsitesResponse>} A promise that returns a {@link WebsitesResponse}
      * @example
      * const websites = await client.websites.getAll()
      */
-    async getAll(
-        options: RequestInit = {},
-        token?: string
-    ): Promise<WebsitesResponse> {
-        return this.get(`/${resource}`, token, options).then(response => {
-            return response.json();
-        });
+    async getAll(): Promise<WebsitesResponse> {
+        const response = await this.get(`/${resource}`);
+        const json = await response.json();
+        return json;
     }
 
     /**
      * Get a website by alias
      * @param alias
-     * @param options - Optional options to pass to fetch
-     * @param token
      * @async
      * @return {Promise<WebsiteResponse>} A promise that returns a {@link WebsiteResponse}
      * @example
      * const website = awaits client.websites.getByAlias("my-website")
      */
-    async getByAlias(
-        alias: string,
-        options: RequestInit = {},
-        token?: string
-    ): Promise<WebsiteResponse> {
+    async getByAlias(alias: string): Promise<WebsiteResponse> {
         if (!alias || alias === "") {
             throw new Error("No alias provided");
         }
 
-        return this.get(`/${resource}/alias/${alias}`, token, options).then(
-            response => {
-                return response.json();
-            }
-        );
+        const response = await this.get(`/${resource}/alias/${alias}`);
+        const json = await response.json();
+        return json;
     }
 
     /**
      * Get current website
      * @async
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @param token - Optional token to be appended to the request
      * @return {Promise<WebsiteResponse>} A promise that returns a {@link WebsiteResponse}
      * @example
      * const website = awaits client.websites.getCurrent()
      */
     // TODO: Fix getCurrent call. It's not working.
-    async getCurrent(
-        options: RequestInit = {},
-        token?: string
-    ): Promise<WebsiteResponse> {
-        return this.get(`/${resource}/current`, token, options).then(
-            response => {
-                return response.json();
-            }
-        );
+    async getCurrent(): Promise<WebsiteResponse> {
+        const response = await this.get(`/${resource}/current`);
+        const json = await response.json();
+        return json;
     }
 }

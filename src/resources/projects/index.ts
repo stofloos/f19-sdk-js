@@ -22,43 +22,29 @@ export default class Projects extends Base {
     /**
      * Get all projects
      * @async
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @param token - Optional token to be appended to the request
-     * @returns {Promise<ProjectsResponse>}
+     * @returns {Promise<ProjectsResponse>} A Promise that resolves to a ProjectsResponse.
      * @example
      * const projects = await client.projects.getAll()
      */
-    async getAll(
-        options: RequestInit = {},
-        token?: string
-    ): Promise<ProjectsResponse> {
-        return this.get(`/${resource}`, token, options).then(response => {
-            return response.json();
-        });
+    async getAll(): Promise<ProjectsResponse> {
+        const response = await this.get(`/${resource}`);
+        const json = await response.json();
+        return json;
     }
 
     /**
      * Get a project by id
-     * @param id
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @param token - Optional token to be appended to the request
-     * @returns {Promise<ProjectResponse>}
+     * @param {string} id - The project ID.
+     * @returns {Promise<ProjectResponse>} A Promise that resolves to a ProjectResponse.
      * @example
-     * const project = awaits client.projects.getById("[PROJECT_ID]]")
+     * const project = await client.projects.getById("[PROJECT_ID]")
      */
-    async getById(
-        id: string,
-        options: RequestInit = {},
-        token?: string
-    ): Promise<ProjectResponse> {
+    async getById(id: string): Promise<ProjectResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
-
-        return this.get(`/${resource}/id/${id}`, token, options).then(
-            response => {
-                return response.json();
-            }
-        );
+        const response = await this.get(`/${resource}/id/${id}`);
+        const json = await response.json();
+        return json;
     }
 }

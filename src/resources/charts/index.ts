@@ -2,7 +2,7 @@ import Base from "../base";
 import { Block, ChannelResource } from "../../index";
 import { BaseResponse } from "../../index";
 
-export declare interface ChartTags {}
+export declare interface ChartTags { }
 
 export type Chart = {
     multiChannelResources: Array<ChannelResource>;
@@ -23,56 +23,35 @@ export declare interface ChartsResponse extends BaseResponse {
 }
 
 const resource = "chart";
+
 /**
  * Charts resource
  * @class Charts
- * @constructor Charts
- * @param {Config} config
- * @method getAll - Get all charts by project id
- * @method getById - Get chart by id
  */
 export default class Charts extends Base {
     /**
      * Get all charts by project id
-     * @param projectId
-     * @param options
-     * @param token
-     * @returns {Promise<ChartsResponse>}
+     * @param {string} projectId - The project ID.
+     * @returns {Promise<ChartsResponse>} A Promise that resolves to a ChartsResponse.
      */
-    async getAll(
-        projectId: string,
-        options: RequestInit = {},
-        token?: string
-    ): Promise<ChartsResponse> {
-        return this.get(
-            `/${resource}/project/${projectId}`,
-            token,
-            options
-        ).then(response => {
-            return response.json();
-        });
+    async getAll(projectId: string): Promise<ChartsResponse> {
+        const response = await this.get(`/${resource}/project/${projectId}`);
+        const json = await response.json();
+        return json;
     }
 
     /**
      * Get chart by id
-     * @param chartId
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @param token - Optional token to be appended to the request
-     * @returns {Promise<ChartResponse>}
+     * @param {string} chartId - The chart ID.
+     * @returns {Promise<ChartResponse>} A Promise that resolves to a ChartResponse.
      */
-    async getById(
-        chartId: string,
-        options: RequestInit = {},
-        token?: string
-    ): Promise<ChartResponse> {
+    async getById(chartId: string): Promise<ChartResponse> {
         if (!chartId || chartId === "") {
             throw new Error("No chart id provided");
         }
 
-        return this.get(`/${resource}/id/${chartId}`, token, options).then(
-            response => {
-                return response.json();
-            }
-        );
+        const response = await this.get(`/${resource}/id/${chartId}`);
+        const json = await response.json();
+        return json;
     }
 }

@@ -25,50 +25,35 @@ export declare interface FacetNavigationResponse extends BaseResponse {
 }
 
 const resource = "facetnavigation";
+
 export default class FacetNavigations extends Base {
     /**
-     * @method getAll
-     * @param projectId
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @param token - Optional token to be appended to the request
+     * Get all facet navigations by project id
+     * @param {string} projectId - The project ID.
+     * @returns {Promise<FacetNavigationsResponse>} A Promise that resolves to a FacetNavigationsResponse.
      */
-    async getAll(
-        projectId: string,
-        options: RequestInit = {},
-        token?: string
-    ): Promise<FacetNavigationsResponse> {
+    async getAll(projectId: string): Promise<FacetNavigationsResponse> {
         if (!projectId || projectId === "") {
             throw new Error("No project id provided");
         }
 
-        return this.get(
-            `/${resource}/project/${projectId}`,
-            token,
-            options
-        ).then(response => {
-            return response.json();
-        });
+        const response = await this.get(`/${resource}/project/${projectId}`);
+        const json = await response.json();
+        return json;
     }
 
     /**
-     * @method getById
-     * @param facetId
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @param token - Optional token to be appended to the request
+     * Get facet navigation by id
+     * @param {string} facetId - The facet ID.
+     * @returns {Promise<FacetNavigationResponse>} A Promise that resolves to a FacetNavigationResponse.
      */
-    async getById(
-        facetId: string,
-        options: RequestInit = {},
-        token?: string
-    ): Promise<FacetNavigationResponse> {
+    async getById(facetId: string): Promise<FacetNavigationResponse> {
         if (!facetId || facetId === "") {
             throw new Error("No facet id provided");
         }
 
-        return this.get(`/${resource}/id/${facetId}`, token, options).then(
-            response => {
-                return response.json();
-            }
-        );
+        const response = await this.get(`/${resource}/id/${facetId}`);
+        const json = await response.json();
+        return json;
     }
 }

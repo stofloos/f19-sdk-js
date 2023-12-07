@@ -57,13 +57,13 @@ export default class Tokens extends Base {
             },
             null
         );
-        const json = await response.json();
-        return json;
+        return await response.json();
     }
 
     /**
      * Get a thumbprint token
      * @async
+     * @param clientToken
      * @param userId
      * @param thumbPrint
      * @return {Promise<TokenResponse>}
@@ -90,7 +90,6 @@ export default class Tokens extends Base {
             },
             null
         );
-        const json = await response.json();
-        return json;
+        return await response.json();
     }
 }

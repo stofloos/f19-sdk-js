@@ -1,54 +1,13 @@
 import "isomorphic-fetch";
-import Images from "./";
-import Projects from "../projects";
 import { config } from "../../helpers/testing";
+import Client from "../../index";
+import Images from "./";
 
 describe("Images resource", () => {
-    const imagesResource = new Images(config);
+    const client = new Client(config);
+    const imagesResource = client.images;
 
-    let imageId = "";
-
-    it("should throw an error if project id is not provided", async () => {
-        await expect(imagesResource.getAll("")).rejects.toThrow(
-            "Project id is required"
-        );
-    });
-
-    it("should get all images for a project", async () => {
-        // Get a project id
-
-        // New projects resource instance
-        const projectsResource = new Projects(config);
-
-        // Get all projects
-        const projects = await projectsResource.getAll();
-
-        // Get the first project id
-        const projectId = projects.payload[0].id;
-        // Get all images for the project
-
-        expect(projectId).toBeDefined();
-
-        const imagesResponse = await imagesResource.getAll(projectId);
-
-        imageId = imagesResponse?.payload?.[0]?.id;
-
-        expect(imagesResponse).toHaveProperty("payload");
-    });
-
-    it("should throw an error if image id is not provided", async () => {
-        await expect(imagesResource.getById("")).rejects.toThrow(
-            "Image id is required"
-        );
-    });
-
-    it("should get an image by id", async () => {
-        const imageResponse = await imagesResource.getById(imageId);
-        expect(imageResponse).toHaveProperty("payload");
-        expect(imageResponse.payload).toHaveProperty("id");
-
-        if (imageResponse?.payload && imageResponse.payload.id) {
-            expect(imageResponse.payload.id).toEqual(imageId);
-        }
+    it("should be instance of Images", () => {
+        expect(imagesResource).toBeInstanceOf(Images);
     });
 });

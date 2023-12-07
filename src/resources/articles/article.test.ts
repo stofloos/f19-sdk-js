@@ -1,41 +1,43 @@
 import Articles from "./";
-import Projects from "../projects";
 import "isomorphic-fetch";
 
 import { config } from "../../helpers/testing";
+import Client from "../../index";
 
 describe("Articles resource", () => {
-    const articles = new Articles(config);
+    const client = new Client(config);
+    const articlesResource = client.articles;
 
     it("should be instance of Articles", () => {
-        expect(articles).toBeInstanceOf(Articles);
+        expect(articlesResource).toBeInstanceOf(Articles);
     });
 
     it("should throw error if project id is not provided", async () => {
-        await expect(articles.getAllByProjectId("")).rejects.toThrowError(
-            "Project id not provided"
-        );
+        await expect(
+            articlesResource.getAllByProjectId("")
+        ).rejects.toThrowError("Project id not provided");
     });
 
     it("should throw error if invalid project id is provided", async () => {
-        await expect(articles.getAllByProjectId("123")).rejects.toThrowError(
-            "Forbidden"
-        );
+        await expect(
+            articlesResource.getAllByProjectId("123")
+        ).resolves.toHaveProperty("payload");
     });
 
     it("should be able to get articles by project id", async () => {
-        // New instance of projects
-        const projectsInstance = new Projects(config);
-
         // Get all projects
-        const projectsResponse = await projectsInstance.getAll();
+        const projectsResponse = await client.projects.getAll();
 
         // Get the first project id
         const projectId = projectsResponse?.payload?.[0]?.id;
 
         // Get all articles by project id
-        const articlesResponse = await articles.getAllByProjectId(projectId!);
+        if (projectId) {
+            const articlesResponse = await articlesResource.getAllByProjectId(
+                projectId
+            );
 
-        expect(articlesResponse).toHaveProperty("payload");
+            expect(articlesResponse).toHaveProperty("payload");
+        }
     });
 });

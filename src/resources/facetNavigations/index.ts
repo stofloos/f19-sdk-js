@@ -38,8 +38,7 @@ export default class FacetNavigations extends Base {
         }
 
         const response = await this.get(`/${resource}/project/${projectId}`);
-        const json = await response.json();
-        return json;
+        return await response.json();
     }
 
     /**
@@ -53,7 +52,6 @@ export default class FacetNavigations extends Base {
         }
 
         const response = await this.get(`/${resource}/id/${facetId}`);
-        const json = await response.json();
-        return json;
+        return await response.json();
     }
 }

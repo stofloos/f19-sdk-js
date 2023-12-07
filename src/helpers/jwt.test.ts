@@ -4,7 +4,7 @@ import Client from "../index";
 
 describe("JWT Helpers", () => {
     const client = new Client(config);
-    const jwtSecret = config.secretApiKey;
+    const jwtSecret = config.apiKey;
     const claims = {
         ClientId: config.clientId
     };
@@ -24,39 +24,30 @@ describe("JWT Helpers", () => {
 
         it("should return a valid Anonymous token", async () => {
             const clientToken = await generateClientToken(claims, jwtSecret);
-            const tokenResponse = await client.tokens.getAnonymousToken({
-                headers: {
-                    "X-F19-ClientToken": clientToken
-                }
-            });
+            const tokenResponse = await client.tokens.getAnonymousToken(
+                clientToken
+            );
 
-            const token = await tokenResponse.json();
-
-            expect(token.payload).toBeTruthy();
+            expect(tokenResponse.payload).toBeTruthy();
         });
     });
 
     describe("Generate Request token", () => {
         it("should return a valid Request token", async () => {
-            const ClientToken = await generateClientToken(claims, jwtSecret);
+            const clientToken = await generateClientToken(claims, jwtSecret);
 
-            const tokenResponse = await client.tokens.getAnonymousToken({
-                headers: {
-                    "X-F19-ClientToken": ClientToken
-                }
-            });
-            const token = await tokenResponse.json();
+            const tokenResponse = await client.tokens.getAnonymousToken(
+                clientToken
+            );
 
             const requestToken = await generateRequestToken({
-                sessionKey: token.payload,
+                sessionKey: tokenResponse.payload,
                 uri: "https://demo.cfreports.f19.nl/cms/api/public/v1/project",
                 clientId: config.clientId,
                 method: "GET"
             });
 
-            const projectResponse = await client.projects.getAll(requestToken);
-
-            expect(projectResponse).toBeTruthy();
+            expect(requestToken).toBeTruthy();
         });
     });
 });

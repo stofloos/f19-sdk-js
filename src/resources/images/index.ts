@@ -1,8 +1,7 @@
 import Base from "../base";
-import { Block, ChannelResource } from "../../index";
-import { BaseResponse } from "../../index";
+import { BaseResponse, Block, ChannelResource } from "../../index";
 
-export declare interface ChannelTag { }
+export declare interface ChannelTag {}
 
 export declare interface ImageChannelTag {
     channel: string;
@@ -46,8 +45,7 @@ export default class Images extends Base {
         }
 
         const response = await this.get(`/${resource}/project/${projectId}`);
-        const json = await response.json();
-        return json;
+        return await response.json();
     }
 
     /**
@@ -61,7 +59,6 @@ export default class Images extends Base {
         }
 
         const response = await this.get(`/${resource}/id/${imageId}`);
-        const json = await response.json();
-        return json;
+        return await response.json();
     }
 }

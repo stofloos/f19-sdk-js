@@ -19,7 +19,7 @@ describe("Index instance", () => {
             new Client({
                 clientId: "",
                 apiKey: "",
-                baseUrl: "https://api.f19.rocks",
+                baseUrl: "https://api.f19.rocks"
             });
         }).toThrowError("API-key not configured");
     });
@@ -29,7 +29,7 @@ describe("Index instance", () => {
             new Client({
                 apiKey: "123",
                 baseUrl: "",
-                clientId: "",
+                clientId: ""
             });
         }).toThrowError("Base URL not configured");
     });

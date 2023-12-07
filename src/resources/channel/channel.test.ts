@@ -1,19 +1,21 @@
 import Channel from "./";
 import "isomorphic-fetch";
 import { config } from "../../helpers/testing";
+import Client from "../../index";
 beforeAll(() => {
     jest.resetModules();
 });
 
 describe("Channel Resource", () => {
-    const getChannel = new Channel(config);
+    const client = new Client(config);
+    const channelResource = client.channel;
 
     it("should be instance of Channel", () => {
-        expect(getChannel).toBeInstanceOf(Channel);
+        expect(channelResource).toBeInstanceOf(Channel);
     });
 
     it("should return channel", async () => {
-        const channel = await getChannel.getAll();
+        const channel = await channelResource.getAll();
 
         expect(channel).toEqual(
             expect.objectContaining({

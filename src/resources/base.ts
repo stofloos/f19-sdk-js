@@ -29,7 +29,9 @@ export default abstract class Base {
     /**
      * Make a request to the API using fetch and return the serialized response
      * @param endpoint - The endpoint to make the request to
+     * @param method
      * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param requestTokenPlacement
      * @returns {Promise<Response>}
      */
     async request(
@@ -42,13 +44,14 @@ export default abstract class Base {
             throw new Error("Endpoint not found");
         }
         const uri = `${this.client.config.apiPath}${endpoint}`;
-        console.log(uri);
+
         let requestToken = "";
         if (requestTokenPlacement)
             requestToken = await this.client.getRequestToken(uri, method);
 
-        const url = `${this.client.config.baseUrl}${uri}${requestTokenPlacement === "QUERY" ? `?t=${requestToken}` : ""
-            }`;
+        const url = `${this.client.config.baseUrl}${uri}${
+            requestTokenPlacement === "QUERY" ? `?t=${requestToken}` : ""
+        }`;
 
         const fetchOptions = {
             method: method,
@@ -73,8 +76,8 @@ export default abstract class Base {
     /**
      * Make a GET request to the API
      * @param endpoint - The endpoint to make the request to
-     * @param token - Optional token to be appended to the request
      * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param requestTokenPlacement
      * @returns {Promise<Response>}
      */
     async get(
@@ -95,8 +98,8 @@ export default abstract class Base {
     /**
      * Make a POST request to the API
      * @param endpoint - The endpoint to make the request to
-     * @param token - Optional token to be appended to the request
      * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param requestTokenPlacement
      * @returns {Promise<Response>}
      */
     async post(

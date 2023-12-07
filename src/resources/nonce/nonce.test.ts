@@ -1,9 +1,9 @@
 import "isomorphic-fetch";
-import Nonce from "./";
 import { config } from "../../helpers/testing";
+import Client from "../../index";
 
 describe("Nonce resource", () => {
-    const nonceResource = new Nonce(config);
+    const nonceResource = new Client(config).nonce;
 
     it("should generate a nonce", async () => {
         const nonce = await nonceResource.getNonce();

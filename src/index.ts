@@ -93,16 +93,16 @@ export interface VideoTags extends Tags {
 export interface MultiChannelTag {
     channel: ChannelType;
     tags: ImageTags &
-    ArticleTags &
-    HeadingTags &
-    ComponentTags &
-    CoverTags &
-    SlipSheetTags &
-    TableOfContentsTags &
-    VideoTags & {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        [key: string]: any;
-    };
+        ArticleTags &
+        HeadingTags &
+        ComponentTags &
+        CoverTags &
+        SlipSheetTags &
+        TableOfContentsTags &
+        VideoTags & {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            [key: string]: any;
+        };
 }
 
 export type Event = {
@@ -311,6 +311,7 @@ export default class Client {
     /**
      * Create a new instance of the client
      * @param {Config} config
+     * @param impersonationOptions
      * @throws Error
      * @constructor Index
      *
@@ -365,14 +366,13 @@ export default class Client {
         } else token = await this.tokens.getAnonymousToken(clientToken);
         if (!token) throw new Error("no SessionKey");
 
-        //Use session key to generate request token
-        const requestToken = await generateRequestToken({
+        //Use a session key to generate request token
+        return await generateRequestToken({
             sessionKey: token.payload,
             uri: uri,
             clientId: this.config.clientId,
             method: method
         });
-        return requestToken;
     }
 
     public getAuthUrl(callbackUrl: string) {

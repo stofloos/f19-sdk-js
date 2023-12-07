@@ -1,8 +1,7 @@
 import Base from "../base";
-import { Block, ChannelResource } from "../../index";
-import { BaseResponse } from "../../index";
+import { BaseResponse, Block, ChannelResource } from "../../index";
 
-export declare interface ChartTags { }
+export declare interface ChartTags {}
 
 export type Chart = {
     multiChannelResources: Array<ChannelResource>;
@@ -36,8 +35,7 @@ export default class Charts extends Base {
      */
     async getAll(projectId: string): Promise<ChartsResponse> {
         const response = await this.get(`/${resource}/project/${projectId}`);
-        const json = await response.json();
-        return json;
+        return await response.json();
     }
 
     /**
@@ -51,7 +49,6 @@ export default class Charts extends Base {
         }
 
         const response = await this.get(`/${resource}/id/${chartId}`);
-        const json = await response.json();
-        return json;
+        return await response.json();
     }
 }

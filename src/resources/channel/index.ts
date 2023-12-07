@@ -22,7 +22,6 @@ export default class Channel extends Base {
      */
     async getAll(): Promise<ChannelResponse> {
         const response = await this.get(`/${resource}`);
-        const json = await response.json();
-        return json;
+        return await response.json();
     }
 }

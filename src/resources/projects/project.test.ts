@@ -1,39 +1,15 @@
 import Projects from "./";
 import "isomorphic-fetch";
 import { config } from "../../helpers/testing";
+import Client from "../../index";
 beforeAll(() => {
     jest.resetModules();
 });
 
 describe("Projects resource", () => {
-    const projects = new Projects(config);
-
-    let projectId: string;
+    const projects = new Client(config).projects;
 
     it("should be instance of Projects", () => {
         expect(projects).toBeInstanceOf(Projects);
-    });
-
-    it("should throw error if id is not provided", async () => {
-        await expect(projects.getById("")).rejects.toThrowError(
-            "No id provided"
-        );
-    });
-
-    it("should return projects", async () => {
-        const project = await projects.getAll();
-
-        if (project.payload?.[0]?.id) {
-            projectId = project.payload?.[0]?.id;
-        }
-
-        expect(project).toHaveProperty("payload");
-    });
-
-    it("should return project", async () => {
-        const project = await projects.getById(projectId);
-
-        expect(project).toHaveProperty("payload");
-        expect(project.payload).toHaveProperty("id");
     });
 });

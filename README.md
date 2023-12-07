@@ -42,7 +42,7 @@ const client = new F19({
 
 Now you can access all anonymous methods using the client object.
 
-If you want to access the personal methods, you need to login first.
+If you want to access the personal methods, you need to log in first.
 You can do this by redirecting the user to the F19 login page and then redirecting them back after logging in using a callback URL.
 
 ```javascript

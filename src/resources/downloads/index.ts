@@ -23,8 +23,7 @@ export default class Index extends Base {
         }
 
         const response = await this.get(`/${resource}/id/${id}`);
-        const json = await response.json();
-        return json;
+        return await response.json();
     }
 
     /**
@@ -40,7 +39,6 @@ export default class Index extends Base {
         }
 
         const response = await this.get(`/${resource}/project/${projectId}`);
-        const json = await response.json();
-        return json;
+        return await response.json();
     }
 }

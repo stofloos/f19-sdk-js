@@ -1,4 +1,4 @@
-import type { Config } from "../index";
+import Client from "../index";
 
 /**
  * Base class for all resources
@@ -11,102 +11,110 @@ import type { Config } from "../index";
  * @property {string} baseUrl
  * @method request
  * */
+
+export type RequestTokenPlacement = "HEADER" | "QUERY" | null;
 export default abstract class Base {
-    readonly apiKey: string;
-    readonly baseUrl: string;
-    readonly apiPath: string;
+    private readonly client: Client;
 
     /**
      * Create a new instance of the base class
-     * @param {Config} config
+     * @param {Client} client
      * @throws Error
      * @constructor Base
      */
-    constructor(config: Config) {
-        if (!config.apiKey || config.apiKey === "") {
-            throw new Error("Api key not configured");
-        }
-
-        if (!config.baseUrl || config.baseUrl === "") {
-            throw new Error("Base URL not configured");
-        }
-
-        this.apiPath = config.apiPath || "/cms/api/public/v1";
-        this.apiKey = config.apiKey;
-        this.baseUrl = config.baseUrl;
+    constructor(client: Client) {
+        this.client = client;
     }
 
     /**
      * Make a request to the API using fetch and return the serialized response
      * @param endpoint - The endpoint to make the request to
-     * @param token - Optional token to be appended to the request
+     * @param method
      * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param requestTokenPlacement
      * @returns {Promise<Response>}
      */
-    async request<T>(
+    async request(
         endpoint: string,
-        token?: string | null | undefined,
-        options?: RequestInit
+        method: "GET" | "POST",
+        options?: RequestInit,
+        requestTokenPlacement: RequestTokenPlacement = "HEADER"
     ): Promise<Response> {
         if (!endpoint || endpoint === "") {
             throw new Error("Endpoint not found");
         }
+        const uri = `${this.client.config.apiPath}${endpoint}`;
 
-        const url = token
-            ? `${this.baseUrl}${this.apiPath}${endpoint}?t=${token}`
-            : `${this.baseUrl}${this.apiPath}${endpoint}`;
+        let requestToken = "";
+        if (requestTokenPlacement)
+            requestToken = await this.client.getRequestToken(uri, method);
+
+        const url = `${this.client.config.baseUrl}${uri}${
+            requestTokenPlacement === "QUERY" ? `?t=${requestToken}` : ""
+        }`;
 
         const fetchOptions = {
+            method: method,
             ...(options || {}),
             headers: {
                 ...(options?.headers ?? {}),
-                "Content-Type": "application/json",
-                "X-API-Key": this.apiKey
+                ...(requestTokenPlacement === "HEADER"
+                    ? { "X-F19-RequestToken": requestToken }
+                    : {}),
+                "Content-Type": "application/json"
             }
         };
 
         const response = await fetch(url, fetchOptions);
 
-        if (!response.ok && response.statusText) {
-            throw new Error(response.statusText);
+        if (response.status === 401) {
+            throw new Error("Unauthorized");
         }
-
         return response;
     }
 
     /**
      * Make a GET request to the API
      * @param endpoint - The endpoint to make the request to
-     * @param token - Optional token to be appended to the request
      * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param requestTokenPlacement
      * @returns {Promise<Response>}
      */
-    async get<T>(
+    async get(
         endpoint: string,
-        token: string | null | undefined = null,
-        options?: RequestInit
+        options?: RequestInit,
+        requestTokenPlacement: RequestTokenPlacement = "HEADER"
     ): Promise<Response> {
-        return await this.request<T>(endpoint, token, {
-            ...options,
-            method: "GET"
-        });
+        return await this.request(
+            endpoint,
+            "GET",
+            {
+                ...options
+            },
+            requestTokenPlacement
+        );
     }
 
     /**
      * Make a POST request to the API
      * @param endpoint - The endpoint to make the request to
-     * @param token - Optional token to be appended to the request
      * @param [options={}] - Optional Fetch options to be passed to the request
+     * @param requestTokenPlacement
      * @returns {Promise<Response>}
      */
-    async post<T>(
+    async post(
         endpoint: string,
-        token: string | null | undefined = null,
-        options?: RequestInit
+        options?: RequestInit,
+        requestTokenPlacement: RequestTokenPlacement = "HEADER"
     ): Promise<Response> {
-        return await this.request<T>(endpoint, token, {
-            ...options,
-            method: "POST"
-        });
+        // Add token as header if provided and method is POST
+        return await this.request(
+            endpoint,
+            "POST",
+            {
+                ...options
+            },
+            requestTokenPlacement
+        );
     }
 }

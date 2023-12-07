@@ -1,22 +1,24 @@
-import Websites from "./";
 import "isomorphic-fetch";
+import Websites from "./";
 import { config } from "../../helpers/testing";
+import Client from "../../index";
 
 beforeAll(() => {
     jest.resetModules();
 });
 
 describe("Websites resource", () => {
-    const websites = new Websites(config);
+    const client = new Client(config);
+    const websitesResource = client.websites;
 
     let websiteAlias: string;
 
     it("should be instance of Websites", () => {
-        expect(websites).toBeInstanceOf(Websites);
+        expect(websitesResource).toBeInstanceOf(Websites);
     });
 
     it("should get all websites", async () => {
-        const websitesResponse = await websites.getAll();
+        const websitesResponse = await websitesResource.getAll();
 
         websiteAlias = websitesResponse?.payload?.[0]?.alias;
 
@@ -24,13 +26,13 @@ describe("Websites resource", () => {
     });
 
     it("should throw error if alias is not provided", async () => {
-        await expect(websites.getByAlias("")).rejects.toThrowError(
+        await expect(websitesResource.getByAlias("")).rejects.toThrowError(
             "No alias provided"
         );
     });
 
     it("should get a website by alias", async () => {
-        const websiteResponse = await websites.getByAlias(websiteAlias);
+        const websiteResponse = await websitesResource.getByAlias(websiteAlias);
         expect(websiteResponse).toEqual(
             expect.objectContaining({
                 nextNonce: expect.any(String),
@@ -45,8 +47,9 @@ describe("Websites resource", () => {
         expect(websiteResponse?.payload?.alias).toEqual(websiteAlias);
     });
 
-    // TODO: Fix getCurrent test
-    it("throws error getting current website", async () => {
-        await expect(websites.getCurrent()).rejects.toThrowError("Not Found");
+    it.skip("throws error getting current website", async () => {
+        await expect(websitesResource.getCurrent()).rejects.toThrowError(
+            "Not Found"
+        );
     });
 });

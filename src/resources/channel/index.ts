@@ -12,21 +12,16 @@ export interface ChannelResponse extends BaseResponse {
 }
 
 const resource = "channel";
+
 export default class Channel extends Base {
     /**
      * Get all channels
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @param token - Optional token to be appended to the request
-     * @returns {Promise<ChannelResponse>}
+     * @returns {Promise<ChannelResponse>} A Promise that resolves to a ChannelResponse.
      * @example
      * const channel = await client.channel.getAll()
      */
-    async getAll(
-        options: RequestInit = {},
-        token?: string
-    ): Promise<ChannelResponse> {
-        return this.get(`/${resource}`, token, options).then(response => {
-            return response.json();
-        });
+    async getAll(): Promise<ChannelResponse> {
+        const response = await this.get(`/${resource}`);
+        return await response.json();
     }
 }

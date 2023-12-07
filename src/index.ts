@@ -11,6 +11,7 @@ import Nonce from "./resources/nonce";
 import Tables from "./resources/tables";
 import Downloads from "./resources/downloads";
 import Tokens from "./resources/tokens";
+import { generateClientToken, generateRequestToken } from "./helpers/jwt";
 
 export type Editclass =
     | "f19-cover"
@@ -45,6 +46,14 @@ export type Config = {
     apiKey: string; // API key to use for authentication.
     baseUrl: string; // Base url of the F19 instance to connect to.
     apiPath?: string; // Path to the API on the F19 instance.
+    clientId: string; // Client id to use it for authentication.
+};
+
+export type ImpersonationOptions = {
+    userId: string;
+    keyThumbprint: string;
+    cacheDifferentiator: string;
+    authorizationToken: string;
 };
 
 export type Error = {
@@ -56,6 +65,7 @@ export type Error = {
 
 export interface BaseResponse {
     errors: Error;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     payload: any;
     statusCode: number;
 }
@@ -71,8 +81,8 @@ export interface Tags {
     editclass?: Editclass | string;
     "is-visible"?: boolean;
     "show-in-header-footer"?: string;
-    "f19-meta-level:"?: string;
-    "f19-meta-channel:"?: string;
+    "f19-meta-level"?: string;
+    "f19-meta-channel"?: string;
     "settings-reference"?: string;
 }
 
@@ -90,6 +100,7 @@ export interface MultiChannelTag {
         SlipSheetTags &
         TableOfContentsTags &
         VideoTags & {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             [key: string]: any;
         };
 }
@@ -156,11 +167,11 @@ export interface ComponentHeading extends Block {
 interface ComponentTags extends Tags {
     articleCode?: string;
     publication?: string;
-    "f19-meta-channel:"?: string;
+    "f19-meta-channel"?: string;
     spread?: string;
     hideHeading?: string;
-    "f19-meta-page-break:"?: string;
-    "f19-meta-headerfooter:"?: string;
+    "f19-meta-page-break"?: string;
+    "f19-meta-headerfooter"?: string;
     "parent-id"?: string;
 }
 
@@ -178,8 +189,8 @@ export interface ComponentInterface extends Block {
 interface CoverTags extends Tags {
     name?: string;
     "name-url"?: string;
-    "f19-meta-page-break:"?: string;
-    "f19-meta-headerfooter:"?: string;
+    "f19-meta-page-break"?: string;
+    "f19-meta-headerfooter"?: string;
 }
 
 export interface Cover extends ComponentInterface {
@@ -191,8 +202,8 @@ interface SlipSheetTags extends Tags {
     spread?: string;
     hideHeading?: string;
     "settings-reference"?: string;
-    "f19-meta-page-break:"?: string;
-    "f19-meta-headerfooter:"?: string;
+    "f19-meta-page-break"?: string;
+    "f19-meta-headerfooter"?: string;
 }
 
 export interface SlipSheet extends ComponentInterface {
@@ -244,6 +255,20 @@ export declare interface Report extends Block {
     articleIds: Array<string>;
 }
 
+export interface Download {
+    text: string;
+    securedProjectId: number;
+    id: string;
+    type: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    blocks: Array<any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    multiChannelResources: Array<any>;
+    multiChannelTags: Array<MultiChannelTag>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    events: Array<any>;
+}
+
 export type Component = Cover | SlipSheet | Heading | TableOfContents | Article;
 
 /**
@@ -280,35 +305,78 @@ export default class Client {
     tables: Tables;
     downloads: Downloads;
     tokens: Tokens;
+    config: Config;
+    impersonationOptions?: ImpersonationOptions;
 
     /**
      * Create a new instance of the client
      * @param {Config} config
+     * @param impersonationOptions
      * @throws Error
      * @constructor Index
      *
      */
-    constructor(config: Config) {
+    constructor(config: Config, impersonationOptions?: ImpersonationOptions) {
         if (!config.apiKey) {
             throw new Error("API-key not configured");
         }
-
         if (!config.baseUrl) {
             throw new Error("Base URL not configured");
         }
+        this.config = {
+            apiKey: config.apiKey,
+            baseUrl: config.baseUrl,
+            apiPath: config.apiPath || "/cms/api/public/v1",
+            clientId: config.clientId
+        };
+        this.impersonationOptions = impersonationOptions;
+        this.projects = new Projects(this);
+        this.websites = new Websites(this);
+        this.reports = new Reports(this);
+        this.articles = new Articles(this);
+        this.assets = new Assets(this);
+        this.charts = new Charts(this);
+        this.channel = new Channel(this);
+        this.facetNavigations = new FacetNavigations(this);
+        this.images = new Images(this);
+        this.nonce = new Nonce(this);
+        this.tables = new Tables(this);
+        this.downloads = new Downloads(this);
+        this.tokens = new Tokens(this);
+    }
 
-        this.projects = new Projects(config);
-        this.websites = new Websites(config);
-        this.reports = new Reports(config);
-        this.articles = new Articles(config);
-        this.assets = new Assets(config);
-        this.charts = new Charts(config);
-        this.channel = new Channel(config);
-        this.facetNavigations = new FacetNavigations(config);
-        this.images = new Images(config);
-        this.nonce = new Nonce(config);
-        this.tables = new Tables(config);
-        this.downloads = new Downloads(config);
-        this.tokens = new Tokens(config);
+    public async getRequestToken(uri: string, method: string) {
+        const jwtSecret = this.config.apiKey;
+        const claims = {
+            ClientId: this.config.clientId
+        };
+
+        //Generate Client token
+        const clientToken = await generateClientToken(claims, jwtSecret);
+        if (!clientToken) throw new Error("no ClientToken");
+
+        let token;
+        //If user is logged in get thumbprint token
+        if (this.impersonationOptions) {
+            token = await this.tokens.getThumbprint(
+                clientToken,
+                this.impersonationOptions.userId,
+                this.impersonationOptions.keyThumbprint
+            );
+        } else token = await this.tokens.getAnonymousToken(clientToken);
+        if (!token) throw new Error("no SessionKey");
+
+        //Use a session key to generate request token
+        return await generateRequestToken({
+            sessionKey: token.payload,
+            uri: uri,
+            clientId: this.config.clientId,
+            method: method
+        });
+    }
+
+    public getAuthUrl(callbackUrl: string) {
+        const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+        return `${this.config.baseUrl}/cms/login/authorize/${this.config.clientId}?callback=${encodedCallbackUrl}`;
     }
 }

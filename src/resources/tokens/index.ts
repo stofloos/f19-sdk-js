@@ -8,7 +8,7 @@ export declare type Token = {
 };
 
 export declare interface TokenResponse extends BaseResponse {
-    payload: Token | null;
+    payload: Token;
 }
 
 const resource = "token";
@@ -21,57 +21,57 @@ export default class Tokens extends Base {
     /**
      * Get a personal token
      * @param authorizationToken
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @param token - Optional token to be appended to the request
      * @async
      * @return {Promise<TokenResponse>}
      */
-    async getPersonal(
-        authorizationToken: string,
-        options: RequestInit = {},
-        token?: string
+    async getPersonalToken(
+        clientToken: string,
+        authorizationToken: string
     ): Promise<TokenResponse> {
-        if (!authorizationToken || authorizationToken === "") {
-            throw new Error("Authorization token is required");
-        }
-
-        return this.post(
-            `/${resource}/personal?authorizationToken=${authorizationToken}`,
-            token,
-            options
-        ).then(response => response.json());
+        const response = await this.post(
+            `/${resource}/personal`,
+            {
+                headers: {
+                    "X-F19-ClientToken": clientToken
+                },
+                body: authorizationToken
+            },
+            null
+        );
+        const json = await response.json();
+        return json;
     }
 
     /**
      * Get an anonymous token
      * @async
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @param token - Optional token to be appended to the request
      * @return {Promise<TokenResponse>}
      */
-    async getAnonymous(
-        options: RequestInit = {},
-        token?: string
-    ): Promise<TokenResponse> {
-        return this.post(`/${resource}/anonymous`, token, options).then(
-            response => response.json()
+    async getAnonymousToken(clientToken: string): Promise<TokenResponse> {
+        const response = await this.post(
+            `/${resource}/anonymous`,
+            {
+                headers: {
+                    "X-F19-ClientToken": clientToken
+                }
+            },
+            null
         );
+        return await response.json();
     }
 
     /**
      * Get a thumbprint token
      * @async
+     * @param clientToken
      * @param userId
      * @param thumbPrint
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @param token - Optional token to be appended to the request
      * @return {Promise<TokenResponse>}
      */
     async getThumbprint(
+        clientToken: string,
         userId: string,
-        thumbPrint: string,
-        options: RequestInit = {},
-        token?: string
+        thumbPrint: string
     ): Promise<TokenResponse> {
         if (!userId || userId === "") {
             throw new Error("UserId token is required");
@@ -80,10 +80,16 @@ export default class Tokens extends Base {
         if (!thumbPrint || thumbPrint === "") {
             throw new Error("Thumbprint token is required");
         }
-        return this.post(
+
+        const response = await this.post(
             `/${resource}/thumbprint?userId=${userId}&thumbprint=${thumbPrint}`,
-            token,
-            options
-        ).then(response => response.json());
+            {
+                headers: {
+                    "X-F19-ClientToken": clientToken
+                }
+            },
+            null
+        );
+        return await response.json();
     }
 }

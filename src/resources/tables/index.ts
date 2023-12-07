@@ -12,6 +12,7 @@ export declare interface TableResponse extends BaseResponse {
 }
 
 const resource = "table";
+
 /**
  * Tables Resource
  * @class Tables
@@ -21,47 +22,32 @@ export default class Tables extends Base {
     /**
      * Get all tables for a project
      * @param projectId
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @param token - Optional token to be appended to the request
      * @returns {Promise<TablesResponse>}
      * @throws Error
      */
-    async getAll(
-        projectId: string,
-        options?: RequestInit,
-        token?: string
-    ): Promise<TablesResponse> {
+    async getAll(projectId: string): Promise<TablesResponse> {
         if (!projectId) {
             throw new Error("No project id provided");
         }
 
-        return this.get(
-            `/${resource}/project/
-        ${projectId}`,
-            token,
-            options
-        ).then(response => response.json());
+        const response = await this.get(`/${resource}/project/${projectId}`);
+        const json = await response.json();
+        return json;
     }
 
     /**
      * Get a table by id
      * @param tableId
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @param token - Optional token to be appended to the request
      * @returns {Promise<TableResponse>}
      * @throws Error
      */
-    async getById(
-        tableId: string,
-        options?: RequestInit,
-        token?: string
-    ): Promise<TableResponse> {
+    async getById(tableId: string): Promise<TableResponse> {
         if (!tableId) {
             throw new Error("No table id provided");
         }
 
-        return this.get(`/${resource}/id/${tableId}`, token, options).then(
-            response => response.json()
-        );
+        const response = await this.get(`/${resource}/id/${tableId}`);
+        const json = await response.json();
+        return json;
     }
 }

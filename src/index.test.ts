@@ -17,6 +17,7 @@ describe("Index instance", () => {
     it("should throw error if api key is not configured", () => {
         expect(() => {
             new Client({
+                clientId: "",
                 apiKey: "",
                 baseUrl: "https://api.f19.rocks"
             });
@@ -27,7 +28,8 @@ describe("Index instance", () => {
         expect(() => {
             new Client({
                 apiKey: "123",
-                baseUrl: ""
+                baseUrl: "",
+                clientId: ""
             });
         }).toThrowError("Base URL not configured");
     });

@@ -1,6 +1,5 @@
 import Base from "../base";
-import { Block, ChannelResource } from "../../index";
-import { BaseResponse } from "../../index";
+import { BaseResponse, Block, ChannelResource } from "../../index";
 
 export declare interface ChannelTag {}
 
@@ -28,59 +27,38 @@ export declare interface ImageResponse extends BaseResponse {
 }
 
 const resource = "image";
+
 /**
  * Images resource
- * @export
  * @class Images
  * @extends {Base}
- * */
+ */
 export default class Images extends Base {
     /**
      * Get all images for a project
-     * @param projectId
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @param token - Optional token to be appended to the request
-     * @returns {Promise<any>}
+     * @param {string} projectId - The project ID.
+     * @returns {Promise<ImagesResponse>} A Promise that resolves to an ImagesResponse.
      */
-    async getAll(
-        projectId: string,
-        options: RequestInit = {},
-        token?: string
-    ): Promise<ImagesResponse> {
+    async getAll(projectId: string): Promise<ImagesResponse> {
         if (!projectId) {
             throw new Error("Project id is required");
         }
-        return await this.get(
-            `/${resource}/project/${projectId}`,
-            token,
-            options
-        ).then(response => {
-            return response.json();
-        });
+
+        const response = await this.get(`/${resource}/project/${projectId}`);
+        return await response.json();
     }
 
     /**
      * Get image by id
-     * @param imageId
-     * @param [options={}] - Optional Fetch options to be passed to the request
-     * @param token - Optional token to be appended to the request
-     * @returns {Promise<any>}
+     * @param {string} imageId - The image ID.
+     * @returns {Promise<ImageResponse>} A Promise that resolves to an ImageResponse.
      */
-    async getById(
-        imageId: string,
-        options: RequestInit = {},
-        token?: string
-    ): Promise<ImageResponse> {
+    async getById(imageId: string): Promise<ImageResponse> {
         if (!imageId) {
             throw new Error("Image id is required");
         }
 
-        return await this.get(
-            `/${resource}/id/${imageId}`,
-            token,
-            options
-        ).then(response => {
-            return response.json();
-        });
+        const response = await this.get(`/${resource}/id/${imageId}`);
+        return await response.json();
     }
 }

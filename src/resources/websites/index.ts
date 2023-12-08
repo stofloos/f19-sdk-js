@@ -1,5 +1,4 @@
-import { Config } from "../../index";
-import { BaseResponse, Block } from "../../index";
+import { BaseResponse, Block, Config } from "../../index";
 import Base from "../base";
 
 export declare type Route = {
@@ -57,8 +56,7 @@ export default class Websites extends Base {
      */
     async getAll(): Promise<WebsitesResponse> {
         const response = await this.get(`/${resource}`);
-        const json = await response.json();
-        return json;
+        return await response.json();
     }
 
     /**
@@ -75,8 +73,7 @@ export default class Websites extends Base {
         }
 
         const response = await this.get(`/${resource}/alias/${alias}`);
-        const json = await response.json();
-        return json;
+        return await response.json();
     }
 
     /**
@@ -86,10 +83,8 @@ export default class Websites extends Base {
      * @example
      * const website = awaits client.websites.getCurrent()
      */
-    // TODO: Fix getCurrent call. It's not working.
-    async getCurrent(): Promise<WebsiteResponse> {
+    async getCurrent(): Promise<WebsitesResponse> {
         const response = await this.get(`/${resource}/current`);
-        const json = await response.json();
-        return json;
+        return await response.json();
     }
 }

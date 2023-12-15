@@ -1,6 +1,6 @@
 import "isomorphic-fetch";
 import { config } from "../../helpers/testing";
-import Client from "../../index";
+import Client from "../../types";
 import Images from "./";
 
 describe("Images resource", () => {

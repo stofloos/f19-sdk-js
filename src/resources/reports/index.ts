@@ -5,7 +5,7 @@ import {
     MultiChannelTag,
     BaseResponse,
     Report
-} from "../../index";
+} from "../../types";
 import { filterComponentsByChannel } from "../../helpers/components";
 
 export declare interface ReportResponse extends BaseResponse {

@@ -1,7 +1,7 @@
 import Reports from "./";
 import "isomorphic-fetch";
 import { config } from "../../helpers/testing";
-import Client from "../../index";
+import Client from "../../types";
 
 describe("Reports resource", () => {
     const client = new Client(config);

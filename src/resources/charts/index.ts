@@ -1,5 +1,5 @@
 import Base from "../base";
-import { BaseResponse, Block, ChannelResource } from "../../index";
+import { BaseResponse, Block, ChannelResource } from "../../types";
 
 export declare interface ChartTags {}
 

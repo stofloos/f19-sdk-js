@@ -1,5 +1,5 @@
 import Base from "../base";
-import { BaseResponse, Block } from "../../index";
+import { BaseResponse, Block } from "../../types";
 
 export declare type Table = Block;
 

@@ -1,6 +1,6 @@
 import "isomorphic-fetch";
 import { config } from "../../helpers/testing";
-import Client from "../../index";
+import Client from "../../types";
 import Nonce from "./index";
 
 describe("Nonce resource", () => {

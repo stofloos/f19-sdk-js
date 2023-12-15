@@ -1,11 +1,5 @@
 import Base from "../base";
-import { BaseResponse } from "../../index";
-
-export declare type Token = {
-    userId: number;
-    thumbprint: string;
-    key: string;
-};
+import { BaseResponse, Token } from "../../types";
 
 export declare interface TokenResponse extends BaseResponse {
     payload: Token;

@@ -1,5 +1,5 @@
 import Base from "../base";
-import { BaseResponse, Download } from "../../index";
+import { BaseResponse, Download } from "../../types";
 
 export interface DownloadsFromProjectResponse extends BaseResponse {
     payload: Array<Download>;

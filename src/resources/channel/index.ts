@@ -1,5 +1,5 @@
 import Base from "../base";
-import { BaseResponse } from "../../index";
+import { BaseResponse } from "../../types";
 
 export type ChannelItem = {
     alias: string;

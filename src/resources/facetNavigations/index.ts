@@ -1,20 +1,5 @@
 import Base from "../base";
-import { BaseResponse } from "../../index";
-
-export declare type Facet = {
-    id: string;
-    name: string;
-    urlSegment: string;
-    facets: Array<Facet>;
-};
-
-export declare type FacetNavigation = {
-    id: string;
-    projectId: string;
-    name: string;
-    facets: Array<Facet>;
-    securedProjectId: number;
-};
+import { BaseResponse, FacetNavigation } from "../../types";
 
 export declare interface FacetNavigationsResponse extends BaseResponse {
     payload: Array<FacetNavigation>;

@@ -3,7 +3,7 @@ import Tables from "./";
 import Projects from "../projects";
 
 import { config } from "../../helpers/testing";
-import Client from "../../index";
+import Client from "../../types";
 
 beforeAll(() => {
     jest.resetModules();

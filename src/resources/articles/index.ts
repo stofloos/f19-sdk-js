@@ -1,6 +1,6 @@
 import Base from "../base";
-import { ChannelType, MultiChannelTag } from "../../index";
-import { Article, BaseResponse } from "../../index";
+import { ChannelType, MultiChannelTag } from "../../types";
+import { Article, BaseResponse } from "../../types";
 
 export interface ArticlesResponse extends BaseResponse {
     payload: Array<Article>;

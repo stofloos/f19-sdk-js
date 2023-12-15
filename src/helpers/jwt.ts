@@ -1,6 +1,6 @@
 import * as jose from "jose";
 import { xmlToJson } from "./xml";
-import { Token } from "../resources/tokens";
+import { Token } from "../types";
 
 type RSAKeyData = {
     RSAKeyValue: {

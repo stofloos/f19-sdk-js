@@ -1,12 +1,5 @@
 import Base from "../base";
-import { BaseResponse } from "../../index";
-
-export declare type Project = {
-    id: string;
-    name: string;
-    language: string;
-    publishDate: string;
-};
+import { BaseResponse, Project } from "../../types";
 
 export declare interface ProjectResponse extends BaseResponse {
     payload: Project | null;

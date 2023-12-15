@@ -1,7 +1,7 @@
 import Channel from "./";
 import "isomorphic-fetch";
 import { config } from "../../helpers/testing";
-import Client from "../../index";
+import Client from "../../types";
 beforeAll(() => {
     jest.resetModules();
 });

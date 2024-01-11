@@ -220,6 +220,7 @@ export declare interface Article extends ComponentInterface {
     projectId: string;
     language: string;
     summary: string;
+    articleId?: string;
     article: Block;
     teaserImage: Image;
     headerImage: Image;

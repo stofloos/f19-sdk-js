@@ -1,7 +1,7 @@
 import "isomorphic-fetch";
 import Websites from "./";
 import { config } from "../../helpers/testing";
-import Client from "../../types";
+import Client from "../../index";
 
 beforeAll(() => {
     jest.resetModules();

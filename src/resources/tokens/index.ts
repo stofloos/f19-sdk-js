@@ -14,6 +14,7 @@ const resource = "token";
 export default class Tokens extends Base {
     /**
      * Get a personal token
+     * @param clientToken
      * @param authorizationToken
      * @async
      * @return {Promise<TokenResponse>}
@@ -32,8 +33,7 @@ export default class Tokens extends Base {
             },
             null
         );
-        const json = await response.json();
-        return json;
+        return await response.json();
     }
 
     /**

@@ -2,7 +2,7 @@ import Articles from "./";
 import "isomorphic-fetch";
 
 import { config } from "../../helpers/testing";
-import Client from "../../types";
+import Client from "../../index";
 
 describe("Articles resource", () => {
     const client = new Client(config);

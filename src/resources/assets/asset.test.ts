@@ -1,7 +1,7 @@
 import Assets from "./";
 import "isomorphic-fetch";
 import { config } from "../../helpers/testing";
-import Client from "../../types";
+import Client from "../../index";
 
 describe("Asset Resource", () => {
     const client = new Client(config);

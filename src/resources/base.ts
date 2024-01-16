@@ -46,23 +46,25 @@ export default abstract class Base {
         const uri = `${this.client.config.apiPath}${endpoint}`;
 
         let requestToken = "";
-        if (requestTokenPlacement)
+        if (requestTokenPlacement) {
             requestToken = await this.client.getRequestToken(uri, method);
+        }
 
         const url = `${this.client.config.baseUrl}${uri}${
             requestTokenPlacement === "QUERY" ? `?t=${requestToken}` : ""
         }`;
 
-        const fetchOptions = {
+        const fetchOptions: RequestInit = {
             method: method,
-            ...(options || {}),
+            credentials: "include",
             headers: {
-                ...(options?.headers ?? {}),
                 ...(requestTokenPlacement === "HEADER"
                     ? { "X-F19-RequestToken": requestToken }
                     : {}),
+                ...(options?.headers ?? {}),
                 "Content-Type": "application/json"
-            }
+            },
+            ...(options || {})
         };
 
         const response = await fetch(url, fetchOptions);

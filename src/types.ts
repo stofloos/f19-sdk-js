@@ -214,6 +214,11 @@ export declare interface ArticleTags extends Tags {
     "parent-id"?: string;
 }
 
+export declare interface ArticleBlock extends Block {
+    headerImage: Image;
+    teaserImage: Image;
+}
+
 export declare interface Article extends ComponentInterface {
     type: "article";
     urlSegment: string;
@@ -221,7 +226,7 @@ export declare interface Article extends ComponentInterface {
     language: string;
     summary: string;
     articleId?: string;
-    article: Block;
+    article: ArticleBlock;
     teaserImage: Image;
     headerImage: Image;
     facetIds: Array<string>;

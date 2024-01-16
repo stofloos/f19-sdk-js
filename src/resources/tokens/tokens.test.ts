@@ -1,7 +1,7 @@
 import "isomorphic-fetch";
 import Tokens from "./";
 import { config } from "../../helpers/testing";
-import Client from "../../types";
+import Client from "../../index";
 
 describe("Tokens resource", () => {
     const tokensResource = new Client(config).tokens;

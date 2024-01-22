@@ -68,8 +68,6 @@ export default abstract class Base {
 
         const response = await fetch(url, fetchOptions);
 
-        console.log("response", response.statusText, url, fetchOptions);
-
         if (response.status === 401) {
             throw new Error(response?.statusText ?? "Unauthorized");
         }

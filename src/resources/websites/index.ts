@@ -33,41 +33,50 @@ export default class Websites extends Base {
     /**
      * Get all websites
      * @async
+     * @param {RequestInit} options - Optional Fetch options to be passed to the request
      * @return {Promise<WebsitesResponse>} A promise that returns a {@link WebsitesResponse}
      * @example
      * const websites = await client.websites.getAll()
      */
-    async getAll(): Promise<WebsitesResponse> {
-        const response = await this.get(`/${resource}`);
+    async getAll(options?: RequestInit): Promise<WebsitesResponse> {
+        const response = await this.get(`/${resource}`, options || {});
         return await response.json();
     }
 
     /**
      * Get a website by alias
-     * @param alias
      * @async
+     * @param alias
+     * @param {RequestInit} options - Optional Fetch options to be passed to the request
      * @return {Promise<WebsiteResponse>} A promise that returns a {@link WebsiteResponse}
      * @example
      * const website = awaits client.websites.getByAlias("my-website")
      */
-    async getByAlias(alias: string): Promise<WebsiteResponse> {
+    async getByAlias(
+        alias: string,
+        options?: RequestInit
+    ): Promise<WebsiteResponse> {
         if (!alias || alias === "") {
             throw new Error("No alias provided");
         }
 
-        const response = await this.get(`/${resource}/alias/${alias}`);
+        const response = await this.get(
+            `/${resource}/alias/${alias}`,
+            options || {}
+        );
         return await response.json();
     }
 
     /**
      * Get current website
      * @async
+     * @param {RequestInit} options - Optional Fetch options to be passed to the request
      * @return {Promise<WebsiteResponse>} A promise that returns a {@link WebsiteResponse}
      * @example
      * const website = awaits client.websites.getCurrent()
      */
-    async getCurrent(): Promise<WebsitesResponse> {
-        const response = await this.get(`/${resource}/current`);
+    async getCurrent(options?: RequestInit): Promise<WebsitesResponse> {
+        const response = await this.get(`/${resource}/current`, options || {});
         return await response.json();
     }
 }

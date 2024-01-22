@@ -39,14 +39,21 @@ export default class Tokens extends Base {
     /**
      * Get an anonymous token
      * @async
+     * @param {string} clientToken - The client token
+     * @param {RequestInit} options - Optional Fetch options to be passed to the request
      * @return {Promise<TokenResponse>}
      */
-    async getAnonymousToken(clientToken: string): Promise<TokenResponse> {
+    async getAnonymousToken(
+        clientToken: string,
+        options?: RequestInit
+    ): Promise<TokenResponse> {
         const response = await this.post(
             `/${resource}/anonymous`,
             {
+                ...options,
                 headers: {
-                    "X-F19-ClientToken": clientToken
+                    "X-F19-ClientToken": clientToken,
+                    ...(options?.headers ?? {})
                 }
             },
             null

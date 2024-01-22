@@ -1,9 +1,9 @@
 import Base from "../base";
 import {
+    BaseResponse,
     ChannelType,
     Component,
     MultiChannelTag,
-    BaseResponse,
     Report
 } from "../../types";
 import { filterComponentsByChannel } from "../../helpers/components";
@@ -35,8 +35,7 @@ const resource = "report";
 
 /**
  * Client for interacting with the F19 API
- * @class Reports
- * @constructor Reports
+ * @async
  * @param {Config} config
  * @method getById - Get a report by id
  * @method getAllByProjectId - Get all reports by project id
@@ -48,17 +47,19 @@ export default class Reports extends Base {
      * Get a report by id
      * @param id
      * @param channel - Optional channel to filter by
+     * @param {RequestInit} options - Optional Fetch options to be passed to the request
      * @returns {Promise<ReportResponse>}
      */
     async getById(
         id: string,
-        channel: ChannelType = "*"
+        channel: ChannelType = "*",
+        options?: RequestInit
     ): Promise<ReportResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        const response = await this.get(`/${resource}/id/${id}`);
+        const response = await this.get(`/${resource}/id/${id}`, options || {});
         const json = await response.json();
         if (channel && json.payload) {
             // If a channel is provided,
@@ -82,20 +83,22 @@ export default class Reports extends Base {
 
     /**
      * Get all reports by project id
-     * @param id
-     * @param channel - Optional channel to filter by
+     * @param {string} id
+     * @param {ChannelType} channel - Optional channel to filter by
+     * @param {RequestInit} options - Optional Fetch options to be passed to the request
      * @returns {Promise<ReportResponse>}
      *
      */
     async getAllByProjectId(
         id: string,
-        channel: ChannelType = "*"
+        channel: ChannelType = "*",
+        options?: RequestInit
     ): Promise<ReportsResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        const response = await this.get(`/${resource}/project/${id}`);
+        const response = await this.get(`/${resource}/project/${id}`, options || {});
         const json = await response.json();
         if (channel && json.payload) {
             // If a channel is provided,
@@ -118,34 +121,36 @@ export default class Reports extends Base {
 
     /**
      * Create a custom report
-     * @param id
-     * @param channel
-     * @param componentIds
+     * @param id - The id of the report to create
+     * @param channel - Optional channel to filter by
+     * @param componentIds - Optional component ids to filter by
+     * @param options - Optional Fetch options to be passed to the request
      * @returns {Promise<Response>}
      */
     async createCustomReport({
         id,
         channel = "*",
-        componentIds = []
+        componentIds = [],
+        options = {}
     }: {
         id: string;
         channel?: ChannelType;
         componentIds?: Array<string>;
+        options?: RequestInit;
     }): Promise<Response> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        const response = await this.post(
+        return await this.post(
             `/${resource}/custom/id/${id}/channel/${channel}`,
             {
+                ...options,
                 body: JSON.stringify({
                     componentIds
                 })
             }
         );
-
-        return response;
     }
 
     /**
@@ -177,8 +182,7 @@ export default class Reports extends Base {
             }
         );
 
-        const json = await response.json();
-        return json;
+        return await response.json();
     }
 
     /**
@@ -196,7 +200,6 @@ export default class Reports extends Base {
         const response = await this.get(
             `/${resource}/custom_progress/id/${id}`
         );
-        const json = await response.json();
-        return json;
+        return await response.json();
     }
 }

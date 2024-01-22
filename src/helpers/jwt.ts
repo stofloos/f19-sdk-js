@@ -93,7 +93,7 @@ export async function generateRequestToken({
     sessionKey: Token;
     uri: string;
     clientId: string;
-    method: string;
+    method: RequestInit["method"];
 }): Promise<string> {
     const alg = "RS256";
 

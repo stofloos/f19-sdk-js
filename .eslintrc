@@ -8,12 +8,14 @@
     "jest": true
   },
   "extends": [
+      "prettier",
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
   "plugins": [
+    "prettier",
     "@typescript-eslint"
   ],
   "overrides": [

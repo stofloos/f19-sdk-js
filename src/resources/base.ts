@@ -47,7 +47,7 @@ export default abstract class Base {
 
         let requestToken = "";
         if (requestTokenPlacement) {
-            requestToken = await this.client.getRequestToken(uri, method);
+            requestToken = await this.client.getRequestToken(uri, method, options);
         }
 
         const url = `${this.client.config.baseUrl}${uri}${
@@ -55,22 +55,23 @@ export default abstract class Base {
         }`;
 
         const fetchOptions: RequestInit = {
-            method: method,
-            credentials: "include",
+            ...(options || {}),
+            method,
             headers: {
+                ...(options?.headers ?? {}),
                 ...(requestTokenPlacement === "HEADER"
                     ? { "X-F19-RequestToken": requestToken }
                     : {}),
-                ...(options?.headers ?? {}),
                 "Content-Type": "application/json"
-            },
-            ...(options || {})
+            }
         };
 
         const response = await fetch(url, fetchOptions);
 
+        console.log("response", response.statusText, url, fetchOptions);
+
         if (response.status === 401) {
-            throw new Error("Unauthorized");
+            throw new Error(response?.statusText ?? "Unauthorized");
         }
         return response;
     }

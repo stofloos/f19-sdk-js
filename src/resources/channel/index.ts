@@ -20,8 +20,8 @@ export default class Channel extends Base {
      * @example
      * const channel = await client.channel.getAll()
      */
-    async getAll(): Promise<ChannelResponse> {
-        const response = await this.get(`/${resource}`);
+    async getAll(options?: RequestInit): Promise<ChannelResponse> {
+        const response = await this.get(`/${resource}`, options || {});
         return await response.json();
     }
 }

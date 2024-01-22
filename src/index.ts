@@ -13,6 +13,7 @@ import Downloads from "./resources/downloads";
 import Tokens from "./resources/tokens";
 import { generateClientToken, generateRequestToken } from "./helpers/jwt";
 import type { Config, ImpersonationOptions } from "./types";
+
 export * from "./types";
 
 /**
@@ -51,7 +52,7 @@ export default class Client {
     tokens: Tokens;
     config: Config;
     impersonationOptions?: ImpersonationOptions;
-
+    clientToken: string | undefined;
     /**
      * Create a new instance of the client
      * @param {Config} config
@@ -87,35 +88,59 @@ export default class Client {
         this.tables = new Tables(this);
         this.downloads = new Downloads(this);
         this.tokens = new Tokens(this);
+        this.clientToken = undefined;
+        this.creatClientToken();
     }
 
-    public async getRequestToken(uri: string, method: string) {
+    private setClientToken(token: string): void {
+        this.clientToken = token;
+    }
+
+    private getClientToken(): string | undefined {
+        return this.clientToken;
+    }
+
+    private creatClientToken() {
         const jwtSecret = this.config.apiKey;
         const claims = {
             ClientId: this.config.clientId
         };
 
-        //Generate Client token
-        const clientToken = await generateClientToken(claims, jwtSecret);
-        if (!clientToken) throw new Error("no ClientToken");
+        generateClientToken(claims, jwtSecret).then(token => {
+            this.setClientToken(token);
+        });
+    }
 
-        let token;
-        //If user is logged in get thumbprint token
-        if (this.impersonationOptions) {
-            token = await this.tokens.getThumbprint(
-                clientToken,
-                this.impersonationOptions.userId,
-                this.impersonationOptions.keyThumbprint
-            );
-        } else token = await this.tokens.getAnonymousToken(clientToken);
-        if (!token) throw new Error("no SessionKey");
+    public async getRequestToken(
+        uri: string,
+        method?: RequestInit["method"],
+        options?: RequestInit
+    ): Promise<string> {
+        const clientToken = this.getClientToken();
+
+        if (!clientToken) {
+            throw new Error("no clientToken");
+        }
+
+        const token = await this.tokens.getAnonymousToken(clientToken, options);
+        // If user is logged in get thumbprint token
+        // if (this.impersonationOptions) {
+        //     token = await this.tokens.getThumbprint(
+        //         clientToken,
+        //         this.impersonationOptions.userId,
+        //         this.impersonationOptions.keyThumbprint
+        //     );
+        // }
+        if (!token) {
+            throw new Error("no SessionKey");
+        }
 
         //Use a session key to generate request token
         return await generateRequestToken({
             sessionKey: token.payload,
             uri: uri,
             clientId: this.config.clientId,
-            method: method
+            method
         });
     }
 

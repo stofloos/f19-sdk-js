@@ -98,7 +98,10 @@ export default class Reports extends Base {
             throw new Error("No id provided");
         }
 
-        const response = await this.get(`/${resource}/project/${id}`, options || {});
+        const response = await this.get(
+            `/${resource}/project/${id}`,
+            options || {}
+        );
         const json = await response.json();
         if (channel && json.payload) {
             // If a channel is provided,

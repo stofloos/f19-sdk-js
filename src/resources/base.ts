@@ -47,7 +47,11 @@ export default abstract class Base {
 
         let requestToken = "";
         if (requestTokenPlacement) {
-            requestToken = await this.client.getRequestToken(uri, method, options);
+            requestToken = await this.client.getRequestToken(
+                uri,
+                method,
+                options
+            );
         }
 
         const url = `${this.client.config.baseUrl}${uri}${

@@ -214,11 +214,6 @@ export declare interface ArticleTags extends Tags {
     "parent-id"?: string;
 }
 
-export declare interface ArticleBlock extends Block {
-    headerImage: Image;
-    teaserImage: Image;
-}
-
 export declare interface Article extends ComponentInterface {
     type: "article";
     urlSegment: string;
@@ -226,7 +221,11 @@ export declare interface Article extends ComponentInterface {
     language: string;
     summary: string;
     articleId?: string;
-    article: ArticleBlock;
+    article: Block & {
+        headerImage: Image;
+        teaserImage: Image;
+        summary: string;
+    };
     teaserImage: Image;
     headerImage: Image;
     facetIds: Array<string>;
@@ -260,7 +259,12 @@ export interface Download {
     events: Array<any>;
 }
 
-export type Component = Cover | SlipSheet | Heading | TableOfContents | Article;
+export type Component =
+    | Cover
+    | SlipSheet
+    | Heading
+    | TableOfContents
+    | Article;
 
 export declare type Route = {
     id: string;

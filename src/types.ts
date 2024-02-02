@@ -259,12 +259,7 @@ export interface Download {
     events: Array<any>;
 }
 
-export type Component =
-    | Cover
-    | SlipSheet
-    | Heading
-    | TableOfContents
-    | Article;
+export type Component = Cover | SlipSheet | Heading | TableOfContents | Article;
 
 export declare type Route = {
     id: string;
@@ -310,3 +305,12 @@ export declare type Token = {
     thumbprint: string;
     key: string;
 };
+
+export type CachedAnonymousToken = {
+    uri: string;
+    method?: RequestInit["method"];
+    token: string;
+    expires: number;
+};
+
+export type CachedAnonymousTokens = Map<string, CachedAnonymousToken>;

@@ -73,7 +73,6 @@ export async function generateClientToken(
     return await signJWT
         .setProtectedHeader({ alg, typ })
         .setIssuedAt()
-        .setExpirationTime("5m")
         .sign(encodedSecret);
 }
 
@@ -119,6 +118,6 @@ export async function generateRequestToken({
     return new jose.SignJWT(claims)
         .setProtectedHeader({ alg, typ: "JWT" })
         .setIssuedAt()
-        .setExpirationTime("5m")
+        .setExpirationTime("1h")
         .sign(privateKey);
 }

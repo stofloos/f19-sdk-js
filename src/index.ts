@@ -53,6 +53,7 @@ export default class Client {
     config: Config;
     impersonationOptions?: ImpersonationOptions;
     clientToken: string | undefined;
+
     /**
      * Create a new instance of the client
      * @param {Config} config
@@ -123,7 +124,8 @@ export default class Client {
         }
 
         const token = await this.tokens.getAnonymousToken(clientToken, options);
-        // If user is logged in get thumbprint token
+
+        // If a user is logged in get thumbprint token
         // if (this.impersonationOptions) {
         //     token = await this.tokens.getThumbprint(
         //         clientToken,
@@ -131,6 +133,7 @@ export default class Client {
         //         this.impersonationOptions.keyThumbprint
         //     );
         // }
+
         if (!token) {
             throw new Error("no SessionKey");
         }

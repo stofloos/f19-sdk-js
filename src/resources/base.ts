@@ -1,4 +1,5 @@
-import Client from "../index";
+import Client from "../";
+import type { CachedAnonymousTokens } from "../";
 
 /**
  * Base class for all resources
@@ -15,6 +16,7 @@ import Client from "../index";
 export type RequestTokenPlacement = "HEADER" | "QUERY" | null;
 export default abstract class Base {
     private readonly client: Client;
+    private requestTokens: CachedAnonymousTokens;
 
     /**
      * Create a new instance of the base class
@@ -24,6 +26,7 @@ export default abstract class Base {
      */
     constructor(client: Client) {
         this.client = client;
+        this.requestTokens = new Map();
     }
 
     /**
@@ -46,12 +49,37 @@ export default abstract class Base {
         const uri = `${this.client.config.apiPath}${endpoint}`;
 
         let requestToken = "";
-        if (requestTokenPlacement) {
+
+        // Check if requestToken is already cached
+        const cachedRequestToken = this.requestTokens.get(uri);
+
+        // If requestToken is cached and not expired, use it
+        if (cachedRequestToken && cachedRequestToken.expires > Date.now()) {
+            requestToken = cachedRequestToken.token;
+        }
+
+        // If requestToken is not cached, get a new one
+        if (requestTokenPlacement && !requestToken) {
             requestToken = await this.client.getRequestToken(
                 uri,
                 method,
                 options
             );
+            // Current Time + 55 minutes
+            const expires = Date.now() +  55 * 60 * 1000;
+
+            // Check if requestToken is already cached and remove it
+            if (this.requestTokens.has(uri)) {
+                this.requestTokens.delete(uri);
+            }
+
+            // Add new requestToken to cache
+            this.requestTokens.set(uri, {
+                uri,
+                method,
+                token: requestToken,
+                expires
+            });
         }
 
         const url = `${this.client.config.baseUrl}${uri}${

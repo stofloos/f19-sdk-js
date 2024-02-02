@@ -89,6 +89,7 @@ export default abstract class Base {
         const fetchOptions: RequestInit = {
             ...(options || {}),
             method,
+            cache: "no-cache",
             headers: {
                 ...(options?.headers ?? {}),
                 ...(requestTokenPlacement === "HEADER"

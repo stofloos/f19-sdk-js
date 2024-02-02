@@ -65,8 +65,8 @@ export default abstract class Base {
                 method,
                 options
             );
-            // Current Time + 1 hour in milliseconds
-            const expires = Date.now() + 3600000;
+            // Current Time + 59 minutes
+            const expires = Date.now() + 3540000;
 
             // Check if requestToken is already cached and remove it
             if (this.requestTokens.has(uri)) {

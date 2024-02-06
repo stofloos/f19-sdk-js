@@ -95,7 +95,7 @@ export async function generateRequestToken({
     uri: string;
     clientId: string;
     method: RequestInit["method"];
-    expiresAt?:  string | number | Date;
+    expiresAt?: string | number | Date;
 }): Promise<string> {
     const alg = "RS256";
 

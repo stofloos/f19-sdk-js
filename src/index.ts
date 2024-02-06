@@ -12,8 +12,7 @@ import Tables from "./resources/tables";
 import Downloads from "./resources/downloads";
 import Tokens from "./resources/tokens";
 import { generateClientToken, generateRequestToken } from "./helpers/jwt";
-import type { Config, ImpersonationOptions } from "./types";
-
+import { Config, ConfigInput, ImpersonationOptions } from "./types";
 export * from "./types";
 
 /**
@@ -56,13 +55,13 @@ export default class Client {
 
     /**
      * Create a new instance of the client
-     * @param {Config} config
+     * @param {ConfigInput} config
      * @param impersonationOptions
      * @throws Error
      * @constructor Index
      *
      */
-    constructor(config: Config, impersonationOptions?: ImpersonationOptions) {
+    constructor(config: ConfigInput, impersonationOptions?: ImpersonationOptions) {
         if (!config.apiKey) {
             throw new Error("API-key not configured");
         }
@@ -73,7 +72,8 @@ export default class Client {
             apiKey: config.apiKey,
             baseUrl: config.baseUrl,
             apiPath: config.apiPath || "/cms/api/public/v1",
-            clientId: config.clientId
+            clientId: config.clientId,
+            cacheExpiration: config?.cacheExpiration || 3600 * 1000
         };
         this.impersonationOptions = impersonationOptions;
         this.projects = new Projects(this);
@@ -138,12 +138,15 @@ export default class Client {
             throw new Error("no SessionKey");
         }
 
+        const expiresAtSeconds =  this.config.cacheExpiration / 1000;
+
         //Use a session key to generate request token
         return await generateRequestToken({
             sessionKey: token.payload,
             uri: uri,
             clientId: this.config.clientId,
-            method
+            method,
+            expiresAt: `${expiresAtSeconds}s`
         });
     }
 

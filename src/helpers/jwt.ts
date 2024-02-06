@@ -78,21 +78,24 @@ export async function generateClientToken(
 
 /**
  * Generate a request token
- * @param sessionKey
- * @param uri
- * @param clientId
- * @param method
+ * @param sessionKey - Session key
+ * @param uri - URI
+ * @param clientId - Client ID
+ * @param method {RequestInit["method"]} - HTTP method
+ * @param expiresAt {string|number|Date}  - Expiration time for the JWT
  */
 export async function generateRequestToken({
     sessionKey,
     uri,
     clientId,
-    method
+    method,
+    expiresAt = "3600s"
 }: {
     sessionKey: Token;
     uri: string;
     clientId: string;
     method: RequestInit["method"];
+    expiresAt?:  string | number | Date;
 }): Promise<string> {
     const alg = "RS256";
 
@@ -118,6 +121,6 @@ export async function generateRequestToken({
     return new jose.SignJWT(claims)
         .setProtectedHeader({ alg, typ: "JWT" })
         .setIssuedAt()
-        .setExpirationTime("1h")
+        .setExpirationTime(expiresAt)
         .sign(privateKey);
 }

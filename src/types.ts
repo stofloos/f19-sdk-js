@@ -27,11 +27,20 @@ export type TagsType = "image" | "article";
 
 export type EventType = "image-not-available" | "article-not-available";
 
-export type Config = {
+export type ConfigInput = {
     apiKey: string; // API key to use for authentication.
     baseUrl: string; // Base url of the F19 instance to connect to.
     apiPath?: string; // Path to the API on the F19 instance.
     clientId: string; // Client id to use it for authentication.
+    cacheExpiration?: number; // Time in ms to cache anonymous tokens.
+};
+
+export type Config = {
+    apiKey: string; // API key to use for authentication.
+    baseUrl: string; // Base url of the F19 instance to connect to.
+    apiPath: string; // Path to the API on the F19 instance.
+    clientId: string; // Client id to use it for authentication.
+    cacheExpiration: number; // Time in ms to cache anonymous tokens.
 };
 
 export type ImpersonationOptions = {

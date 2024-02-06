@@ -107,8 +107,19 @@ export default abstract class Base {
 
         const response = await fetch(url, fetchOptions);
 
-        if (response.status === 401) {
-            throw new Error(response?.statusText ?? "Unauthorized");
+        if (response.status !== 200) {
+            const errorTime = new Date(Date.now()).toISOString();
+            const requestToken = this.requestTokens.get(uri);
+            const tokenExpires =
+                requestToken?.expires || cachedRequestToken?.expires;
+            let expireTime = "";
+            if (tokenExpires) {
+                const expireTime = new Date();
+                expireTime.setUTCMilliseconds(tokenExpires);
+                expireTime.toISOString();
+            }
+            const errorMessage = `${response?.statusText ?? "Unauthorized"}: Call with method ${method} to ${url} at ${errorTime};${expireTime ? ` Token expiration:${expireTime} ` : ""}`;
+            throw new Error(errorMessage);
         }
         return response;
     }

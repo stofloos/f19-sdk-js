@@ -55,7 +55,7 @@ export default abstract class Base {
 
 
         // Get current time in UTC seconds
-        const currentTime = new Date(Date.now()).getUTCSeconds();
+        const currentTime = new Date(Date.now()).getUTCMilliseconds();
 
         // If requestToken is cached and not expired, use it
         if (cachedRequestToken && cachedRequestToken.expires > currentTime) {
@@ -71,7 +71,7 @@ export default abstract class Base {
             );
 
             // Expires in 55 minutes in UTC seconds
-            const expires = new Date(Date.now()).getUTCSeconds() + this.client.config.cacheExpiration;
+            const expires = new Date(Date.now()).getUTCMilliseconds() + this.client.config.cacheExpiration;
 
 
             // Check if requestToken is already cached and remove it

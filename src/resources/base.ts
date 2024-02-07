@@ -1,5 +1,5 @@
 import Client from "../";
-import type { CachedAnonymousTokens } from "../";
+import TimeBasedCache from "../helpers/cache";
 
 /**
  * Base class for all resources
@@ -16,7 +16,7 @@ import type { CachedAnonymousTokens } from "../";
 export type RequestTokenPlacement = "HEADER" | "QUERY" | null;
 export default abstract class Base {
     private readonly client: Client;
-    private requestTokens: CachedAnonymousTokens;
+    private cache: TimeBasedCache;
 
     /**
      * Create a new instance of the base class
@@ -26,7 +26,7 @@ export default abstract class Base {
      */
     constructor(client: Client) {
         this.client = client;
-        this.requestTokens = new Map();
+        this.cache = new TimeBasedCache();
     }
 
     /**
@@ -51,14 +51,13 @@ export default abstract class Base {
         let requestToken = "";
 
         // Check if requestToken is already cached
-        const cachedRequestToken = this.requestTokens.get(uri);
+        const cachedRequestToken = this.cache.get(uri);
 
         // Get current time in UTC seconds
-        const currentTime = new Date(Date.now()).getUTCMilliseconds();
 
         // If requestToken is cached and not expired, use it
-        if (cachedRequestToken && cachedRequestToken.expires > currentTime) {
-            requestToken = cachedRequestToken.token;
+        if (!!cachedRequestToken) {
+            requestToken = cachedRequestToken;
         }
 
         // If requestToken is not cached, get a new one
@@ -69,23 +68,12 @@ export default abstract class Base {
                 options
             );
 
-            // Expires 5 minutes before cacheExpiration
-            const expires =
-                new Date(Date.now()).getUTCMilliseconds() +
-                (this.client.config.cacheExpiration - 5 * 60 * 1000);
-
-            // Check if requestToken is already cached and remove it
-            if (this.requestTokens.has(uri)) {
-                this.requestTokens.delete(uri);
-            }
-
             // Add new requestToken to cache
-            this.requestTokens.set(uri, {
+            this.cache.set(
                 uri,
-                method,
-                token: requestToken,
-                expires
-            });
+                requestToken,
+                this.client.config.cacheExpiration - 300 * 1000
+            );
         }
 
         const url = `${this.client.config.baseUrl}${uri}${
@@ -109,16 +97,10 @@ export default abstract class Base {
 
         if (response.status !== 200) {
             const errorTime = new Date(Date.now()).toISOString();
-            const requestToken = this.requestTokens.get(uri);
-            const tokenExpires =
-                requestToken?.expires || cachedRequestToken?.expires;
-            let expireTime = "";
-            if (tokenExpires) {
-                const expireTime = new Date();
-                expireTime.setUTCMilliseconds(tokenExpires);
-                expireTime.toISOString();
-            }
-            const errorMessage = `${response?.statusText ?? "Unauthorized"}: Call with method ${method} to ${url} at ${errorTime};${expireTime ? ` Token expiration:${expireTime} ` : ""}`;
+
+            const errorMessage = `${
+                response?.statusText ?? "Unauthorized"
+            }: Call with method ${method} to ${url} at ${errorTime};`;
             throw new Error(errorMessage);
         }
         return response;

@@ -61,7 +61,10 @@ export default class Client {
      * @constructor Index
      *
      */
-    constructor(config: ConfigInput, impersonationOptions?: ImpersonationOptions) {
+    constructor(
+        config: ConfigInput,
+        impersonationOptions?: ImpersonationOptions
+    ) {
         if (!config.apiKey) {
             throw new Error("API-key not configured");
         }
@@ -138,7 +141,8 @@ export default class Client {
             throw new Error("no SessionKey");
         }
 
-        const expiresAtSeconds =  this.config.cacheExpiration / 1000;
+        // Convert cache expiration from ms to seconds
+        const expiresAtSeconds = this.config.cacheExpiration / 1000;
 
         //Use a session key to generate request token
         return await generateRequestToken({

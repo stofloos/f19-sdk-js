@@ -52,7 +52,6 @@ export default abstract class Base {
 
         let requestToken = this.cache.get(uri);
 
-
         // If requestToken is not cached, get a new one
         if (requestTokenPlacement && !requestToken) {
             requestToken = await this.client.getRequestToken(

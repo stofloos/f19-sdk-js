@@ -20,8 +20,7 @@ export default class TimeBasedCache {
             // Update the existing entry
             this.update(key, value, expirationTimeMs);
         } else {
-            // eslint-disable-next-line no-console
-            console.log("Cache.Set", key, expirationTimeMs, Date.now());
+            // Add a new entry if the key doesn't exist
             this.cache[key] = {
                 value,
                 expirationTime: Date.now() + expirationTimeMs,
@@ -33,8 +32,6 @@ export default class TimeBasedCache {
     }
 
     get(key: string | number) {
-        // eslint-disable-next-line no-console
-        console.log("Cache.Get", key, Date.now());
         const entry = this.cache[key];
         if (entry && entry.expirationTime > Date.now()) {
             return entry.value;
@@ -44,9 +41,7 @@ export default class TimeBasedCache {
     }
 
     remove(key: string | number) {
-        // eslint-disable-next-line no-console
-        console.log("Cache.Remove", key, Date.now());
-
+        // Client timeout for cache item
         const timeoutId = this.cache[key]?.timeoutId;
         if (timeoutId) {
             clearTimeout(timeoutId);
@@ -56,9 +51,6 @@ export default class TimeBasedCache {
     }
 
     update(key: string | number, value: string, expirationTimeMs: number) {
-        // eslint-disable-next-line no-console
-        console.log("Cache.Update", key, expirationTimeMs, Date.now());
-
         // Clear the existing timeout
         const existingTimeoutId = this.cache[key]?.timeoutId;
         if (existingTimeoutId) {

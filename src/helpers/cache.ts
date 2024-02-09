@@ -8,6 +8,10 @@ export default class TimeBasedCache {
 
     set(key: string | number, value: string, expirationTimeMs: number) {
         // Check if the key already exists in the cache
+
+        // eslint-disable-next-line no-console
+        console.log("Cache.set", key, value, expirationTimeMs, Date.now());
+
         if (this.cache[key]) {
             // Update the existing entry
             this.update(key, value, expirationTimeMs);
@@ -26,6 +30,9 @@ export default class TimeBasedCache {
     }
 
     update(key: string | number, value: string, expirationTimeMs: number) {
+        // eslint-disable-next-line no-console
+        console.log("Cache.update", key, value, expirationTimeMs, Date.now());
+
         // Update the value and expiration time for the existing entry
         this.cache[key] = {
             value,
@@ -39,6 +46,8 @@ export default class TimeBasedCache {
     }
 
     get(key: string | number) {
+        // eslint-disable-next-line no-console
+        console.log("Cache.get", key, Date.now());
         const entry = this.cache[key];
         if (entry && entry.expirationTime > Date.now()) {
             return entry.value;
@@ -48,6 +57,8 @@ export default class TimeBasedCache {
     }
 
     remove(key: string | number) {
+        // eslint-disable-next-line no-console
+        console.log("Cache.remove", key, Date.now());
         delete this.cache[key];
     }
 

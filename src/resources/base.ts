@@ -52,7 +52,7 @@ export default abstract class Base {
         let requestToken = this.cache.get(uri);
 
         // eslint-disable-next-line no-console
-        console.log("cached requestToken", uri, requestToken);
+        console.log("cached requestToken", uri, requestToken, Date.now());
 
         // If requestToken is not cached, get a new one
         if (requestTokenPlacement && !requestToken) {
@@ -63,7 +63,7 @@ export default abstract class Base {
             );
 
             // eslint-disable-next-line no-console
-            console.log("new requestToken", uri, requestToken);
+            console.log("new requestToken", uri, requestToken, Date.now());
 
             // Add new requestToken to cache
             this.cache.set(
@@ -95,11 +95,9 @@ export default abstract class Base {
         const response = await fetch(url, fetchOptions);
 
         if (response.status !== 200) {
-            const errorTime = new Date(Date.now()).toISOString();
-
             const errorMessage = `${
                 response?.statusText ?? "Unauthorized"
-            }: Call with method ${method} to ${url} at ${errorTime};${
+            }: Call with method ${method} to ${url} at ${Date.now()};${
                 requestToken ? ` with requestToken ${requestToken}` : ""
             }`;
             throw new Error(errorMessage);

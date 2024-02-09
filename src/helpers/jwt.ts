@@ -89,13 +89,13 @@ export async function generateRequestToken({
     uri,
     clientId,
     method,
-    expiresAt = "3600s"
+    expiresAt
 }: {
     sessionKey: Token;
     uri: string;
     clientId: string;
     method: RequestInit["method"];
-    expiresAt?: string | number | Date;
+    expiresAt: string | number | Date;
 }): Promise<string> {
     const alg = "RS256";
 

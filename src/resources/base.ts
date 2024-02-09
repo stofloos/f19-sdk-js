@@ -49,10 +49,9 @@ export default abstract class Base {
         const uri = `${this.client.config.apiPath}${endpoint}`;
 
         // If requestToken is cached and not expired, use it
+
         let requestToken = this.cache.get(uri);
 
-        // eslint-disable-next-line no-console
-        console.log("cached requestToken", uri, requestToken, Date.now());
 
         // If requestToken is not cached, get a new one
         if (requestTokenPlacement && !requestToken) {
@@ -63,7 +62,7 @@ export default abstract class Base {
             );
 
             // eslint-disable-next-line no-console
-            console.log("new requestToken", uri, requestToken, Date.now());
+            console.log("Generate new token:", uri, Date.now());
 
             // Add new requestToken to cache
             this.cache.set(

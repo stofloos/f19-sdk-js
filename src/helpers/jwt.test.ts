@@ -24,8 +24,9 @@ describe("JWT Helpers", () => {
 
         it("should return a valid Anonymous token", async () => {
             const clientToken = await generateClientToken(claims, jwtSecret);
-            const tokenResponse =
-                await client.tokens.getAnonymousToken(clientToken);
+            const tokenResponse = await client.tokens.getAnonymousToken(
+                clientToken
+            );
 
             expect(tokenResponse.payload).toBeTruthy();
         });
@@ -35,8 +36,9 @@ describe("JWT Helpers", () => {
         it("should return a valid Request token", async () => {
             const clientToken = await generateClientToken(claims, jwtSecret);
 
-            const tokenResponse =
-                await client.tokens.getAnonymousToken(clientToken);
+            const tokenResponse = await client.tokens.getAnonymousToken(
+                clientToken
+            );
 
             const requestToken = await generateRequestToken({
                 sessionKey: tokenResponse.payload,

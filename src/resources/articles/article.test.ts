@@ -33,8 +33,9 @@ describe("Articles resource", () => {
 
         // Get all articles by project id
         if (projectId) {
-            const articlesResponse =
-                await articlesResource.getAllByProjectId(projectId);
+            const articlesResponse = await articlesResource.getAllByProjectId(
+                projectId
+            );
 
             expect(articlesResponse).toHaveProperty("payload");
         }

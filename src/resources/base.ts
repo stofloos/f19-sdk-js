@@ -48,17 +48,11 @@ export default abstract class Base {
         }
         const uri = `${this.client.config.apiPath}${endpoint}`;
 
-        let requestToken = "";
-
-        // Check if requestToken is already cached
-        const cachedRequestToken = this.cache.get(uri);
-
-        // Get current time in UTC seconds
-
         // If requestToken is cached and not expired, use it
-        if (!!cachedRequestToken) {
-            requestToken = cachedRequestToken;
-        }
+        let requestToken = this.cache.get(uri);
+
+        // eslint-disable-next-line no-console
+        console.log("cached requestToken", uri, requestToken);
 
         // If requestToken is not cached, get a new one
         if (requestTokenPlacement && !requestToken) {
@@ -67,6 +61,9 @@ export default abstract class Base {
                 method,
                 options
             );
+
+            // eslint-disable-next-line no-console
+            console.log("new requestToken", uri, requestToken);
 
             // Add new requestToken to cache
             this.cache.set(
@@ -77,7 +74,9 @@ export default abstract class Base {
         }
 
         const url = `${this.client.config.baseUrl}${uri}${
-            requestTokenPlacement === "QUERY" ? `?t=${requestToken}` : ""
+            requestTokenPlacement === "QUERY" && requestToken
+                ? `?t=${requestToken}`
+                : ""
         }`;
 
         const fetchOptions: RequestInit = {
@@ -86,7 +85,7 @@ export default abstract class Base {
             cache: "no-cache",
             headers: {
                 ...(options?.headers ?? {}),
-                ...(requestTokenPlacement === "HEADER"
+                ...(requestTokenPlacement === "HEADER" && requestToken
                     ? { "X-F19-RequestToken": requestToken }
                     : {}),
                 "Content-Type": "application/json"
@@ -100,7 +99,9 @@ export default abstract class Base {
 
             const errorMessage = `${
                 response?.statusText ?? "Unauthorized"
-            }: Call with method ${method} to ${url} at ${errorTime};`;
+            }: Call with method ${method} to ${url} at ${errorTime};${
+                requestToken ? ` with requestToken ${requestToken}` : ""
+            }`;
             throw new Error(errorMessage);
         }
         return response;

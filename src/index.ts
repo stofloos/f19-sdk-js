@@ -76,7 +76,7 @@ export default class Client {
             baseUrl: config.baseUrl,
             apiPath: config.apiPath || "/cms/api/public/v1",
             clientId: config.clientId,
-            cacheExpiration: config?.cacheExpiration || 3600 * 1000
+            cacheExpiration: config?.cacheExpiration || 60 * 60 * 1000
         };
         this.impersonationOptions = impersonationOptions;
         this.projects = new Projects(this);

@@ -1,6 +1,6 @@
 {
     "name": "@happy-horizon/f19-sdk-js",
-    "version": "2.2.7",
+    "version": "2.2.8",
     "description": "Javascript SDK for F19 digital reporting platform",
     "repository": {
         "type": "git",

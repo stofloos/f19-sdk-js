@@ -52,7 +52,6 @@ export default abstract class Base {
 
         let requestToken = this.cache.get(uri);
 
-
         // If requestToken is not cached, get a new one
         if (requestTokenPlacement && !requestToken) {
             requestToken = await this.client.getRequestToken(
@@ -96,9 +95,7 @@ export default abstract class Base {
         if (response.status !== 200) {
             const errorMessage = `${
                 response?.statusText ?? "Unauthorized"
-            }: Call with method ${method} to ${url} at ${Date.now()};${
-                requestToken ? ` with requestToken ${requestToken}` : ""
-            }`;
+            }: Call with method ${method} to ${url} at ${Date.now()};`;
             throw new Error(errorMessage);
         }
         return response;

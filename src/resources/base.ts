@@ -60,9 +60,6 @@ export default abstract class Base {
                 options
             );
 
-            // eslint-disable-next-line no-console
-            console.log("Generate new token:", uri, Date.now());
-
             // Add new requestToken to cache
             this.cache.set(
                 uri,

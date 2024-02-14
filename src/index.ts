@@ -104,14 +104,15 @@ export default class Client {
         return this.clientToken;
     }
 
-    private creatClientToken() {
+    private async creatClientToken(): Promise<string> {
         const jwtSecret = this.config.apiKey;
         const claims = {
             ClientId: this.config.clientId
         };
 
-        generateClientToken(claims, jwtSecret).then(token => {
+        return generateClientToken(claims, jwtSecret).then(token => {
             this.setClientToken(token);
+            return token;
         });
     }
 
@@ -120,7 +121,8 @@ export default class Client {
         method?: RequestInit["method"],
         options?: RequestInit
     ): Promise<string> {
-        const clientToken = this.getClientToken();
+        const clientToken =
+            this.getClientToken() || (await this.creatClientToken());
 
         if (!clientToken) {
             throw new Error("no clientToken");

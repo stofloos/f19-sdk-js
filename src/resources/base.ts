@@ -1,5 +1,4 @@
 import Client from "../";
-import TimeBasedCache from "../helpers/cache";
 
 /**
  * Base class for all resources
@@ -16,8 +15,6 @@ import TimeBasedCache from "../helpers/cache";
 export type RequestTokenPlacement = "HEADER" | "QUERY" | null;
 export default abstract class Base {
     private readonly client: Client;
-    private cache: TimeBasedCache;
-
     /**
      * Create a new instance of the base class
      * @param {Client} client
@@ -26,7 +23,6 @@ export default abstract class Base {
      */
     constructor(client: Client) {
         this.client = client;
-        this.cache = new TimeBasedCache();
     }
 
     /**
@@ -48,28 +44,18 @@ export default abstract class Base {
         }
         const uri = `${this.client.config.apiPath}${endpoint}`;
 
-        // If requestToken is cached and not expired, use it
+        let requestToken: string | null = null;
 
-        let requestToken = this.cache.get(uri);
-
-        // If requestToken is not cached, get a new one
-        if (requestTokenPlacement && !requestToken) {
+        if (requestTokenPlacement) {
             requestToken = await this.client.getRequestToken(
                 uri,
                 method,
                 options
             );
-
-            // Add new requestToken to cache
-            this.cache.set(
-                uri,
-                requestToken,
-                this.client.config.cacheExpiration - 300 * 1000
-            );
         }
 
         const url = `${this.client.config.baseUrl}${uri}${
-            requestTokenPlacement === "QUERY" && requestToken
+            requestTokenPlacement === "QUERY" && !!requestToken
                 ? `?t=${requestToken}`
                 : ""
         }`;
@@ -80,7 +66,7 @@ export default abstract class Base {
             cache: "no-cache",
             headers: {
                 ...(options?.headers ?? {}),
-                ...(requestTokenPlacement === "HEADER" && requestToken
+                ...(requestTokenPlacement === "HEADER" && !!requestToken
                     ? { "X-F19-RequestToken": requestToken }
                     : {}),
                 "Content-Type": "application/json"

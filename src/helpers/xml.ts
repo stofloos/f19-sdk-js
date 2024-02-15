@@ -11,10 +11,6 @@ export function xmlToJson<T>(xmlString: string): Promise<T> {
             reject(new Error("No XML provided"));
         }
 
-        if (typeof xmlString !== "string") {
-            reject(new Error("XML must be a string"));
-        }
-
         parseString(xmlString, { explicitArray: false }, (err, result) => {
             if (err) {
                 reject(err);

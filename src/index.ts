@@ -13,7 +13,20 @@ import Downloads from "./resources/downloads";
 import Tokens from "./resources/tokens";
 import { generateClientToken, generateRequestToken } from "./helpers/jwt";
 import { Config, ConfigInput, ImpersonationOptions } from "./types";
+
 export * from "./types";
+export type { WebsiteResponse, WebsitesResponse } from "./resources/websites";
+export type { ProjectsResponse } from "./resources/projects";
+export type { ReportsResponse, ReportResponse } from "./resources/reports";
+export type { ArticlesResponse, ArticleResponse } from "./resources/articles";
+export type { ChartResponse, ChartsResponse } from "./resources/charts";
+export type { ChannelResponse } from "./resources/channel";
+export type { FacetNavigationsResponse } from "./resources/facetNavigations";
+export type { ImageResponse } from "./resources/images";
+export type { NonceResponse } from "./resources/nonce";
+export type { TablesResponse } from "./resources/tables";
+export type { DownloadResponse } from "./resources/downloads";
+export type { TokenResponse } from "./resources/tokens";
 
 /**
  * Client for interacting with the F19 API
@@ -104,14 +117,15 @@ export default class Client {
         return this.clientToken;
     }
 
-    private creatClientToken() {
+    private async creatClientToken(): Promise<string> {
         const jwtSecret = this.config.apiKey;
         const claims = {
             ClientId: this.config.clientId
         };
 
-        generateClientToken(claims, jwtSecret).then(token => {
+        return generateClientToken(claims, jwtSecret).then(token => {
             this.setClientToken(token);
+            return token;
         });
     }
 
@@ -120,7 +134,8 @@ export default class Client {
         method?: RequestInit["method"],
         options?: RequestInit
     ): Promise<string> {
-        const clientToken = this.getClientToken();
+        const clientToken =
+            this.getClientToken() || (await this.creatClientToken());
 
         if (!clientToken) {
             throw new Error("no clientToken");

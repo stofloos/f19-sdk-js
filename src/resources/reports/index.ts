@@ -53,13 +53,18 @@ export default class Reports extends Base {
     async getById(
         id: string,
         channel: ChannelType = "*",
-        options?: RequestInit
+        options?: RequestInit & { summary?: 1 | 2 }
     ): Promise<ReportResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
-        const response = await this.get(`/${resource}/id/${id}`, options || {});
+        const response = await this.get(
+            `/${resource}/id/${id}${
+                options?.summary ? `?summary=${options.summary}` : ""
+            }`,
+            options || {}
+        );
         const json = await response.json();
         if (channel && json.payload) {
             // If a channel is provided,
@@ -92,34 +97,36 @@ export default class Reports extends Base {
     async getAllByProjectId(
         id: string,
         channel: ChannelType = "*",
-        options?: RequestInit
+        options?: RequestInit & { summary?: 1 | 2 }
     ): Promise<ReportsResponse> {
         if (!id || id === "") {
             throw new Error("No id provided");
         }
 
         const response = await this.get(
-            `/${resource}/project/${id}`,
+            `/${resource}/project/${id}${
+                options?.summary ? `?summary=${options.summary}` : ""
+            }`,
             options || {}
         );
-        const json = await response.json();
-        if (channel && json.payload) {
-            // If a channel is provided,
-            // filter out reports without the specified channel
-            json.payload = json.payload.filter((report: Report) => {
-                return report.components.some((component: Component) => {
-                    if (channel !== "*") {
-                        const channelTags = component?.multiChannelTags.find(
-                            (tag: MultiChannelTag) => tag.channel === channel
-                        );
+        return await response.json();
+        // if (channel && json.payload) {
+        //     // If a channel is provided,
+        //     // filter out reports without the specified channel
+        //     json.payload = json.payload.filter((report: Report) => {
+        //         return report.components.some((component: Component) => {
+        //             if (channel !== "*") {
+        //                 const channelTags = component?.multiChannelTags.find(
+        //                     (tag: MultiChannelTag) => tag.channel === channel
+        //                 );
 
-                        return channelTags?.tags?.["is-visible"] !== false;
-                    }
-                    return true;
-                });
-            });
-        }
-        return json;
+        //                 return channelTags?.tags?.["is-visible"] !== false;
+        //             }
+        //             return true;
+        //         });
+        //     });
+        // }
+        // return json;
     }
 
     /**
